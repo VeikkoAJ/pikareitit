@@ -1,9 +1,14 @@
-import {ListView, Text, View} from "react-native";
+import {Text, View} from "react-native";
 import React from "react";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {RouteLegUnit} from "./RouteLegUnit";
+import {RouteTransportLeg} from "../types";
 
-export function RouteLeg() {
+type RouteLegProps = {
+    routeLeg: RouteTransportLeg
+}
+
+export function RouteLeg({ routeLeg }: RouteLegProps) {
     return (
         <View style={{
             flexShrink: 1,
@@ -27,13 +32,13 @@ export function RouteLeg() {
                         fontSize: 24,
                     }}
                 >
-                    {"Todella pitkä paikan nimi 2, Espoo"}
+                    {routeLeg.startPlace}
                 </Text>
-                <MaterialCommunityIcons name={'bus'} size={30} color="white"/>
+                <MaterialCommunityIcons name={routeLeg.transportMode} size={30} color="white"/>
             </View>
-            <RouteLegUnit name={"113"} departure={new Date()}/>
-            <RouteLegUnit name={"502"} departure={new Date()}/>
-            <RouteLegUnit name={"202"} departure={new Date()}/>
+            <RouteLegUnit legUnit={routeLeg.transportLegUnits[0]} />
+            <RouteLegUnit legUnit={routeLeg.transportLegUnits[1]}/>
+            <RouteLegUnit legUnit={routeLeg.transportLegUnits[2]}/>
         </View>
 
     )

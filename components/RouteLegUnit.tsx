@@ -1,12 +1,12 @@
 import {Text, View} from "react-native";
 import React from "react";
+import {RouteTransportLegUnit} from "../types";
 
 type RouteLegUnitProps = {
-    name: String,
-    departure: Date
+    legUnit: RouteTransportLegUnit
 }
 
-export function RouteLegUnit({name, departure}: RouteLegUnitProps) {
+export function RouteLegUnit({ legUnit }: RouteLegUnitProps) {
 
     return (
         <View style={{
@@ -14,8 +14,8 @@ export function RouteLegUnit({name, departure}: RouteLegUnitProps) {
             justifyContent: 'space-between',
             borderBottomWidth: 1,
         }}>
-            <Text style={{fontSize: 18}}>{name}</Text>
-            <Text style={{fontSize: 18}}>{departure.getHours().toString() + ":" + departure.getMinutes().toString() + ":" + departure.getSeconds().toString().padStart(2, '0')}</Text>
+            <Text style={{fontSize: 18}}>{legUnit.name}</Text>
+            <Text style={{fontSize: 18}}>{legUnit.startTime.getHours().toString() + ":" + legUnit.startTime.getMinutes().toString() + ":" + legUnit.startTime.getSeconds().toString().padStart(2, '0')}</Text>
         </View>
     )
 }
