@@ -15,8 +15,8 @@ export function RouteLegUnit({ legUnit }: RouteLegUnitProps) {
             justifyContent: 'space-between',
             borderBottomWidth: 1,
         }}>
-            <Text style={{fontSize: 18}}>{legUnit.name}</Text>
-            <Text style={{fontSize: 18}}>{format(new Date(legUnit.startTime), "HH:mm:ss")}</Text>
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>{legUnit.name}</Text>
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>{format(new Date(legUnit.startTime), "HH:mm:ss")}</Text>
         </View>
     )
 }

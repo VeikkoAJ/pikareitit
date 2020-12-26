@@ -2,6 +2,7 @@ import {Text, TouchableOpacity, View} from "react-native";
 import React, {useEffect, useState} from "react";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {format} from "date-fns";
+import {basicColors} from "../styles/BasicColors";
 
 export function RouteScreenTopBar() {
     const [currentDate, setCurrentDate] = useState(new Date());
@@ -16,14 +17,16 @@ export function RouteScreenTopBar() {
     return(
         <View style={{
             height: 50,
+            width: '100%',
+            position: 'absolute',
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'stretch',
-            backgroundColor: '#ffffdc'
+            zIndex: 1
         }}>
-            <View style={{
+            <TouchableOpacity style={{
                 flexDirection: 'row',
-                backgroundColor: 'tomato',
+                backgroundColor: basicColors.topBarBackground,
                 borderBottomEndRadius: 10,
                 paddingEnd: 20,
                 paddingStart: 10,
@@ -34,11 +37,14 @@ export function RouteScreenTopBar() {
                     fontSize: 24,
                     fontWeight: 'bold',
                     color: 'white'
-                }}>{format(currentDate, "HH:mm:ss")}</Text>
-            </View>
+                }}>
+                    {format(currentDate, "HH:mm:ss")}
+                </Text>
+            </TouchableOpacity>
+
             <TouchableOpacity style={{
                 flexDirection: 'row',
-                backgroundColor: 'tomato',
+                backgroundColor: basicColors.topBarBackground,
                 borderBottomStartRadius: 10,
                 paddingStart: 20,
                 paddingEnd: 20,

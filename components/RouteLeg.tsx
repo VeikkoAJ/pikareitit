@@ -1,8 +1,9 @@
-import {Text, View} from "react-native";
+import {Text, TouchableOpacity, View} from "react-native";
 import React from "react";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {RouteLegUnit} from "./RouteLegUnit";
 import {RouteTransportLeg} from "../types";
+import {basicColors} from "../styles/BasicColors";
 
 type RouteLegProps = {
     routeLeg: RouteTransportLeg | null
@@ -11,13 +12,14 @@ type RouteLegProps = {
 export function RouteLeg({ routeLeg }: RouteLegProps) {
 
     return (
-        <View style={{
+        <TouchableOpacity style={{
             flexShrink: 1,
-            backgroundColor: 'orchid',
+            backgroundColor: basicColors.routeLegLight,
             borderRadius: 20,
             paddingHorizontal: 10,
             paddingTop: 5,
-            paddingBottom: 15
+            paddingBottom: 15,
+            elevation: 1
         }}>
             <View style={{
                 flexShrink: 1,
@@ -33,12 +35,12 @@ export function RouteLeg({ routeLeg }: RouteLegProps) {
                 }}>
                     {routeLeg != null ? routeLeg.startPlace : '_'}
                 </Text>
-                <MaterialCommunityIcons name={routeLeg != null ? routeLeg.transportMode : 'cross'} size={30} color="white"/>
+                <MaterialCommunityIcons name={routeLeg != null ? routeLeg.transportMode.toLowerCase() : 'cross'} size={30} color="white"/>
             </View>
             {routeLeg?.transportLegUnits != undefined ? <RouteLegUnit legUnit={routeLeg.transportLegUnits[0]}/>: <Text>_</Text>}
             {routeLeg?.transportLegUnits != undefined ? <RouteLegUnit legUnit={routeLeg.transportLegUnits[1]}/>: <Text>_</Text>}
             {routeLeg?.transportLegUnits != undefined ? <RouteLegUnit legUnit={routeLeg.transportLegUnits[2]}/>: <Text>_</Text>}
-        </View>
+        </TouchableOpacity>
 
     )
 }

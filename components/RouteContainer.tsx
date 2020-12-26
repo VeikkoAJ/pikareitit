@@ -31,8 +31,8 @@ export function RouteContainer({currentTime}: RouteContainerProps) {
     console.log("data", data);
 
     return (
-        <ScrollView style={{
-        }}>
+        <ScrollView style={{paddingHorizontal: 10}}>
+            <View style={{height: 75}}/>
             <RouteStartEnd name={"HOME"} emojiName={"home"}/>
             <RouteMiddleSector iconName={'walk'}/>
             <RouteLeg
@@ -67,13 +67,25 @@ export function RouteContainer({currentTime}: RouteContainerProps) {
                 }}
             />
             <RouteMiddleSplitSector iconName={"train"}/>
-            <RouteLeg
-                routeLeg={{
-                    startPlace: "Pukinmäen asema",
-                    transportMode: "rail",
-                    transportLegUnits: null
-                }}
-            />
+            <View style={{flexDirection: 'row', flex: 1, justifyContent: 'space-evenly'}}>
+                <View style={{width: '50%'}}>
+                    <RouteLeg routeLeg={{
+                        startPlace: "Pukinmäen asema",
+                        transportMode: "bus",
+                        transportLegUnits: null
+                    }}/>
+                </View>
+                <View style={{width: '1%'}} />
+                <View style={{width: '50%'}}>
+                    <RouteLeg routeLeg={{
+                        startPlace: "Malmin asema",
+                        transportMode: "bus",
+                        transportLegUnits: null
+                    }}/>
+                </View>
+
+            </View>
+
             <RouteMiddleMergeSector iconName={"bus"}/>
             <RouteStartEnd name={"PARTIO"} emojiName={"tent"}/>
             <View style={{height: 50}}/>
