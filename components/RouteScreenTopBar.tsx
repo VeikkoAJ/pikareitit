@@ -1,6 +1,7 @@
 import {Text, TouchableOpacity, View} from "react-native";
 import React, {useEffect, useState} from "react";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {format} from "date-fns";
 
 export function RouteScreenTopBar() {
     const [currentDate, setCurrentDate] = useState(new Date());
@@ -33,7 +34,7 @@ export function RouteScreenTopBar() {
                     fontSize: 24,
                     fontWeight: 'bold',
                     color: 'white'
-                }}>{currentDate.getHours().toString() + ":" + currentDate.getMinutes().toString() + ":" + currentDate.getSeconds().toString().padStart(2, '0')}</Text>
+                }}>{format(currentDate, "HH:mm:ss")}</Text>
             </View>
             <TouchableOpacity style={{
                 flexDirection: 'row',

@@ -7,6 +7,8 @@ import {RouteContainer} from "../components/RouteContainer";
 
 
 export function CurrentRouteScreen() {
+
+    const currentTime = new Date(2020, 12, 26, 10, 0);
     return (
         <View style={{
             flex: 1,
@@ -14,7 +16,7 @@ export function CurrentRouteScreen() {
             backgroundColor: 'ivory'
         }}>
             <RouteScreenTopBar/>
-            <RouteContainer/>
+            <RouteContainer currentTime={currentTime}/>
          </View>
     )
 }

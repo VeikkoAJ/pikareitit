@@ -11,8 +11,8 @@ export type RouteMiddleSectorProps = {
 
 export type RouteTransportLegUnit = {
     name: string,
-    startTime: Date,
-    endTime: Date,
+    startTime: number,
+    endTime: number,
     realTime: boolean
 }
 
@@ -22,14 +22,16 @@ export type RouteTransportLeg = {
     transportMode: string,
     transportLegUnits: RouteTransportLegUnit[]
 }
+export type TransportMode ={
+    mode: string
+}
 
 export type RouteTransportLegQueryParam = {
     from: string,
     to: string,
-    //in milliseconds
-    delay: number,
+    date: string,
+    time: string
     //BUS, TRAIN, TRAM, METRO, FERRY
-    transportModes: string[]
 }
 
 export type RouteTransportLegQueryResponse = {

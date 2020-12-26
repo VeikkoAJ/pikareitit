@@ -5,10 +5,11 @@ import {RouteLegUnit} from "./RouteLegUnit";
 import {RouteTransportLeg} from "../types";
 
 type RouteLegProps = {
-    routeLeg: RouteTransportLeg
+    routeLeg: RouteTransportLeg | null
 }
 
 export function RouteLeg({ routeLeg }: RouteLegProps) {
+
     return (
         <View style={{
             flexShrink: 1,
@@ -25,20 +26,18 @@ export function RouteLeg({ routeLeg }: RouteLegProps) {
                 alignItems: 'center',
                 paddingVertical: 5,
             }}>
-                <Text
-                    style={{
+                <Text style={{
                         flexShrink: 1,
                         color: 'white',
                         fontSize: 24,
-                    }}
-                >
-                    {routeLeg.startPlace}
+                }}>
+                    {routeLeg != null ? routeLeg.startPlace : '_'}
                 </Text>
-                <MaterialCommunityIcons name={routeLeg.transportMode} size={30} color="white"/>
+                <MaterialCommunityIcons name={routeLeg != null ? routeLeg.transportMode : 'cross'} size={30} color="white"/>
             </View>
-            <RouteLegUnit legUnit={routeLeg.transportLegUnits[0]} />
-            <RouteLegUnit legUnit={routeLeg.transportLegUnits[1]}/>
-            <RouteLegUnit legUnit={routeLeg.transportLegUnits[2]}/>
+            {routeLeg?.transportLegUnits != undefined ? <RouteLegUnit legUnit={routeLeg.transportLegUnits[0]}/>: <Text>_</Text>}
+            {routeLeg?.transportLegUnits != undefined ? <RouteLegUnit legUnit={routeLeg.transportLegUnits[1]}/>: <Text>_</Text>}
+            {routeLeg?.transportLegUnits != undefined ? <RouteLegUnit legUnit={routeLeg.transportLegUnits[2]}/>: <Text>_</Text>}
         </View>
 
     )
