@@ -1,43 +1,58 @@
-
-
-export type coordinate = {
-    lat: number,
-    lon: number
-}
-
 export type RouteMiddleSectorProps = {
-    iconName: String
+  // In milliseconds
+  travelTime: number
 }
 
 export type RouteTransportLegUnit = {
-    name: string,
-    startTime: number,
-    endTime: number,
-    realTime: boolean
+  name: string
+  startTime: number
+  realTime: boolean
 }
+
+export type TransportMode = {
+  mode: 'BUS' | 'RAIL' | 'TRAM' | 'SUBWAY' | 'FERRY' | 'WALK'
+}
+
+export type MiddleSector = 'single' | 'split' | 'two' | 'merge'
 
 export type RouteTransportLeg = {
-    startPlace: string,
-    //BUS, TRAIN, TRAM, METRO, FERRY
-    transportMode: string,
-    transportLegUnits: RouteTransportLegUnit[]
-}
-export type TransportMode ={
-    mode: string
+  from: string
+  to: string
+  transportModes: TransportMode[]
 }
 
-export type RouteTransportLegQueryParam = {
-    from: string,
-    to: string,
-    date: string,
-    time: string
-    //BUS, TRAIN, TRAM, METRO, FERRY
+type RouteTransportLegRow = {
+  routeLegs: RouteTransportLeg[]
+  middleSector: MiddleSector
+  middleSectorTransportModes: TransportMode[]
 }
 
-export type RouteTransportLegQueryResponse = {
-    'data' : {
-        'plan' : {
-            'itineraries' : {}
-        }
-    }
+export type Route = {
+  routeName: string
+  description: string
+  startPlace: string
+  destination: string
+  routeTransportLegRows: RouteTransportLegRow[]
+}
+
+type Leg = {
+  from: {
+    name: string
+  }
+  mode: string
+  route: {
+    shortName: string
+  }
+  startTime: number
+}
+
+type Itinerary = {
+  duration: number
+  legs: Leg[]
+}
+
+export type QueryData = {
+  plan: {
+    itineraries: Itinerary[]
+  }
 }

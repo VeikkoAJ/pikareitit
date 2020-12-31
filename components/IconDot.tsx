@@ -1,32 +1,31 @@
-import {basicColors} from "../styles/BasicColors";
-import {MaterialCommunityIcons} from "@expo/vector-icons";
-import {View} from "react-native";
-import React from "react";
+import { basicColors, routeLegColors } from '../styles/BasicColors'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { Text, View } from 'react-native'
+import React from 'react'
+import { format } from 'date-fns'
 
 type IconDotProps = {
-    name: string
+  travelTime: number
 }
 
-export function IconDot({name}: IconDotProps) {
-    return (
-        <View style={{
-            marginVertical: 2.5,
-            marginHorizontal: 5,
-            alignContent: 'center',
-            backgroundColor: basicColors.routeLeg,
-            borderRadius: 20,
-            width: 40,
-            height: 40,
-            elevation: 1
-        }}>
-         <MaterialCommunityIcons
-             style={{
-                 paddingLeft: 7.5,
-                 paddingTop: 7.5,
-             }}
-             name={name.toLowerCase()}
-             size={25} color="white"
-         />
-     </View>
- )
+export function IconDot({ travelTime }: IconDotProps) {
+  return (
+    <View
+      style={{
+        marginVertical: 2.5,
+        marginHorizontal: 5,
+        alignContent: 'center',
+        justifyContent: 'center',
+        backgroundColor: routeLegColors.normal,
+        borderRadius: 20,
+        width: 40,
+        height: 40,
+        elevation: 1,
+      }}
+    >
+      <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}>
+        {Math.round(travelTime / 60000)}
+      </Text>
+    </View>
+  )
 }

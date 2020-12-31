@@ -1,4 +1,3 @@
-import {RouteTransportLeg, RouteTransportLegQueryParam, TransportMode} from "../types";
 import { gql } from "@apollo/client";
 
 

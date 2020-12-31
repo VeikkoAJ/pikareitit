@@ -1,95 +1,65 @@
-import {ScrollView, Text, View} from "react-native";
-import React, {useEffect} from "react";
-import {RouteLeg} from "./RouteLeg";
-import {MaterialCommunityIcons} from "@expo/vector-icons";
-import {RouteLegUnit} from "./RouteLegUnit";
-import {RouteStartEnd} from "./RouteStartEnd";
-import {RouteMiddleSector} from "./RouteMiddleSector";
-import {RouteMiddleSplitSector} from "./RouteMiddleSplitSector";
-import {RouteMiddleMergeSector} from "./RouteMiddleMergeSector";
-import {useQuery} from "@apollo/client";
-import {routeRequest} from "../services/RouteFetcher";
-import { format } from 'date-fns'
-
+import React, { useState } from 'react'
+import { ScrollView, View } from 'react-native'
+import RouteLeg from './RouteLeg'
+import RouteStartEnd from './RouteStartEnd'
+import { RouteMiddleSector } from './RouteMiddleSector'
+import { Route } from '../types'
+import { RouteMiddleSplitSector } from './RouteMiddleSplitSector'
+import { RouteMiddleMergeSector } from './RouteMiddleMergeSector'
 
 export type RouteContainerProps = {
-    currentTime: Date
+  currentRoute: Route
 }
 
-export function RouteContainer({currentTime}: RouteContainerProps) {
-
-    const { loading, error, data } = useQuery(routeRequest,
-        { variables: {
-                from: "60.211039,24.825548",
-                to: "60.219377,24.813573",
-                date: format(currentTime, 'yyyy-MM-dd'),
-                time: format(currentTime, 'HH:mm:ss')
+export function RouteContainer({ currentRoute }: RouteContainerProps) {
+  const [activeIndex, setActiveIndex] = useState(0)
+  // TODO Add startTime hook and travelTime hook
+  return (
+    <ScrollView style={{ paddingHorizontal: 10 }}>
+      <View style={{ height: 75 }} />
+      <RouteStartEnd name={currentRoute.startPlace} iconName="home" />
+      <RouteMiddleSector iconName="walk" />
+      {currentRoute.routeTransportLegRows.map((routeLegRow, viewIndex) => (
+        <>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              width: '100%',
             }}
-        );
-
-    console.log("error",error);
-    console.log("data", data);
-
-    return (
-        <ScrollView style={{paddingHorizontal: 10}}>
-            <View style={{height: 75}}/>
-            <RouteStartEnd name={"HOME"} emojiName={"home"}/>
-            <RouteMiddleSector iconName={'walk'}/>
-            <RouteLeg
-                routeLeg={!loading && !error ? {
-                    startPlace: data.plan.itineraries[1].legs[1].from.name,
-                    transportMode: data.plan.itineraries[1].legs[1].mode,
-                    transportLegUnits: [{
-                        name: data.plan.itineraries[0].legs[1].route.shortName,
-                        startTime: parseInt(data.plan.itineraries[0].legs[1].startTime),
-                        endTime: 0,
-                        realTime: false
-                    },
-                    {
-                        name: data.plan.itineraries[1].legs[1].route.shortName,
-                        startTime: parseInt(data.plan.itineraries[1].legs[1].startTime),
-                        endTime: 0,
-                        realTime: true
-                    },
-                    {
-                        name: data.plan.itineraries[2].legs[1].route.shortName,
-                        startTime: parseInt(data.plan.itineraries[2].legs[1].startTime),
-                        endTime: 0,
-                        realTime: true
-                    }]
-                } : null}/>
-            <RouteMiddleSector iconName={'bus'}/>
-            <RouteLeg
-                routeLeg={{
-                    startPlace: "Leppävaaran asema",
-                    transportMode: "rail",
-                    transportLegUnits: null
-                }}
-            />
-            <RouteMiddleSplitSector iconName={"train"}/>
-            <View style={{flexDirection: 'row', flex: 1, justifyContent: 'space-evenly'}}>
-                <View style={{width: '50%'}}>
-                    <RouteLeg routeLeg={{
-                        startPlace: "Pukinmäen asema",
-                        transportMode: "bus",
-                        transportLegUnits: null
-                    }}/>
-                </View>
-                <View style={{width: '1%'}} />
-                <View style={{width: '50%'}}>
-                    <RouteLeg routeLeg={{
-                        startPlace: "Malmin asema",
-                        transportMode: "bus",
-                        transportLegUnits: null
-                    }}/>
-                </View>
-
-            </View>
-
-            <RouteMiddleMergeSector iconName={"bus"}/>
-            <RouteStartEnd name={"PARTIO"} emojiName={"tent"}/>
-            <View style={{height: 50}}/>
-        </ScrollView>
-    )
-
+            key={viewIndex}
+          >
+            {routeLegRow.routeLegs.map((routeLeg, index) => (
+              <RouteLeg
+                key={index}
+                routeLeg={routeLeg}
+                startTime={new Date(2021, 0, 2, 10, 0)}
+                setActive={() => setActiveIndex(viewIndex)}
+                isOld={activeIndex > viewIndex}
+                isActive={activeIndex === viewIndex}
+              />
+            ))}
+          </View>
+          {routeLegRow.middleSector === 'single' && (
+            <RouteMiddleSector travelTime={1000 * 60 * 4} />
+          )}
+          {routeLegRow.middleSector === 'split' && (
+            <RouteMiddleSplitSector travelTime={1000 * 60 * 4} />
+          )}
+          {routeLegRow.middleSector === 'merge' && (
+            <RouteMiddleMergeSector travelTime={1000 * 60 * 4} />
+          )}
+          {routeLegRow.middleSector === 'two' && (
+            <RouteMiddleSector travelTime={1000 * 60 * 4} />
+          )}
+        </>
+      ))}
+      <RouteStartEnd
+        name={currentRoute.destination}
+        iconName="office-building"
+      />
+      <View style={{ height: 50 }} />
+    </ScrollView>
+  )
 }
