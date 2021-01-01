@@ -8,16 +8,16 @@ import { routeLegColors } from '../styles/BasicColors';
 import { routeRequest } from '../services/RouteFetcher';
 import RouteLegIcon from './RouteLegIcon';
 
-type RouteLegProps = {
+interface RouteLegProps {
   routeLeg: RouteTransportLeg;
   startTime: Date | undefined;
   setLegStartDate: (date: Date) => void;
-  setRouteStartTime: (time: Date) => void;
+  setRouteStartTime: (date: Date) => void;
   setRouteLegDuration: (time: number) => void;
   setActive: () => void;
   isOld: boolean;
   isActive: boolean;
-};
+}
 
 export default function RouteLeg({
   routeLeg,
@@ -29,6 +29,8 @@ export default function RouteLeg({
   isOld,
   isActive,
 }: RouteLegProps) {
+  // TODO add secondary destination querys
+
   // eslint-disable-next-line no-unused-vars
   const { loading, error, data } = useQuery<QueryData>(routeRequest, {
     variables: {
@@ -56,10 +58,7 @@ export default function RouteLeg({
     console.log(data);
     if (data && data?.plan.itineraries[0].legs.length > 1) {
       setLegStartDate(new Date(data?.plan.itineraries[0].legs[1].endTime));
-      setRouteLegDuration(
-        data.plan.itineraries[0].legs[1].endTime -
-          data.plan.itineraries[0].legs[1].startTime
-      );
+      setRouteLegDuration(data.plan.itineraries[0].legs[1].duration);
     }
   }, [data]);
 
@@ -70,7 +69,7 @@ export default function RouteLeg({
     return routeLeg.from.split(',')[0];
   };
 
-  function borderColor(): string {
+  const borderColor = () => {
     if (isActive) {
       return 'red'; // TODO Change to a better color
     }
@@ -78,7 +77,17 @@ export default function RouteLeg({
       return routeLegColors.lightVisited;
     }
     return routeLegColors.light;
-  }
+  };
+
+  const elevation = () => {
+    if (isActive) {
+      return 5;
+    }
+    if (isOld) {
+      return 0;
+    }
+    return 1;
+  };
 
   return (
     <TouchableOpacity
@@ -94,7 +103,7 @@ export default function RouteLeg({
         paddingHorizontal: 10,
         paddingTop: 5,
         paddingBottom: 15,
-        elevation: !isOld ? 1 : isActive ? 3 : 0,
+        elevation: elevation(),
       }}
       onPress={() => {
         setRouteStartTime(new Date());
@@ -110,17 +119,15 @@ export default function RouteLeg({
           paddingVertical: 5,
         }}
       >
-        {stopName && (
-          <Text
-            style={{
-              flexShrink: 1,
-              color: 'white',
-              fontSize: 24,
-            }}
-          >
-            {stopName}
-          </Text>
-        )}
+        <Text
+          style={{
+            flexShrink: 1,
+            color: 'white',
+            fontSize: 24,
+          }}
+        >
+          {stopName()}
+        </Text>
         <RouteLegIcon
           transportMode={routeLeg?.transportModes[0]}
           size={30}

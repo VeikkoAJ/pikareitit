@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { gql } from '@apollo/client';
 
 export const routeRequest = gql`
   query route($from: String, $to: String, $date: String, $time: String) {
@@ -23,7 +23,12 @@ export const routeRequest = gql`
           mode
           startTime
           endTime
+          duration
+          realTime
           from {
+            name
+          }
+          to {
             name
           }
           route {
@@ -33,4 +38,4 @@ export const routeRequest = gql`
       }
     }
   }
-`
+`;

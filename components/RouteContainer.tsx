@@ -8,6 +8,7 @@ import { RouteMiddleSplitSector } from './RouteMiddleSplitSector';
 import { RouteMiddleMergeSector } from './RouteMiddleMergeSector';
 import { UseRouteLegDurations } from '../hooks/UseRouteLegDurations';
 import UseRouteLegStartTimes from '../hooks/UseRouteLegStartTimes';
+import MiddleSectorWrapper from './MiddleSectorWrapper';
 
 export type RouteContainerProps = {
   currentRoute: Route;
@@ -30,12 +31,11 @@ export function RouteContainer({ currentRoute }: RouteContainerProps) {
     currentRoute.routeTransportLegRows.length
   );
 
-  // TODO create MiddleSector container
   return (
     <ScrollView style={{ paddingHorizontal: 10 }}>
       <View style={{ height: 75 }} />
       <RouteStartEnd name={currentRoute.startPlace} iconName="home" />
-      <RouteMiddleSector travelTime={1000 * 60 * 2.5} />
+      <RouteMiddleSector travelTime={currentRoute.startWalkDuration} />
       {currentRoute.routeTransportLegRows.map((routeLegRow, rowIndex) => (
         <>
           <View
@@ -67,22 +67,10 @@ export function RouteContainer({ currentRoute }: RouteContainerProps) {
               />
             ))}
           </View>
-          {routeLegRow.middleSector === 'single' && (
-            <RouteMiddleSector travelTime={routeLegDurations[rowIndex][0]} />
-          )}
-          {routeLegRow.middleSector === 'split' && (
-            <RouteMiddleSplitSector
-              travelTime={routeLegDurations[rowIndex][0]}
-            />
-          )}
-          {routeLegRow.middleSector === 'merge' && (
-            <RouteMiddleMergeSector
-              travelTime={routeLegDurations[rowIndex][0]}
-            />
-          )}
-          {routeLegRow.middleSector === 'two' && (
-            <RouteMiddleSector travelTime={routeLegDurations[rowIndex][0]} />
-          )}
+          <MiddleSectorWrapper
+            middleSector={routeLegRow.middleSector}
+            routeLegDurations={routeLegDurations[rowIndex]}
+          />
         </>
       ))}
       <RouteStartEnd

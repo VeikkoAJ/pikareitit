@@ -1,5 +1,5 @@
 export type RouteMiddleSectorProps = {
-  // In milliseconds
+  // In seconds
   travelTime: number;
 };
 
@@ -32,19 +32,25 @@ export type Route = {
   description: string;
   startPlace: string;
   destination: string;
+  startWalkDuration: number;
   routeTransportLegRows: RouteTransportLegRow[];
 };
 
 type Leg = {
+  mode: string;
+  startTime: number;
+  endTime: number;
+  duration: number;
+  realTime: boolean;
   from: {
     name: string;
   };
-  mode: string;
+  to: {
+    name: string;
+  };
   route: {
     shortName: string;
   };
-  startTime: number;
-  endTime: number;
 };
 
 type Itinerary = {

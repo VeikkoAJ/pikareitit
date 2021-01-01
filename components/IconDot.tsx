@@ -32,7 +32,7 @@ export function IconDot({ travelTime }: IconDotProps) {
           textAlign: 'center',
         }}
       >
-        {(Math.round(travelTime / 6000) / 10).toString()}
+        {(travelTime / 60).toPrecision(2)}
       </Text>
     </View>
   );

@@ -1,4 +1,4 @@
-import { StatusBar, Text, View } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import React, { useState } from 'react';
 
 import { RouteScreenTopBar } from '../components/RouteScreenTopBar';
@@ -13,6 +13,7 @@ export function CurrentRouteScreen() {
     description: 'there is no description to this cursed shit',
     startPlace: 'Majurinkulma',
     destination: 'Lehmustie',
+    startWalkDuration: 2.3 * 60,
     routeTransportLegRows: [
       {
         routeLegs: [
