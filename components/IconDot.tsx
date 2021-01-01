@@ -1,12 +1,12 @@
-import { basicColors, routeLegColors } from '../styles/BasicColors'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { Text, View } from 'react-native'
-import React from 'react'
-import { format } from 'date-fns'
+import { basicColors, routeLegColors } from '../styles/BasicColors';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Text, View } from 'react-native';
+import React from 'react';
+import { format } from 'date-fns';
 
 type IconDotProps = {
-  travelTime: number
-}
+  travelTime: number;
+};
 
 export function IconDot({ travelTime }: IconDotProps) {
   return (
@@ -23,9 +23,17 @@ export function IconDot({ travelTime }: IconDotProps) {
         elevation: 1,
       }}
     >
-      <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}>
-        {Math.round(travelTime / 60000)}
+      <Text
+        style={{
+          paddingTop: 2,
+          fontSize: 18,
+          color: 'white',
+          fontWeight: 'bold',
+          textAlign: 'center',
+        }}
+      >
+        {(Math.round(travelTime / 6000) / 10).toString()}
       </Text>
     </View>
-  )
+  );
 }

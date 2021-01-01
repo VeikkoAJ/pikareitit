@@ -1,24 +1,30 @@
-import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
-import { useQuery } from '@apollo/client'
-import { format } from 'date-fns'
-import { RouteLegUnit } from './RouteLegUnit'
-import { QueryData, RouteTransportLeg } from '../types'
-import { routeLegColors } from '../styles/BasicColors'
-import { routeRequest } from '../services/RouteFetcher'
-import RouteLegIcon from './RouteLegIcon'
+import React, { useEffect } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { useQuery } from '@apollo/client';
+import { format } from 'date-fns';
+import { RouteLegUnit } from './RouteLegUnit';
+import { QueryData, RouteTransportLeg } from '../types';
+import { routeLegColors } from '../styles/BasicColors';
+import { routeRequest } from '../services/RouteFetcher';
+import RouteLegIcon from './RouteLegIcon';
 
 type RouteLegProps = {
-  routeLeg: RouteTransportLeg
-  startTime: Date
-  setActive: () => void
-  isOld: boolean
-  isActive: boolean
-}
+  routeLeg: RouteTransportLeg;
+  startTime: Date | undefined;
+  setLegStartDate: (date: Date) => void;
+  setRouteStartTime: (time: Date) => void;
+  setRouteLegDuration: (time: number) => void;
+  setActive: () => void;
+  isOld: boolean;
+  isActive: boolean;
+};
 
 export default function RouteLeg({
   routeLeg,
   startTime,
+  setLegStartDate,
+  setRouteStartTime,
+  setRouteLegDuration,
   setActive,
   isOld,
   isActive,
@@ -28,27 +34,50 @@ export default function RouteLeg({
     variables: {
       from: routeLeg.from,
       to: routeLeg.to,
-      date: format(startTime, 'yyyy-MM-dd'),
-      time: format(startTime, 'HH:mm:ss'),
+      date: format(
+        startTime !== undefined ? startTime : new Date(),
+        'yyyy-MM-dd'
+      ),
+      time: format(
+        startTime !== undefined ? startTime : new Date(),
+        'HH:mm:ss'
+      ),
     },
-    skip: isOld,
-  })
+    fetchPolicy: 'network-only', // set false when testing with live dates
+    skip: isOld || (startTime && undefined),
+  });
 
   if (error) {
-    return error
+    // eslint-disable-next-line no-console
+    console.log(error);
   }
 
-  const stopName =
-    data?.plan.itineraries[0].legs[1].from.name || routeLeg.from.split(',')[0]
+  useEffect(() => {
+    console.log(data);
+    if (data && data?.plan.itineraries[0].legs.length > 1) {
+      setLegStartDate(new Date(data?.plan.itineraries[0].legs[1].endTime));
+      setRouteLegDuration(
+        data.plan.itineraries[0].legs[1].endTime -
+          data.plan.itineraries[0].legs[1].startTime
+      );
+    }
+  }, [data]);
+
+  const stopName = () => {
+    if (data) {
+      return data?.plan.itineraries[0].legs[1].from.name;
+    }
+    return routeLeg.from.split(',')[0];
+  };
 
   function borderColor(): string {
     if (isActive) {
-      return 'red' // TODO Change to a better color
+      return 'red'; // TODO Change to a better color
     }
     if (isOld) {
-      return routeLegColors.lightVisited
+      return routeLegColors.lightVisited;
     }
-    return routeLegColors.light
+    return routeLegColors.light;
   }
 
   return (
@@ -67,7 +96,10 @@ export default function RouteLeg({
         paddingBottom: 15,
         elevation: !isOld ? 1 : isActive ? 3 : 0,
       }}
-      onPress={setActive}
+      onPress={() => {
+        setRouteStartTime(new Date());
+        setActive();
+      }}
     >
       <View
         style={{
@@ -110,5 +142,5 @@ export default function RouteLeg({
           : null}
       </View>
     </TouchableOpacity>
-  )
+  );
 }

@@ -1,12 +1,12 @@
-import { View } from 'react-native'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
 import React from 'react'
+import { View } from 'react-native'
 import { RouteMiddleSectorProps } from '../types'
-import { basicColors } from '../styles/BasicColors'
 import { SmallDot } from './SmallDot'
 import { IconDot } from './IconDot'
 
-export function RouteMiddleSector({ travelTime }: RouteMiddleSectorProps) {
+export default function RouteMiddleSector({
+  travelTime,
+}: RouteMiddleSectorProps) {
   return (
     <View
       style={{
