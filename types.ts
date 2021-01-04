@@ -18,6 +18,7 @@ export type MiddleSector = 'single' | 'split' | 'two' | 'merge';
 export type RouteTransportLeg = {
   from: string;
   to: string;
+  secondaryTo?: string;
   transportModes: TransportMode[];
 };
 
@@ -30,8 +31,8 @@ type RouteTransportLegRow = {
 export type Route = {
   routeName: string;
   description: string;
-  startPlace: string;
-  destination: string;
+  originPlace: string;
+  finalDestination: string;
   startWalkDuration: number;
   routeTransportLegRows: RouteTransportLegRow[];
 };

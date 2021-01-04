@@ -12,8 +12,11 @@ interface RouteLegProps {
   routeLeg: RouteTransportLeg;
   startTime: Date | undefined;
   setLegStartDate: (date: Date) => void;
+  setSecLegStartDate?: (date: Date) => void;
   setRouteStartTime: (date: Date) => void;
+  setSecRouteStartTime?: (date: Date) => void;
   setRouteLegDuration: (time: number) => void;
+  setSecRouteLegDuration?: (time: number) => void;
   setActive: () => void;
   isOld: boolean;
   isActive: boolean;
@@ -24,7 +27,9 @@ export default function RouteLeg({
   startTime,
   setLegStartDate,
   setRouteStartTime,
+  setSecRouteStartTime,
   setRouteLegDuration,
+  setSecRouteLegDuration,
   setActive,
   isOld,
   isActive,
@@ -46,16 +51,14 @@ export default function RouteLeg({
       ),
     },
     fetchPolicy: 'network-only', // set false when testing with live dates
-    skip: isOld || (startTime && undefined),
+    skip: isOld || startTime === undefined,
   });
 
   if (error) {
-    // eslint-disable-next-line no-console
     console.log(error);
   }
 
   useEffect(() => {
-    console.log(data);
     if (data && data?.plan.itineraries[0].legs.length > 1) {
       setLegStartDate(new Date(data?.plan.itineraries[0].legs[1].endTime));
       setRouteLegDuration(data.plan.itineraries[0].legs[1].duration);

@@ -11,8 +11,8 @@ export function CurrentRouteScreen() {
   const [route, setRoute] = useState<Route>({
     routeName: 'Majurinkulma -> Lehmustie',
     description: 'there is no description to this cursed shit',
-    startPlace: 'Majurinkulma',
-    destination: 'Lehmustie',
+    originPlace: 'Majurinkulma',
+    finalDestination: 'Lehmustie',
     startWalkDuration: 2.3 * 60,
     routeTransportLegRows: [
       {
@@ -30,11 +30,23 @@ export function CurrentRouteScreen() {
         routeLegs: [
           {
             from: 'Leppävaaran asema, Espoo::60.2193775,24.8113851',
-            to: 'Helsingin Rautatieasema, Helsinki::60.1711619,24.9392905',
+            to: 'Pasilan asema, Helsinki, Helsinki::60.1986935,24.9345064',
             transportModes: [{ mode: 'RAIL' }],
           },
         ],
-        middleSector: 'split',
+        middleSector: 'single',
+        middleSectorTransportModes: [{ mode: 'RAIL' }],
+      },
+      {
+        routeLegs: [
+          {
+            from: 'Pasilan asema, Helsinki::60.1986935,24.9345064',
+            to: 'Pukinmäen asema, Helsinki::60.2424651,24.9917559',
+            secondaryTo: 'Malmin asema, Helsinki::60.2506078,25.0094086',
+            transportModes: [{ mode: 'RAIL' }],
+          },
+        ],
+        middleSector: 'single',
         middleSectorTransportModes: [{ mode: 'RAIL' }],
       },
     ],

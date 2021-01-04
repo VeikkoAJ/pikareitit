@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import RouteLeg from './RouteLeg';
 import RouteStartEnd from './RouteStartEnd';
 import RouteMiddleSector from './RouteMiddleSector';
 import { Route } from '../types';
-import { RouteMiddleSplitSector } from './RouteMiddleSplitSector';
-import { RouteMiddleMergeSector } from './RouteMiddleMergeSector';
 import { UseRouteLegDurations } from '../hooks/UseRouteLegDurations';
 import UseRouteLegStartTimes from '../hooks/UseRouteLegStartTimes';
 import MiddleSectorWrapper from './MiddleSectorWrapper';
@@ -34,7 +32,7 @@ export function RouteContainer({ currentRoute }: RouteContainerProps) {
   return (
     <ScrollView style={{ paddingHorizontal: 10 }}>
       <View style={{ height: 75 }} />
-      <RouteStartEnd name={currentRoute.startPlace} iconName="home" />
+      <RouteStartEnd name={currentRoute.originPlace} iconName="home" />
       <RouteMiddleSector travelTime={currentRoute.startWalkDuration} />
       {currentRoute.routeTransportLegRows.map((routeLegRow, rowIndex) => (
         <>
@@ -74,7 +72,7 @@ export function RouteContainer({ currentRoute }: RouteContainerProps) {
         </>
       ))}
       <RouteStartEnd
-        name={currentRoute.destination}
+        name={currentRoute.finalDestination}
         iconName="office-building"
       />
       <View style={{ height: 50 }} />
