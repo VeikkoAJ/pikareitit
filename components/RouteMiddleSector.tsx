@@ -5,7 +5,7 @@ import { SmallDot } from './SmallDot'
 import { IconDot } from './IconDot'
 
 export default function RouteMiddleSector({
-  travelTime,
+  travelTimes,
 }: RouteMiddleSectorProps) {
   return (
     <View
@@ -16,7 +16,7 @@ export default function RouteMiddleSector({
       }}
     >
       <SmallDot />
-      <IconDot travelTime={travelTime} />
+      <IconDot travelTime={travelTimes[0]} />
       <SmallDot />
     </View>
   )

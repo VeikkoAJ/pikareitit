@@ -4,7 +4,7 @@ import { RouteMiddleSectorProps } from '../types'
 import { SmallDot } from './SmallDot'
 import { IconDot } from './IconDot'
 
-export function RouteMiddleSplitSector({ travelTime }: RouteMiddleSectorProps) {
+export function RouteMiddleSplitSector({ travelTimes }: RouteMiddleSectorProps) {
   return (
     <View
       style={{
@@ -30,13 +30,13 @@ export function RouteMiddleSplitSector({ travelTime }: RouteMiddleSectorProps) {
           alignItems: 'center',
         }}
       >
-        <IconDot travelTime={travelTime} />
+        <IconDot travelTime={travelTimes[0]}/>
         <SmallDot />
         <SmallDot />
         <SmallDot />
         <SmallDot />
         <SmallDot />
-        <SmallDot />
+        <IconDot travelTime={travelTimes[1] - travelTimes[0]} showSign={'+'} />
       </View>
       <View
         style={{

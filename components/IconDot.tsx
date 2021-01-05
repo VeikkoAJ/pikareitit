@@ -1,14 +1,14 @@
 import { basicColors, routeLegColors } from '../styles/BasicColors';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Text, View } from 'react-native';
 import React from 'react';
-import { format } from 'date-fns';
 
-type IconDotProps = {
+interface IconDotProps {
   travelTime: number;
+  showSign?: string
 };
 
-export function IconDot({ travelTime }: IconDotProps) {
+export function IconDot({ travelTime, showSign = ''}: IconDotProps) {
+
   return (
     <View
       style={{
@@ -26,13 +26,13 @@ export function IconDot({ travelTime }: IconDotProps) {
       <Text
         style={{
           paddingTop: 2,
-          fontSize: 18,
+          fontSize: 16,
           color: 'white',
           fontWeight: 'bold',
           textAlign: 'center',
         }}
       >
-        {(travelTime / 60).toPrecision(2)}
+        {showSign + (travelTime / 60).toPrecision(2)}
       </Text>
     </View>
   );

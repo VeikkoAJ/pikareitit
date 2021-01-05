@@ -19,7 +19,7 @@ export function RouteContainer({ currentRoute }: RouteContainerProps) {
   // TODO Add startTime hook and travelTime hook
   const {
     routeLegStartDates,
-    updateRouteLegStartTime,
+    updateNextRouteLegStartTime,
     updateStartTime,
   } = UseRouteLegStartTimes(
     currentRoute.routeTransportLegRows.length,
@@ -33,7 +33,7 @@ export function RouteContainer({ currentRoute }: RouteContainerProps) {
     <ScrollView style={{ paddingHorizontal: 10 }}>
       <View style={{ height: 75 }} />
       <RouteStartEnd name={currentRoute.originPlace} iconName="home" />
-      <RouteMiddleSector travelTime={currentRoute.startWalkDuration} />
+      <RouteMiddleSector travelTimes={[currentRoute.startWalkDuration]} />
       {currentRoute.routeTransportLegRows.map((routeLegRow, rowIndex) => (
         <>
           <View
@@ -52,13 +52,17 @@ export function RouteContainer({ currentRoute }: RouteContainerProps) {
                 routeLeg={routeLeg}
                 startTime={routeLegStartDates[rowIndex][index]}
                 setLegStartDate={(date: Date) =>
-                  updateRouteLegStartTime(date, [rowIndex + 1, index])
+                  updateNextRouteLegStartTime(date, [rowIndex + 1, index])
                 }
+                setSecLegStartDate={(date:Date) => updateNextRouteLegStartTime(date,  [rowIndex + 1, index + 1])}
                 setRouteStartTime={() =>
                   updateStartTime(placeholderDate, [rowIndex, index])
                 }
                 setRouteLegDuration={(time: number) =>
                   updateRouteLegDurations(time, [rowIndex, index])
+                }
+                setSecRouteLegDuration={(time: number) =>
+                  updateRouteLegDurations(time, [rowIndex, index + 1])
                 }
                 setActive={() => setActiveIndex(rowIndex)}
                 isOld={activeIndex > rowIndex}

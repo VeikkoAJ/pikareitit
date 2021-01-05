@@ -6,7 +6,7 @@ import { RouteMiddleMergeSector } from './RouteMiddleMergeSector';
 
 type MiddleSectorWrapperProps = {
   middleSector: MiddleSector;
-  routeLegDurations: [number, number];
+  routeLegDurations: number[];
 };
 
 export default function MiddleSectorWrapper({
@@ -16,16 +16,16 @@ export default function MiddleSectorWrapper({
   return (
     <>
       {middleSector === 'single' && (
-        <RouteMiddleSector travelTime={routeLegDurations[0]} />
+        <RouteMiddleSector travelTimes={routeLegDurations} />
       )}
       {middleSector === 'split' && (
-        <RouteMiddleSplitSector travelTime={routeLegDurations[0]} />
+        <RouteMiddleSplitSector travelTimes={routeLegDurations} />
       )}
       {middleSector === 'merge' && (
-        <RouteMiddleMergeSector travelTime={routeLegDurations[0]} />
+        <RouteMiddleMergeSector travelTimes={routeLegDurations} />
       )}
       {middleSector === 'two' && (
-        <RouteMiddleSector travelTime={routeLegDurations[0]} />
+        <RouteMiddleSector travelTimes={routeLegDurations} />
       )}
     </>
   );

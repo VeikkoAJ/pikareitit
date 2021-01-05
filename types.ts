@@ -1,12 +1,14 @@
 export type RouteMiddleSectorProps = {
   // In seconds
-  travelTime: number;
+  travelTimes: number[];
+  sign?: string
 };
 
 export type RouteTransportLegUnit = {
   name: string;
   startTime: number;
   endTime: number,
+  secondaryEndTime?: number
   realTime: boolean;
 };
 

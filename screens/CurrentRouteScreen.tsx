@@ -31,11 +31,6 @@ export function CurrentRouteScreen() {
             from: 'Leppävaaran asema, Espoo::60.2193775,24.8113851',
             to: 'Pasilan asema, Helsinki, Helsinki::60.1986935,24.9345064',
             transportModes: [{ mode: 'RAIL' }],
-          },
-          {
-            from: 'Leppävaaran asema, Espoo::60.2193775,24.8113851',
-            to: 'Pasilan asema, Helsinki, Helsinki::60.1986935,24.9345064',
-            transportModes: [{ mode: 'BUS' }],
           }
         ],
         middleSector: 'single',
@@ -50,8 +45,24 @@ export function CurrentRouteScreen() {
             transportModes: [{ mode: 'RAIL' }],
           },
         ],
-        middleSector: 'single',
+        middleSector: 'split',
         middleSectorTransportModes: [{ mode: 'RAIL' }],
+      },
+      {
+        routeLegs: [
+          {
+            from: 'Pukinmäen asema, Helsinki::60.2424651,24.9917559',
+            to: 'Syystie 19, Helsinki::60.2567313,24.9973389',
+            transportModes: [{ mode: 'BUS' }],
+          },
+          {
+            from: 'Malmin asema, Helsinki::60.2506078,25.0094086',
+            to: 'Syystie 19, Helsinki::60.2567313,24.9973389',
+            transportModes: [{ mode: 'BUS' }],
+          }
+        ],
+        middleSector: 'single',
+        middleSectorTransportModes: [{ mode: 'BUS' }],
       },
     ],
   });

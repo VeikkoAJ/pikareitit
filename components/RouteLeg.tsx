@@ -13,8 +13,7 @@ interface RouteLegProps {
   startTime: Date | undefined;
   setLegStartDate: (date: Date) => void;
   setSecLegStartDate?: (date: Date) => void;
-  setRouteStartTime: (date: Date) => void;
-  setSecRouteStartTime?: (date: Date) => void;
+  setRouteStartTime: () => void;
   setRouteLegDuration: (time: number) => void;
   setSecRouteLegDuration?: (time: number) => void;
   setActive: () => void;
@@ -26,8 +25,8 @@ export default function RouteLeg({
   routeLeg,
   startTime,
   setLegStartDate,
+  setSecLegStartDate,
   setRouteStartTime,
-  setSecRouteStartTime,
   setRouteLegDuration,
   setSecRouteLegDuration,
   setActive,
@@ -36,38 +35,68 @@ export default function RouteLeg({
 }: RouteLegProps) {
   // TODO add secondary destination querys
 
-  // eslint-disable-next-line no-unused-vars
-  const { loading, error, data } = useQuery<QueryData>(routeRequest, {
-    variables: {
-      from: routeLeg.from,
-      to: routeLeg.to,
-      date: format(
-        startTime !== undefined ? startTime : new Date(),
-        'yyyy-MM-dd'
-      ),
-      time: format(
+  const routeQueries = () => {
+    const mainResult = useQuery<QueryData>(routeRequest, {
+      variables: {
+        from: routeLeg.from,
+        to: routeLeg.to,
+        date: format(
+          startTime !== undefined ? startTime : new Date(),
+          'yyyy-MM-dd'
+        ),
+        time: format(
         startTime !== undefined ? startTime : new Date(),
         'HH:mm:ss'
-      ),
-    },
-    fetchPolicy: 'network-only', // set false when testing with live dates
+        ),
+      },
+    fetchPolicy: 'cache-first',
     skip: isOld || startTime === undefined,
   });
-
-  if (error) {
-    console.log(error);
+    const secondaryResult = useQuery<QueryData>(routeRequest, {
+      variables: {
+        from: routeLeg.from,
+        to: routeLeg.secondaryTo,
+        date: format(
+          startTime !== undefined ? startTime : new Date(),
+          'yyyy-MM-dd'
+        ),
+        time: format(
+          startTime !== undefined ? startTime : new Date(),
+          'HH:mm:ss'
+        ),
+      },
+      fetchPolicy: 'cache-first',
+      skip: routeLeg.secondaryTo === undefined || isOld || startTime === undefined,
+    });
+    return [mainResult, secondaryResult]
   }
 
+  const [
+    { loading: loading1, data: data1},
+    { loading: loading2, data: data2}
+  ] = routeQueries()
+
   useEffect(() => {
-    if (data && data?.plan.itineraries[0].legs.length > 1) {
-      setLegStartDate(new Date(data?.plan.itineraries[0].legs[1].endTime));
-      setRouteLegDuration(data.plan.itineraries[0].legs[1].duration);
+    if (data1 && data1?.plan.itineraries[0] !== undefined) {
+      setLegStartDate(new Date(data1?.plan.itineraries[0].legs[1].endTime));
+      setRouteLegDuration(data1.plan.itineraries[0].legs[1].duration);
     }
-  }, [data]);
+
+  }, [data1]);
+  useEffect( () => {
+    if (data2 && data2.plan.itineraries[0] !== undefined) {
+      if (setSecLegStartDate) {
+        setSecLegStartDate(new Date(data2.plan.itineraries[0].legs[1].endTime));
+      }
+      if (setSecRouteLegDuration) {
+        setSecRouteLegDuration(data2.plan.itineraries[0].legs[1].duration)
+      }
+    }
+  }, [data2])
 
   const stopName = () => {
-    if (data) {
-      return data?.plan.itineraries[0].legs[1].from.name;
+    if (data1 && data1?.plan.itineraries[0]  !== undefined) {
+      return data1?.plan.itineraries[0].legs[1].from.name;
     }
     return routeLeg.from.split(',')[0];
   };
@@ -109,7 +138,7 @@ export default function RouteLeg({
         elevation: elevation(),
       }}
       onPress={() => {
-        setRouteStartTime(new Date());
+        setRouteStartTime();
         setActive();
       }}
     >
@@ -141,8 +170,8 @@ export default function RouteLeg({
         />
       </View>
       <View style={{ minHeight: 70 }}>
-        {!isOld && data
-          ? data?.plan.itineraries.map((itinerary, key) => (
+        {!isOld && data1
+          ? data1?.plan.itineraries.map((itinerary, key) => (
               <RouteLegUnit
                 key={key}
                 legUnit={{

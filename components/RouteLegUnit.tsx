@@ -45,6 +45,15 @@ export function RouteLegUnit({ legUnit, showAdditional = true }: RouteLegUnitPro
         >
           {`→${  format(legUnit.endTime, "HH:mm")}`}
         </Text>}
+        {showAdditional && legUnit.secondaryEndTime && <Text
+          style={{
+            fontSize: 18,
+            fontStyle: 'italic',
+            color: routeLegColors.charCoalText,
+          }}
+        >
+          {`→${  format(legUnit.secondaryEndTime, "HH:mm")}`}
+        </Text>}
       </Text>
 
     </View>

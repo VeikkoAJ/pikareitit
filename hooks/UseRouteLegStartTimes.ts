@@ -16,7 +16,7 @@ export default function UseRouteLegStartTimes(
     initialArray.concat(emptyArray.slice(0, routeLegRowCount - 1))
   );
 
-  const updateRouteLegStartTime = (
+  const updateNextRouteLegStartTime = (
     newStartTime: Date,
     index: [number, number]
   ) => {
@@ -51,5 +51,5 @@ export default function UseRouteLegStartTimes(
     );
     setRouteLegStartDates(temp);
   };
-  return { routeLegStartDates, updateRouteLegStartTime, updateStartTime };
+  return { routeLegStartDates, updateNextRouteLegStartTime, updateStartTime };
 }
