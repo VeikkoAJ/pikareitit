@@ -1,14 +1,15 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { format } from "date-fns";
 import { RouteTransportLegUnit } from "../types";
 import { routeLegColors } from "../styles/BasicColors";
 
-type RouteLegUnitProps = {
+interface RouteLegUnitProps {
   legUnit: RouteTransportLegUnit;
-};
+  showAdditional: boolean
+}
 
-export function RouteLegUnit({ legUnit }: RouteLegUnitProps) {
+export function RouteLegUnit({ legUnit, showAdditional = true }: RouteLegUnitProps) {
   return (
     <View
       style={{
@@ -26,15 +27,34 @@ export function RouteLegUnit({ legUnit }: RouteLegUnitProps) {
       >
         {legUnit.name}
       </Text>
-      <Text
-        style={{
-          fontSize: 18,
-          fontWeight: "bold",
-          color: routeLegColors.charCoalText,
-        }}
-      >
-        {format(new Date(legUnit.startTime), "HH:mm:ss")}
+      <Text>
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "bold",
+            color: routeLegColors.charCoalText,
+          }}
+        >
+          {`${format(legUnit.startTime, "HH:mm")  }`}
+        </Text>
+        {showAdditional && <Text
+          style={{
+            fontSize: 18,
+            color: routeLegColors.charCoalText,
+          }}
+        >
+          {`→${  format(legUnit.endTime, "HH:mm")}`}
+        </Text>}
       </Text>
+
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+    greyText: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: routeLegColors.charCoalText,
+    }
+})

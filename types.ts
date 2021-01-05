@@ -6,6 +6,7 @@ export type RouteMiddleSectorProps = {
 export type RouteTransportLegUnit = {
   name: string;
   startTime: number;
+  endTime: number,
   realTime: boolean;
 };
 

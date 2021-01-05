@@ -12,7 +12,7 @@ export type RouteContainerProps = {
   currentRoute: Route;
 };
 
-const placeholderDate = new Date(2021, 0, 2, 10, 0);
+const placeholderDate = new Date(2021, 0, 5, 13, 41);
 
 export function RouteContainer({ currentRoute }: RouteContainerProps) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -46,6 +46,7 @@ export function RouteContainer({ currentRoute }: RouteContainerProps) {
             key={rowIndex}
           >
             {routeLegRow.routeLegs.map((routeLeg, index) => (
+              <>
               <RouteLeg
                 key={index}
                 routeLeg={routeLeg}
@@ -63,6 +64,8 @@ export function RouteContainer({ currentRoute }: RouteContainerProps) {
                 isOld={activeIndex > rowIndex}
                 isActive={activeIndex === rowIndex}
               />
+              <View style={{width: '1%'}}/>
+              </>
             ))}
           </View>
           <MiddleSectorWrapper

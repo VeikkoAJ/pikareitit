@@ -7,7 +7,6 @@ import { basicColors } from '../styles/BasicColors';
 import { Route } from '../types';
 
 export function CurrentRouteScreen() {
-  const currentTime = new Date(2021, 0, 2, 10, 0);
   const [route, setRoute] = useState<Route>({
     routeName: 'Majurinkulma -> Lehmustie',
     description: 'there is no description to this cursed shit',
@@ -33,6 +32,11 @@ export function CurrentRouteScreen() {
             to: 'Pasilan asema, Helsinki, Helsinki::60.1986935,24.9345064',
             transportModes: [{ mode: 'RAIL' }],
           },
+          {
+            from: 'Leppävaaran asema, Espoo::60.2193775,24.8113851',
+            to: 'Pasilan asema, Helsinki, Helsinki::60.1986935,24.9345064',
+            transportModes: [{ mode: 'BUS' }],
+          }
         ],
         middleSector: 'single',
         middleSectorTransportModes: [{ mode: 'RAIL' }],
@@ -67,7 +71,7 @@ export function CurrentRouteScreen() {
       />
       <View style={{ flex: 1 }}>
         <RouteScreenTopBar />
-        <RouteContainer currentRoute={route} currentTime={currentTime} />
+        <RouteContainer currentRoute={route} />
       </View>
     </View>
   );

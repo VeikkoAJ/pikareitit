@@ -127,7 +127,10 @@ export default function RouteLeg({
             flexShrink: 1,
             color: 'white',
             fontSize: 24,
+
           }}
+          numberOfLines={1}
+          ellipsizeMode="tail"
         >
           {stopName()}
         </Text>
@@ -145,7 +148,8 @@ export default function RouteLeg({
                 legUnit={{
                   name: itinerary.legs[1].route.shortName,
                   startTime: itinerary.legs[1].startTime,
-                  realTime: true,
+                  endTime: itinerary.legs[1].endTime,
+                  realTime: itinerary.legs[1].realTime
                 }}
               />
             ))
