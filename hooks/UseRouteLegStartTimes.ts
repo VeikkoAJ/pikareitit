@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 
 export default function UseRouteLegStartTimes(
   routeLegRowCount: number,
-  initialStartTime: Date = new Date()
+  initialStartTime: Date
 ) {
   const emptyArray: (Date | undefined)[][] = new Array(routeLegRowCount).fill(
     new Array(2).fill(undefined)

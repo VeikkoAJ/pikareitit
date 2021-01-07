@@ -16,6 +16,7 @@ const client = new ApolloClient({
 const MainTab = createBottomTabNavigator();
 
 export default function App() {
+
   return (
     <ApolloProvider client={client}>
       <NavigationContainer>
@@ -23,7 +24,7 @@ export default function App() {
           initialRouteName="home"
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
-              let iconName: String = "ios-construct";
+              let iconName = "ios-construct";
 
               if (route.name === "home") {
                 iconName = focused

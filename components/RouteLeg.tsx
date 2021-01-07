@@ -7,6 +7,7 @@ import { QueryData, RouteTransportLeg } from '../types';
 import { routeLegColors } from '../styles/BasicColors';
 import { routeRequest } from '../services/RouteFetcher';
 import RouteLegIcon from './RouteLegIcon';
+import UseRouteQuery from '../hooks/UseRouteQuery';
 
 interface RouteLegProps {
   routeLeg: RouteTransportLeg;
@@ -33,70 +34,30 @@ export default function RouteLeg({
   isOld,
   isActive,
 }: RouteLegProps) {
-  // TODO add secondary destination querys
 
-  const routeQueries = () => {
-    const mainResult = useQuery<QueryData>(routeRequest, {
-      variables: {
-        from: routeLeg.from,
-        to: routeLeg.to,
-        date: format(
-          startTime !== undefined ? startTime : new Date(),
-          'yyyy-MM-dd'
-        ),
-        time: format(
-        startTime !== undefined ? startTime : new Date(),
-        'HH:mm:ss'
-        ),
-      },
-    fetchPolicy: 'cache-first',
-    skip: isOld || startTime === undefined,
-  });
-    const secondaryResult = useQuery<QueryData>(routeRequest, {
-      variables: {
-        from: routeLeg.from,
-        to: routeLeg.secondaryTo,
-        date: format(
-          startTime !== undefined ? startTime : new Date(),
-          'yyyy-MM-dd'
-        ),
-        time: format(
-          startTime !== undefined ? startTime : new Date(),
-          'HH:mm:ss'
-        ),
-      },
-      fetchPolicy: 'cache-first',
-      skip: routeLeg.secondaryTo === undefined || isOld || startTime === undefined,
-    });
-    return [mainResult, secondaryResult]
-  }
-
-  const [
-    { loading: loading1, data: data1},
-    { loading: loading2, data: data2}
-  ] = routeQueries()
+  const {mainQueryLegs, secondaryQueryLegs} = UseRouteQuery(routeLeg, startTime, isOld)
 
   useEffect(() => {
-    if (data1 && data1?.plan.itineraries[0] !== undefined) {
-      setLegStartDate(new Date(data1?.plan.itineraries[0].legs[1].endTime));
-      setRouteLegDuration(data1.plan.itineraries[0].legs[1].duration);
+    if (mainQueryLegs && mainQueryLegs[0]) {
+      setLegStartDate(new Date(mainQueryLegs[0]?.endTime));
+      setRouteLegDuration(mainQueryLegs[0]?.duration);
     }
 
-  }, [data1]);
+  }, [mainQueryLegs]);
   useEffect( () => {
-    if (data2 && data2.plan.itineraries[0] !== undefined) {
+    if (secondaryQueryLegs && secondaryQueryLegs[0]) {
       if (setSecLegStartDate) {
-        setSecLegStartDate(new Date(data2.plan.itineraries[0].legs[1].endTime));
+        setSecLegStartDate(new Date(secondaryQueryLegs[0]?.endTime));
       }
       if (setSecRouteLegDuration) {
-        setSecRouteLegDuration(data2.plan.itineraries[0].legs[1].duration)
+        setSecRouteLegDuration(secondaryQueryLegs[0]?.duration)
       }
     }
-  }, [data2])
+  }, [secondaryQueryLegs])
 
   const stopName = () => {
-    if (data1 && data1?.plan.itineraries[0]  !== undefined) {
-      return data1?.plan.itineraries[0].legs[1].from.name;
+    if (mainQueryLegs && mainQueryLegs[0]) {
+      return mainQueryLegs[0]?.from.name
     }
     return routeLeg.from.split(',')[0];
   };
@@ -152,6 +113,7 @@ export default function RouteLeg({
         }}
       >
         <Text
+          key='stopName'
           style={{
             flexShrink: 1,
             color: 'white',
@@ -170,19 +132,26 @@ export default function RouteLeg({
         />
       </View>
       <View style={{ minHeight: 70 }}>
-        {!isOld && data1
-          ? data1?.plan.itineraries.map((itinerary, key) => (
-              <RouteLegUnit
-                key={key}
-                legUnit={{
-                  name: itinerary.legs[1].route.shortName,
-                  startTime: itinerary.legs[1].startTime,
-                  endTime: itinerary.legs[1].endTime,
-                  realTime: itinerary.legs[1].realTime
-                }}
-              />
-            ))
-          : null}
+        {!isOld && mainQueryLegs && mainQueryLegs[0]
+          ? mainQueryLegs.map((leg) => {
+            if (leg !== undefined) {
+              return (
+                <RouteLegUnit
+                  key={leg.route.shortName}
+                  legUnit={{
+                    name: leg.route.shortName,
+                    startTime: leg.startTime,
+                    endTime: leg.endTime,
+                    realTime: leg.realTime
+                  }}
+                  showAdditional
+                />
+              )
+            }
+            return null
+          })
+          : null
+        }
       </View>
     </TouchableOpacity>
   );

@@ -14,6 +14,7 @@ export function RouteMiddleSplitSector({ travelTimes }: RouteMiddleSectorProps) 
       }}
     >
       <View
+        key="firstRow"
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
@@ -21,9 +22,10 @@ export function RouteMiddleSplitSector({ travelTimes }: RouteMiddleSectorProps) 
         }}
       >
         <SmallDot />
-        <View style={{ width: 180, height: 20 }} />
+        <View style={{ width: 170, height: 20 }} />
       </View>
       <View
+        key='secondRow'
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
@@ -35,19 +37,19 @@ export function RouteMiddleSplitSector({ travelTimes }: RouteMiddleSectorProps) 
         <SmallDot />
         <SmallDot />
         <SmallDot />
-        <SmallDot />
         <IconDot travelTime={travelTimes[1] - travelTimes[0]} showSign={'+'} />
       </View>
       <View
+        key='thirdRow'
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
         }}
       >
-        <View style={{ width: 10 }} />
+        <View style={{ width: 2}} />
         <SmallDot />
-        <View style={{ width: 160, height: 20 }} />
+        <View style={{ width: 142, height: 20 }} />
         <SmallDot />
       </View>
     </View>

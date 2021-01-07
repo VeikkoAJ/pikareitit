@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.6",
+    "@react-native-async-storage/async-storage": "^1.13.2",
+    "@react-native-community/datetimepicker": "^3.0.9",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.2",
     "@react-navigation/native": "^5.8.10",
@@ -24,7 +26,8 @@
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.0",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "react-spinners": "^0.10.4"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

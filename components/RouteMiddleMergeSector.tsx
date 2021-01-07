@@ -5,7 +5,7 @@ import { RouteMiddleSectorProps } from '../types'
 import { SmallDot } from './SmallDot'
 import { IconDot } from './IconDot'
 
-export function RouteMiddleMergeSector({ iconName }: RouteMiddleSectorProps) {
+export function RouteMiddleMergeSector({ travelTimes }: RouteMiddleSectorProps) {
   return (
     <View
       style={{
@@ -15,32 +15,34 @@ export function RouteMiddleMergeSector({ iconName }: RouteMiddleSectorProps) {
       }}
     >
       <View
+        key='firstRow'
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
         }}
       >
-        <SmallDot />
-        <View style={{ width: 170, height: 20 }} />
-        <SmallDot />
+        <View style={{ width: 2}} />
+        <SmallDot/>
+        <View style={{ width: 142, height: 20 }} />
+        <SmallDot/>
       </View>
       <View
+        key='secondRow'
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
         }}
       >
-        <SmallDot />
-        <SmallDot />
-        <SmallDot />
-        <IconDot name={iconName} />
-        <SmallDot />
-        <SmallDot />
-        <SmallDot />
+        <IconDot  travelTime={travelTimes[0]} />
+        <SmallDot/>
+        <SmallDot/>
+        <SmallDot/>
+        <SmallDot/>
+        <IconDot  travelTime={travelTimes[1]} />
       </View>
-      <SmallDot />
+      <SmallDot/>
     </View>
   )
 }

@@ -10,7 +10,7 @@ export function UseRouteLegDurations(routeLegRowCount: number) {
     newDuration: number,
     index: [number, number]
   ) => {
-    console.log('index', index, 'newDuration', newDuration);
+    // console.log('index', index, 'newDuration', newDuration);
     if (routeLegDurations[index[0]][index[1]] === 0) {
       setRouteLegDurations(
         routeLegDurations.map((row, i) =>

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { format } from "date-fns";
 import { RouteTransportLegUnit } from "../types";
 import { routeLegColors } from "../styles/BasicColors";
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 
 interface RouteLegUnitProps {
   legUnit: RouteTransportLegUnit;
@@ -10,15 +11,25 @@ interface RouteLegUnitProps {
 }
 
 export function RouteLegUnit({ legUnit, showAdditional = true }: RouteLegUnitProps) {
-  return (
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        borderBottomWidth: 1,
-      }}
-    >
+
+  const routeName = () => {
+    if (legUnit.name === 'Walk') {
+      return (
+        <MaterialCommunityIcons
+          style={{
+            alignSelf: 'flex-end',
+            paddingBottom: 3
+          }}
+          name='walk'
+          size={18}
+
+          color={routeLegColors.charCoalText}
+        />
+      )
+    }
+    return (
       <Text
+        key='routeName'
         style={{
           fontSize: 18,
           fontWeight: "bold",
@@ -27,8 +38,22 @@ export function RouteLegUnit({ legUnit, showAdditional = true }: RouteLegUnitPro
       >
         {legUnit.name}
       </Text>
+    )
+
+  }
+
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        borderBottomWidth: 1,
+      }}
+    >
+      {routeName()}
       <Text>
         <Text
+          key='startTime'
           style={{
             fontSize: 18,
             fontWeight: "bold",
@@ -38,6 +63,7 @@ export function RouteLegUnit({ legUnit, showAdditional = true }: RouteLegUnitPro
           {`${format(legUnit.startTime, "HH:mm")  }`}
         </Text>
         {showAdditional && <Text
+          key='endTime'
           style={{
             fontSize: 18,
             color: routeLegColors.charCoalText,

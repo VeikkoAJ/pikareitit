@@ -12,7 +12,7 @@ export default function RouteMiddleSector({
       style={{
         marginVertical: 10,
         alignItems: 'center',
-        paddingHorizontal: 10,
+        paddingHorizontal: 5,
       }}
     >
       <SmallDot />

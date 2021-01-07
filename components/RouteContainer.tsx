@@ -10,11 +10,13 @@ import MiddleSectorWrapper from './MiddleSectorWrapper';
 
 export type RouteContainerProps = {
   currentRoute: Route;
+  searchTime: Date
 };
 
-const placeholderDate = new Date(2021, 0, 5, 13, 41);
 
-export function RouteContainer({ currentRoute }: RouteContainerProps) {
+
+export function RouteContainer({ currentRoute, searchTime }: RouteContainerProps) {
+
   const [activeIndex, setActiveIndex] = useState(0);
   // TODO Add startTime hook and travelTime hook
   const {
@@ -23,12 +25,12 @@ export function RouteContainer({ currentRoute }: RouteContainerProps) {
     updateStartTime,
   } = UseRouteLegStartTimes(
     currentRoute.routeTransportLegRows.length,
-    placeholderDate
+    searchTime
   );
   const { routeLegDurations, updateRouteLegDurations } = UseRouteLegDurations(
     currentRoute.routeTransportLegRows.length
   );
-
+  console.log('searchTime', routeLegStartDates[0][0]);
   return (
     <ScrollView style={{ paddingHorizontal: 10 }}>
       <View style={{ height: 75 }} />
@@ -43,12 +45,12 @@ export function RouteContainer({ currentRoute }: RouteContainerProps) {
               justifyContent: 'center',
               width: '100%',
             }}
-            key={rowIndex}
+            key={`${routeLegRow.routeLegs[0].from  }Row`}
           >
             {routeLegRow.routeLegs.map((routeLeg, index) => (
               <>
               <RouteLeg
-                key={index}
+                key={routeLeg.from}
                 routeLeg={routeLeg}
                 startTime={routeLegStartDates[rowIndex][index]}
                 setLegStartDate={(date: Date) =>
@@ -56,7 +58,7 @@ export function RouteContainer({ currentRoute }: RouteContainerProps) {
                 }
                 setSecLegStartDate={(date:Date) => updateNextRouteLegStartTime(date,  [rowIndex + 1, index + 1])}
                 setRouteStartTime={() =>
-                  updateStartTime(placeholderDate, [rowIndex, index])
+                  updateStartTime(new Date(), [rowIndex, index])
                 }
                 setRouteLegDuration={(time: number) =>
                   updateRouteLegDurations(time, [rowIndex, index])

@@ -2,17 +2,26 @@ import {Text, TouchableOpacity, View} from "react-native";
 import React, {useEffect, useState} from "react";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {format} from "date-fns";
+import DateTimePicker from '@react-native-community/datetimepicker';
 import {basicColors} from "../styles/BasicColors";
+import BasicClock from './BasicClock';
 
-export function RouteScreenTopBar() {
-    const [currentDate, setCurrentDate] = useState(new Date());
+interface RouteScreenTopBarProps {
+    setSearchTime: (time: Date) => void
+}
 
-    useEffect(() => {
-        const interval = setInterval(() => setCurrentDate(new Date()), 200);
-        return () => {
-            clearInterval(interval);
-        };
-    }, []);
+export function RouteScreenTopBar({ setSearchTime }: RouteScreenTopBarProps) {
+
+    const [datePickerDate, setDatePickerDate] = useState(new Date())
+    const [showDatePicker, setShowDatePicker] = useState(false)
+
+    const onDatePickerChange = (event, selectedDate?: Date) => {
+        setShowDatePicker(false)
+        if (selectedDate) {
+            setSearchTime(selectedDate)
+            setDatePickerDate(selectedDate)
+        }
+    }
 
     return(
         <View style={{
@@ -24,6 +33,18 @@ export function RouteScreenTopBar() {
             alignItems: 'stretch',
             zIndex: 1
         }}>
+            {showDatePicker &&
+                <DateTimePicker
+                  testID='dateTimePicker'
+                  value={datePickerDate}
+                  mode='time'
+                  is24Hour
+                  display="default"
+                  onChange={onDatePickerChange}
+
+
+                />
+            }
             <TouchableOpacity style={{
                 flexDirection: 'row',
                 backgroundColor: basicColors.topBarBackground,
@@ -32,16 +53,10 @@ export function RouteScreenTopBar() {
                 paddingStart: 10,
                 elevation: 1,
                 alignItems: "center"
-            }}>
-                <Text style={{
-                    fontSize: 24,
-                    fontWeight: 'bold',
-                    color: 'white'
-                }}>
-                    {format(currentDate, "HH:mm:ss")}
-                </Text>
+            }}
+            onPress={() => setShowDatePicker(true)}>
+                <BasicClock/>
             </TouchableOpacity>
-
             <TouchableOpacity style={{
                 flexDirection: 'row',
                 backgroundColor: basicColors.topBarBackground,
@@ -51,7 +66,7 @@ export function RouteScreenTopBar() {
                 elevation: 1,
                 alignItems: "center"
             }}>
-                <MaterialCommunityIcons name={'menu'} size={30} color="white"/>
+                <MaterialCommunityIcons name='menu' size={30} color="white"/>
             </TouchableOpacity>
         </View>
     )
