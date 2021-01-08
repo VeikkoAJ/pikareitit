@@ -2,24 +2,38 @@ import React, {useEffect, useState} from 'react';
 import { StatusBar, View, Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ClipLoader} from 'react-spinners';
+import { BottomTabNavigationProp  } from '@react-navigation/bottom-tabs'
+import { RouteProp } from '@react-navigation/native';
 import { RouteScreenTopBar } from '../components/RouteScreenTopBar';
 import { RouteContainer } from '../components/RouteContainer';
 import {basicColors, routeLegColors} from '../styles/BasicColors';
 import { Route } from '../types';
+import {RootTabParamList} from '../NavigationTypes';
 
 
+interface CurrentRouteScreenProps {
+  navigate: BottomTabNavigationProp<
+    RootTabParamList,
+    'Current route'
+    >;
+  route: RouteProp<RootTabParamList, 'Current route'>
+}
 
-export function CurrentRouteScreen() {
+export function CurrentRouteScreen({ navigate, route }: CurrentRouteScreenProps) {
 
   const [searchTime, setSearchTime] = useState<Date>(new Date(2020, 0, 5, 10))
-  const [route, setRoute] = useState<Route |undefined>(undefined);
+  const [transportRoute, setTransportRoute] = useState<Route |undefined>(undefined);
 
   useEffect( () => {
     async function getRouteFromStorage() {
       try {
-        const jsonFetchedRoute = await AsyncStorage.getItem('wrongKey')
+        if (route.params.routeKey === undefined) {
+          console.log("RouteKey undefined")
+          return
+        }
+        const jsonFetchedRoute = await AsyncStorage.getItem(route.params.routeKey)
         if (jsonFetchedRoute !== null) {
-          setRoute(JSON.parse(jsonFetchedRoute))
+          setTransportRoute(JSON.parse(jsonFetchedRoute))
         }
       } catch (e) {
         console.log("error in fetching route:", e)
@@ -46,8 +60,8 @@ export function CurrentRouteScreen() {
       />
       <View style={{ flex: 1 }}>
         <RouteScreenTopBar setSearchTime={(time: Date) => setSearchTime(time)} />
-        {route ?
-          <RouteContainer currentRoute={route} searchTime={searchTime} /> :
+        {transportRoute ?
+          <RouteContainer currentRoute={transportRoute} searchTime={searchTime} /> :
           <View style={{
             flex: 1,
             alignItems: 'center',

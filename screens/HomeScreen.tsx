@@ -3,6 +3,8 @@ import {Button, FlatList, StatusBar, Text, View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Route} from '../types';
 import {RouteNameList} from '../components/RouteNameList';
+import {basicColors} from '../styles/BasicColors';
+import {RootTabParamList} from '../NavigationTypes';
 
 const testRoute: Route = {
     routeName: 'Majurinkulma -> Lehmustie',
@@ -63,22 +65,25 @@ const testRoute: Route = {
         },
     ],
 }
-
-interface routeKeyPair {
+// TODO move this to types after async storage is working
+interface RouteKeyPair {
     route: Route,
     key: string
 }
 
-export function HomeScreen() {
+export function HomeScreen({ navigation }) {
 
     const [routeKeys, setRouteKeys] = useState<string[]>([]);
-    const [routes, setRoutes] = useState<routeKeyPair[]>([])
-    const [activeRoute, setActiveRoute] = useState<Route| undefined>(undefined)
+    const [routes, setRoutes] = useState<RouteKeyPair[]>([])
+    const [activeRouteKey, setActiveRouteKey] = useState<string | undefined>(undefined)
+    const [tempToggle, setTempToggle] = useState(false) // this is for testing useEffect
 
     useEffect(() => {
+        console.log('triggered')
         async function getRouteKeys() {
             try {
                 const keys = await AsyncStorage.getAllKeys()
+                console.log('keys', keys)
                 if (keys !== undefined) {
                     setRouteKeys(keys);
                     const fetchedRoutes = await AsyncStorage.multiGet(keys)
@@ -86,7 +91,8 @@ export function HomeScreen() {
                         // @ts-ignore
                         // TODO fix mapping
                         setRoutes(fetchedRoutes.map(route => {
-                            if (route[1] !== null) {
+                            if (route[1] !== null && route[1][0] === '{') {
+                                console.log('route', route);
                                 return ({
                                     route: JSON.parse(route[1]),
                                     key: route[0]
@@ -101,41 +107,56 @@ export function HomeScreen() {
             }
         }
         getRouteKeys()
-    }, [])
+    }, [tempToggle])
+
+    const loadActiveRoute = (routeKey: string) => {
+        setActiveRouteKey(routeKey);
+        navigation.navigate( 'Current route', {
+            routeKey
+        })
+
+    }
 
     const storeRoute = async (route: Route) => {
         try {
             const jsonRoute = JSON.stringify(route)
             await AsyncStorage.setItem('testKey', jsonRoute)
-            console.log('fetching')
         } catch (e) {
             console.log("failed to save route:", e)
-        } finally {
-            console.log("stored values")
         }
     }
-    // TODO rename this
-    interface renderItemProps {
-        route: Route,
-        key: string
-    }
 
-    const renderItem = (_: routeKeyPair) => (
-        <RouteNameList
-          name={_.route.routeName}
-          originPlace={route.originPlace}
-          finalDestination={route.finalDestination}
-          setActiveRoute={() => setActiveRoute(route)}
-        />
-    )
+    console.log('routes:', routes);
 
+
+    // TODO add top bar
     return (
         <View style={{
-            marginTop: StatusBar.currentHeight
+            marginTop: StatusBar.currentHeight,
+            backgroundColor: basicColors.topBarLight
         }}>
-            <Text>home screen</Text>
+            <FlatList
+              style={{
+                  borderWidth: 1,
+                  minHeight: 300,
+                  flex: 1
+              }}
+              data={routes}
+              renderItem={({item}) => (
+                <RouteNameList
+                  name={item.route.routeName}
+                  originPlace={item.route.originPlace}
+                  finalDestination={item.route.finalDestination}
+                  setActiveRoute={() => loadActiveRoute(item.key)}
+                />
+              )}
+              ItemSeparatorComponent={() => (
+                <View style={{borderBottomWidth: 1, borderColor: 'black', minHeight: 1}}/>
+              )}
+              keyExtractor={_ => _.key}
+            />
             <Button title='save' onPress={() => storeRoute(testRoute)}/>
-            <FlatList data={routes} renderItem={renderItem} keyExtractor={_ => _.key}/>
+            <Button title="load" onPress={() => setTempToggle(!tempToggle)}/>
         </View>
     )
 }

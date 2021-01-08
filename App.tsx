@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { RootTabParamList} from './NavigationTypes';
 import { HomeScreen } from "./screens/HomeScreen";
 import { BrowseScreen } from "./screens/BrowseScreen";
 import { CurrentRouteScreen } from "./screens/CurrentRouteScreen";
@@ -13,7 +14,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const MainTab = createBottomTabNavigator();
+const MainTab = createBottomTabNavigator<RootTabParamList>();
 
 export default function App() {
 
@@ -21,18 +22,18 @@ export default function App() {
     <ApolloProvider client={client}>
       <NavigationContainer>
         <MainTab.Navigator
-          initialRouteName="home"
+          initialRouteName="Home"
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
               let iconName = "ios-construct";
 
-              if (route.name === "home") {
+              if (route.name === "Home") {
                 iconName = focused
                   ? "ios-information-circle"
                   : "ios-information-circle-outline";
-              } else if (route.name === "browse") {
+              } else if (route.name === "Browse") {
                 iconName = "ios-list";
-              } else if (route.name === "current route") {
+              } else if (route.name === "Current route") {
                 iconName = "md-map";
               }
 
@@ -48,9 +49,13 @@ export default function App() {
             inactiveTintColor: "white",
           }}
         >
-          <MainTab.Screen name="browse" component={BrowseScreen} />
-          <MainTab.Screen name="home" component={HomeScreen} />
-          <MainTab.Screen name="current route" component={CurrentRouteScreen} />
+          <MainTab.Screen name="Browse" component={BrowseScreen} />
+          <MainTab.Screen name="Home" component={HomeScreen} />
+          <MainTab.Screen
+            name="Current route"
+            component={CurrentRouteScreen}
+            initialParams={{ routeKey: undefined}}
+          />
         </MainTab.Navigator>
       </NavigationContainer>
     </ApolloProvider>

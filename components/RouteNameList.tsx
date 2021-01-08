@@ -14,9 +14,13 @@ export function RouteNameList({ name, originPlace, finalDestination, setActiveRo
 
   return (
     <TouchableOpacity
+      style={{
+        backgroundColor: routeLegColors.light,
+        borderRadius: 10
+      }}
       onPress={() => setActiveRoute()}
     >
-      <Text style={{fontSize: 24, color: 'white'}}>{name}</Text>
+      <Text style={{fontSize: 24, color: 'white', paddingBottom: 5}}>{name}</Text>
       <Text style={{fontSize: 16, color: routeLegColors.charCoalText}}>{`${originPlace  }->${  finalDestination}`}</Text>
     </TouchableOpacity>
   )
