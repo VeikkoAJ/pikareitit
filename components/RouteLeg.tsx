@@ -34,30 +34,32 @@ export default function RouteLeg({
   isOld,
   isActive,
 }: RouteLegProps) {
-
-  const {mainQueryLegs, secondaryQueryLegs} = UseRouteQuery(routeLeg, startTime, isOld)
+  const { mainQueryLegs, secondaryQueryLegs } = UseRouteQuery(
+    routeLeg,
+    startTime,
+    isOld
+  );
 
   useEffect(() => {
     if (mainQueryLegs && mainQueryLegs[0]) {
       setLegStartDate(new Date(mainQueryLegs[0]?.endTime));
       setRouteLegDuration(mainQueryLegs[0]?.duration);
     }
-
   }, [mainQueryLegs]);
-  useEffect( () => {
+  useEffect(() => {
     if (secondaryQueryLegs && secondaryQueryLegs[0]) {
       if (setSecLegStartDate) {
         setSecLegStartDate(new Date(secondaryQueryLegs[0]?.endTime));
       }
       if (setSecRouteLegDuration) {
-        setSecRouteLegDuration(secondaryQueryLegs[0]?.duration)
+        setSecRouteLegDuration(secondaryQueryLegs[0]?.duration);
       }
     }
-  }, [secondaryQueryLegs])
+  }, [secondaryQueryLegs]);
 
   const stopName = () => {
     if (mainQueryLegs && mainQueryLegs[0]) {
-      return mainQueryLegs[0]?.from.name
+      return mainQueryLegs[0]?.from.name;
     }
     return routeLeg.from.split(',')[0];
   };
@@ -84,6 +86,7 @@ export default function RouteLeg({
 
   return (
     <TouchableOpacity
+      key={routeLeg.from + ' to ' + routeLeg.to}
       style={{
         flex: 1,
         flexShrink: 1,
@@ -113,12 +116,11 @@ export default function RouteLeg({
         }}
       >
         <Text
-          key='stopName'
+          key="stopName"
           style={{
             flexShrink: 1,
             color: 'white',
             fontSize: 24,
-
           }}
           numberOfLines={1}
           ellipsizeMode="tail"
@@ -134,24 +136,23 @@ export default function RouteLeg({
       <View style={{ minHeight: 70 }}>
         {!isOld && mainQueryLegs && mainQueryLegs[0]
           ? mainQueryLegs.map((leg) => {
-            if (leg !== undefined) {
-              return (
-                <RouteLegUnit
-                  key={leg.route.shortName}
-                  legUnit={{
-                    name: leg.route.shortName,
-                    startTime: leg.startTime,
-                    endTime: leg.endTime,
-                    realTime: leg.realTime
-                  }}
-                  showAdditional
-                />
-              )
-            }
-            return null
-          })
-          : null
-        }
+              if (leg !== undefined) {
+                return (
+                  <RouteLegUnit
+                    key={`${leg.route.shortName}@${leg.from}`}
+                    legUnit={{
+                      name: leg.route.shortName,
+                      startTime: leg.startTime,
+                      endTime: leg.endTime,
+                      realTime: leg.realTime,
+                    }}
+                    showAdditional
+                  />
+                );
+              }
+              return null;
+            })
+          : null}
       </View>
     </TouchableOpacity>
   );

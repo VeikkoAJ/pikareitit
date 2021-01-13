@@ -10,13 +10,13 @@ import MiddleSectorWrapper from './MiddleSectorWrapper';
 
 export type RouteContainerProps = {
   currentRoute: Route;
-  searchTime: Date
+  searchTime: Date;
 };
 
-
-
-export function RouteContainer({ currentRoute, searchTime }: RouteContainerProps) {
-
+export function RouteContainer({
+  currentRoute,
+  searchTime,
+}: RouteContainerProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   // TODO Add startTime hook and travelTime hook
   const {
@@ -45,33 +45,40 @@ export function RouteContainer({ currentRoute, searchTime }: RouteContainerProps
               justifyContent: 'center',
               width: '100%',
             }}
-            key={`${routeLegRow.routeLegs[0].from  }Row`}
+            key={`${routeLegRow.routeLegs[0].from} to ${routeLegRow.routeLegs[0].to} row`}
           >
             {routeLegRow.routeLegs.map((routeLeg, index) => (
-              <>
-              <RouteLeg
-                key={routeLeg.from}
-                routeLeg={routeLeg}
-                startTime={routeLegStartDates[rowIndex][index]}
-                setLegStartDate={(date: Date) =>
-                  updateNextRouteLegStartTime(date, [rowIndex + 1, index])
-                }
-                setSecLegStartDate={(date:Date) => updateNextRouteLegStartTime(date,  [rowIndex + 1, index + 1])}
-                setRouteStartTime={() =>
-                  updateStartTime(new Date(), [rowIndex, index])
-                }
-                setRouteLegDuration={(time: number) =>
-                  updateRouteLegDurations(time, [rowIndex, index])
-                }
-                setSecRouteLegDuration={(time: number) =>
-                  updateRouteLegDurations(time, [rowIndex, index + 1])
-                }
-                setActive={() => setActiveIndex(rowIndex)}
-                isOld={activeIndex > rowIndex}
-                isActive={activeIndex === rowIndex}
-              />
-              <View style={{width: '1%'}}/>
-              </>
+              <React.Fragment
+                key={`${routeLeg.from} to ${routeLeg.to} fragment`}
+              >
+                <RouteLeg
+                  key={`${routeLeg.from} to ${routeLeg.to}`}
+                  routeLeg={routeLeg}
+                  startTime={routeLegStartDates[rowIndex][index]}
+                  setLegStartDate={(date: Date) =>
+                    updateNextRouteLegStartTime(date, [rowIndex + 1, index])
+                  }
+                  setSecLegStartDate={(date: Date) =>
+                    updateNextRouteLegStartTime(date, [rowIndex + 1, index + 1])
+                  }
+                  setRouteStartTime={() =>
+                    updateStartTime(new Date(), [rowIndex, index])
+                  }
+                  setRouteLegDuration={(time: number) =>
+                    updateRouteLegDurations(time, [rowIndex, index])
+                  }
+                  setSecRouteLegDuration={(time: number) =>
+                    updateRouteLegDurations(time, [rowIndex, index + 1])
+                  }
+                  setActive={() => setActiveIndex(rowIndex)}
+                  isOld={activeIndex > rowIndex}
+                  isActive={activeIndex === rowIndex}
+                />
+                <View
+                  key={`${routeLeg.from} to ${routeLeg.to} splitter`}
+                  style={{ width: '1%' }}
+                />
+              </React.Fragment>
             ))}
           </View>
           <MiddleSectorWrapper
@@ -84,7 +91,7 @@ export function RouteContainer({ currentRoute, searchTime }: RouteContainerProps
         name={currentRoute.finalDestination}
         iconName="office-building"
       />
-      <View style={{ height: 50 }} />
+      <View style={{ height: 56 }} />
     </ScrollView>
   );
 }
