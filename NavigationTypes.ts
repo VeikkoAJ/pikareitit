@@ -1,5 +1,5 @@
 export type RootTabParamList = {
-  Browse: undefined;
+  Browse: { screen: string };
   Home: undefined;
   'Current route': { routeKey: string | undefined };
 };

@@ -69,27 +69,14 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
 
   // TODO add top bar
   return (
-    <View
-      style={{
-        alignItems: 'stretch',
-        justifyContent: 'flex-start',
-        height: '100%',
-        marginTop: StatusBar.currentHeight,
-        paddingHorizontal: 15,
-        paddingTop: 25,
-        backgroundColor: basicColors.topBarLight,
-      }}
-    >
+    <View style={basicStyles.background}>
       <View>
         <Text style={basicStyles.charcoalHeader}>Welcome</Text>
       </View>
-      <View style={{ minHeight: 50 }} />
+      <View style={{ minHeight: 30 }} />
       <View style={[listStyles.listContainer, { minHeight: 120 }]}>
         <Text style={listStyles.listHeader}>Recent route:</Text>
-        <TouchableOpacity
-          style={listStyles.touchableListItem}
-          onPress={loadActiveRoute}
-        >
+        <TouchableOpacity style={listStyles.listItem} onPress={loadActiveRoute}>
           <Text style={listStyles.listItemHeader}>
             {lastRoute ? lastRoute?.routeName : 'No recently viewed route'}
           </Text>
@@ -98,8 +85,8 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
           ) : null}
         </TouchableOpacity>
         <TouchableOpacity
-          style={listStyles.touchableListItem}
-          onPress={() => navigation.navigate('Browse')}
+          style={listStyles.listItem}
+          onPress={() => navigation.navigate('Browse', { screen: 'Browse' })}
         >
           <Text style={listStyles.listItemHeader}>Browse more routes...</Text>
         </TouchableOpacity>
@@ -127,9 +114,28 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
           }}
         >
           <Text style={[listStyles.listHeader, { borderBottomWidth: 0 }]}>
-            Settings{' '}
+            Settings
           </Text>
           <Text style={{ fontSize: 23, textAlign: 'right' }}> 🔧</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[listStyles.listContainer]}
+        onPress={() =>
+          navigation.navigate('Browse', { screen: 'Create route' })
+        }
+      >
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingEnd: 5,
+          }}
+        >
+          <Text style={[listStyles.listHeader, { borderBottomWidth: 0 }]}>
+            Create new
+          </Text>
+          <Text style={{ fontSize: 23, textAlign: 'right' }}> +</Text>
         </View>
       </TouchableOpacity>
     </View>

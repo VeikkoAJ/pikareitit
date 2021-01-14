@@ -1,14 +1,14 @@
 export type RouteMiddleSectorProps = {
   // In seconds
   travelTimes: number[];
-  sign?: string
+  sign?: string;
 };
 
 export type RouteTransportLegUnit = {
   name: string;
   startTime: number;
-  endTime: number,
-  secondaryEndTime?: number
+  endTime: number;
+  secondaryEndTime?: number;
   realTime: boolean;
 };
 
@@ -25,7 +25,7 @@ export type RouteTransportLeg = {
   transportModes: TransportMode[];
 };
 
-type RouteTransportLegRow = {
+export type RouteTransportLegRow = {
   routeLegs: RouteTransportLeg[];
   middleSector: MiddleSector;
   middleSectorTransportModes: TransportMode[];

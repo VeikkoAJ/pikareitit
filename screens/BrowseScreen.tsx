@@ -143,21 +143,11 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
 
   // TODO add top bar
   return (
-    <View
-      style={{
-        alignItems: 'stretch',
-        justifyContent: 'flex-start',
-        height: '100%',
-        marginTop: StatusBar.currentHeight,
-        paddingHorizontal: 15,
-        paddingVertical: 25,
-        backgroundColor: basicColors.topBarLight,
-      }}
-    >
+    <View style={[basicStyles.background, { paddingBottom: 80 }]}>
       <View>
         <Text style={basicStyles.charcoalHeader}>Saved routes</Text>
       </View>
-      <View style={{ minHeight: 50 }} />
+      <View style={{ minHeight: 30 }} />
       <FlatList
         style={[listStyles.listContainer]}
         data={routes}

@@ -1,9 +1,16 @@
 import React from 'react';
-import { StatusBar, Text, View } from 'react-native';
+import { ScrollView, StatusBar, Text, TextInput, View } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { StackParamList } from '../NavigationTypes';
 import { RouteProp } from '@react-navigation/native';
-import { basicColors, basicStyles } from '../styles/BasicColors';
+import {
+  basicColors,
+  basicStyles,
+  listForm,
+  listStyles,
+  routeLegColors,
+} from '../styles/BasicColors';
+import { RouteLegCreation } from '../components/RouteLegCreation';
 
 interface CreateRouteScreenProps {
   navigation: BottomTabNavigationProp<StackParamList, 'Create route'>;
@@ -15,21 +22,12 @@ export default function CreateRouteScreen({
   route,
 }: CreateRouteScreenProps) {
   return (
-    <View
-      style={{
-        alignItems: 'stretch',
-        justifyContent: 'flex-start',
-        height: '100%',
-        marginTop: StatusBar.currentHeight,
-        paddingHorizontal: 15,
-        paddingTop: 25,
-        backgroundColor: basicColors.topBarLight,
-      }}
-    >
+    <View style={basicStyles.background}>
       <View>
-        <Text style={basicStyles.charcoalHeader}>Welcome</Text>
+        <Text style={basicStyles.charcoalHeader}>Create a new route</Text>
       </View>
-      <View style={{ minHeight: 50 }} />
+      <View style={{ minHeight: 30 }} />
+      <RouteLegCreation />
     </View>
   );
 }

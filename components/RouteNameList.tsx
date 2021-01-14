@@ -17,7 +17,7 @@ export function RouteNameList({
 }: RouteNameListProps) {
   return (
     <TouchableOpacity
-      style={listStyles.touchableListItem}
+      style={listStyles.listItem}
       onPress={() => setActiveRoute()}
     >
       <Text style={[listStyles.listItemHeader, { borderBottomWidth: 0 }]}>

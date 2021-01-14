@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StatusBar, StyleSheet } from 'react-native';
 
 // https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=B9F6CA&secondary.color=E64A19
 export const basicColors = {
@@ -18,6 +18,16 @@ export const routeLegColors = {
 };
 
 export const basicStyles = StyleSheet.create({
+  background: {
+    alignItems: 'stretch',
+    justifyContent: 'flex-start',
+    height: '100%',
+    marginTop: StatusBar.currentHeight,
+    paddingLeft: 15,
+    paddingRight: 20,
+    paddingTop: 25,
+    backgroundColor: basicColors.topBarLight,
+  },
   charcoalHeader: {
     fontSize: 32,
     fontWeight: 'bold',
@@ -37,8 +47,8 @@ export const basicStyles = StyleSheet.create({
 
 export const listStyles = StyleSheet.create({
   listContainer: {
-    paddingTop: 5,
-    paddingBottom: 15,
+    paddingTop: 15,
+    paddingBottom: 10,
     paddingHorizontal: 10,
     marginBottom: 10,
     elevation: 2,
@@ -50,23 +60,40 @@ export const listStyles = StyleSheet.create({
     color: routeLegColors.charCoalText,
     borderBottomWidth: 1,
     borderColor: routeLegColors.normal,
-    elevation: 2,
   },
-  touchableListItem: {
-    paddingTop: 10,
+  listItem: {
+    paddingTop: 5,
     paddingBottom: 5,
-    elevation: 2,
     borderBottomWidth: 1,
     borderColor: routeLegColors.normal,
   },
   listItemHeader: {
     fontSize: 18,
     color: routeLegColors.charCoalText,
-    paddingBottom: 5,
   },
   listSeparator: {
     borderBottomWidth: 1,
     borderColor: routeLegColors.normal,
     minHeight: 1,
+  },
+});
+
+export const listForm = StyleSheet.create({
+  listTextInput: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
+  fieldName: {
+    ...listStyles.listItemHeader,
+    flex: 1,
+    fontWeight: 'bold',
+  },
+  fieldAnswer: {
+    ...listStyles.listItemHeader,
+    flex: 2,
+    marginLeft: 6,
+    borderBottomWidth: 1,
   },
 });
