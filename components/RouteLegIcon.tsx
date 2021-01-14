@@ -1,12 +1,12 @@
-import { TransportMode } from '../types'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
-import React from 'react'
+import React from 'react';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { TransportMode } from '../types';
 
 type RouteLegIconProps = {
-  transportMode: TransportMode
-  size: number
-  color: string
-}
+  transportMode: TransportMode;
+  size: number;
+  color: string;
+};
 
 export default function RouteLegIcon({
   transportMode,
@@ -16,19 +16,19 @@ export default function RouteLegIcon({
   const iconName = () => {
     switch (transportMode.mode) {
       case 'BUS':
-        return 'bus'
+        return 'bus';
       case 'RAIL':
-        return 'train'
+        return 'train';
       case 'TRAM':
-        return 'tram'
+        return 'tram';
       case 'SUBWAY':
-        return 'subway'
+        return 'subway';
       case 'FERRY':
-        return 'ship'
+        return 'ferry';
       default:
-        return 'cross'
+        return 'walk';
     }
-  }
+  };
 
-  return <MaterialCommunityIcons name={iconName()} size={size} color={color} />
+  return <MaterialCommunityIcons name={iconName()} size={size} color={color} />;
 }

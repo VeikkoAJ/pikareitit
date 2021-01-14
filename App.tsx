@@ -8,6 +8,7 @@ import { HomeScreen } from './screens/HomeScreen';
 import { BrowseScreen } from './screens/BrowseScreen';
 import { CurrentRouteScreen } from './screens/CurrentRouteScreen';
 import { basicColors, routeLegColors } from './styles/BasicColors';
+import BrowseAndCreateNavigatorScreen from './screens/BrowseAndCreateNavigatorScreen';
 
 const client = new ApolloClient({
   uri: 'https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql',
@@ -25,7 +26,6 @@ export default function App() {
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
               let iconName = 'ios-construct';
-
               if (route.name === 'Home') {
                 iconName = focused
                   ? 'ios-information-circle'
@@ -48,7 +48,10 @@ export default function App() {
             inactiveTintColor: 'white',
           }}
         >
-          <MainTab.Screen name="Browse" component={BrowseScreen} />
+          <MainTab.Screen
+            name="Browse"
+            component={BrowseAndCreateNavigatorScreen}
+          />
           <MainTab.Screen name="Home" component={HomeScreen} />
           <MainTab.Screen
             name="Current route"

@@ -86,7 +86,7 @@ export default function RouteLeg({
 
   return (
     <TouchableOpacity
-      key={routeLeg.from + ' to ' + routeLeg.to}
+      key={`${routeLeg.from  } to ${  routeLeg.to}`}
       style={{
         flex: 1,
         flexShrink: 1,

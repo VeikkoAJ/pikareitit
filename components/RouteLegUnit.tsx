@@ -33,7 +33,7 @@ export function RouteLegUnit({
       <Text
         key={legUnit.startTime + legUnit.name}
         style={{
-          fontSize: 18,
+          fontSize: 16,
           fontWeight: 'bold',
           color: routeLegColors.charCoalText,
         }}
@@ -57,7 +57,7 @@ export function RouteLegUnit({
         <Text
           key={legUnit.startTime + legUnit.name + 'starTime'}
           style={{
-            fontSize: 18,
+            fontSize: 16,
             fontWeight: 'bold',
             color: routeLegColors.charCoalText,
           }}
@@ -68,7 +68,7 @@ export function RouteLegUnit({
           <Text
             key={legUnit.startTime + legUnit.name + 'end time'}
             style={{
-              fontSize: 18,
+              fontSize: 16,
               color: routeLegColors.charCoalText,
             }}
           >
@@ -79,7 +79,7 @@ export function RouteLegUnit({
           <Text
             key={legUnit.startTime + legUnit.name + 'secondary time'}
             style={{
-              fontSize: 18,
+              fontSize: 16,
               fontStyle: 'italic',
               color: routeLegColors.charCoalText,
             }}
@@ -94,7 +94,7 @@ export function RouteLegUnit({
 
 const styles = StyleSheet.create({
   greyText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     color: routeLegColors.charCoalText,
   },

@@ -67,3 +67,8 @@ export type QueryData = {
     itineraries: Itinerary[];
   };
 };
+
+export interface RouteKeyPair {
+  route: Route;
+  key: string;
+}

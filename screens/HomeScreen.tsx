@@ -1,169 +1,137 @@
 import React, { useEffect, useState } from 'react';
-import { Button, FlatList, StatusBar, Text, View } from 'react-native';
+import {
+  Button,
+  FlatList,
+  StatusBar,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Route } from '../types';
+import { Route, RouteKeyPair } from '../types';
 import { RouteNameList } from '../components/RouteNameList';
-import { basicColors } from '../styles/BasicColors';
+import {
+  basicColors,
+  basicStyles,
+  listStyles,
+  routeLegColors,
+} from '../styles/BasicColors';
 import { RootTabParamList } from '../NavigationTypes';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { RouteProp } from '@react-navigation/native';
 
-const testRoute: Route = {
-  routeName: 'Majurinkulma -> Lehmustie',
-  description: 'there is no description to this cursed shit',
-  originPlace: 'Majurinkulma',
-  finalDestination: 'Lehmustie',
-  startWalkDuration: 2.3 * 60,
-  routeTransportLegRows: [
-    {
-      routeLegs: [
-        {
-          from: 'Majurinkulma 2, Espoo::60.2112299,24.8230712',
-          to: 'Leppävaaran asema, Espoo::60.2193775,24.8113851',
-          transportModes: [{ mode: 'BUS' }, { mode: 'WALK' }],
-        },
-      ],
-      middleSector: 'single',
-      middleSectorTransportModes: [{ mode: 'BUS' }],
-    },
-    {
-      routeLegs: [
-        {
-          from: 'Leppävaaran asema, Espoo::60.2193775,24.8113851',
-          to: 'Pasilan asema, Helsinki, Helsinki::60.1986935,24.9345064',
-          transportModes: [{ mode: 'RAIL' }],
-        },
-      ],
-      middleSector: 'single',
-      middleSectorTransportModes: [{ mode: 'RAIL' }],
-    },
-    {
-      routeLegs: [
-        {
-          from: 'Pasilan asema, Helsinki::60.1986935,24.9345064',
-          to: 'Pukinmäen asema, Helsinki::60.2424651,24.9917559',
-          secondaryTo: 'Malmin asema, Helsinki::60.2506078,25.0094086',
-          transportModes: [{ mode: 'RAIL' }],
-        },
-      ],
-      middleSector: 'split',
-      middleSectorTransportModes: [{ mode: 'RAIL' }],
-    },
-    {
-      routeLegs: [
-        {
-          from: 'Pukinmäen asema, Helsinki::60.2424651,24.9917559',
-          to: 'Syystie 19, Helsinki::60.2567313,24.9973389',
-          transportModes: [{ mode: 'BUS' }],
-        },
-        {
-          from: 'Malmin asema, Helsinki::60.2506078,25.0094086',
-          to: 'Syystie 19, Helsinki::60.2567313,24.9973389',
-          transportModes: [{ mode: 'BUS' }],
-        },
-      ],
-      middleSector: 'merge',
-      middleSectorTransportModes: [{ mode: 'BUS' }],
-    },
-  ],
-};
 // TODO move this to types after async storage is working
-interface RouteKeyPair {
-  route: Route;
-  key: string;
+interface HomeScreenScreenProps {
+  navigation: BottomTabNavigationProp<RootTabParamList, 'Home'>;
+  route: RouteProp<RootTabParamList, 'Current route'>;
 }
 
-export function HomeScreen({ navigation }) {
-  const [routeKeys, setRouteKeys] = useState<string[]>([]);
-  const [routes, setRoutes] = useState<RouteKeyPair[]>([]);
-  const [activeRouteKey, setActiveRouteKey] = useState<string | undefined>(
+export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
+  const [lastRouteKey, setLastRouteKey] = useState<string | undefined>(
     undefined
   );
-  const [tempToggle, setTempToggle] = useState(false); // this is for testing useEffect
+  const [lastRoute, setLastRoute] = useState<Route | undefined>(undefined);
 
   useEffect(() => {
-    console.log('triggered');
-    async function getRouteKeys() {
+    async function getLastRoute() {
       try {
-        const keys = await AsyncStorage.getAllKeys();
-        console.log('keys', keys);
-        if (keys !== undefined) {
-          setRouteKeys(keys);
-          const fetchedRoutes = await AsyncStorage.multiGet(keys);
-          if (fetchedRoutes !== undefined) {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // TODO fix mapping
-            setRoutes(
-              fetchedRoutes
-                .map((route) => {
-                  if (route[1] !== null && route[1][0] === '{') {
-                    console.log('route', route);
-                    return {
-                      route: JSON.parse(route[1]),
-                      key: route[0],
-                    };
-                  }
-                  return undefined;
-                })
-                .filter((_) => _ !== undefined)
-            );
+        const key = await AsyncStorage.getItem('lastRouteKey');
+        if (key !== null) {
+          setLastRouteKey(key);
+          const routeJSON = await AsyncStorage.getItem(key);
+          if (routeJSON !== null) {
+            setLastRoute(JSON.parse(routeJSON));
           }
         }
       } catch (e) {
-        console.log('error fetching routes from async storage', e);
+        console.log('error fetching last route from async storage', e);
       }
     }
-    getRouteKeys();
-  }, [tempToggle]);
+    getLastRoute();
+  }, []);
 
-  const loadActiveRoute = (routeKey: string) => {
-    setActiveRouteKey(routeKey);
-    navigation.navigate('Current route', {
-      routeKey,
-    });
-  };
-
-  const storeRoute = async (route: Route) => {
-    try {
-      const jsonRoute = JSON.stringify(route);
-      await AsyncStorage.setItem('testKey', jsonRoute);
-    } catch (e) {
-      console.log('failed to save route:', e);
+  const loadActiveRoute = () => {
+    if (!lastRouteKey) {
+      ToastAndroid.showWithGravity(
+        'no recently used routes',
+        200,
+        ToastAndroid.SHORT
+      );
+      return;
+    }
+    if (lastRouteKey) {
+      navigation.navigate('Current route', {
+        routeKey: lastRouteKey,
+      });
     }
   };
-
-  console.log('routes:', routes);
 
   // TODO add top bar
   return (
     <View
       style={{
+        alignItems: 'stretch',
+        justifyContent: 'flex-start',
+        height: '100%',
         marginTop: StatusBar.currentHeight,
+        paddingHorizontal: 15,
+        paddingTop: 25,
         backgroundColor: basicColors.topBarLight,
       }}
     >
-      <FlatList
-        style={{
-          borderWidth: 1,
-          minHeight: 300,
-          flex: 1,
-        }}
-        data={routes}
-        renderItem={({ item }) => (
-          <RouteNameList
-            name={item.route.routeName}
-            originPlace={item.route.originPlace}
-            finalDestination={item.route.finalDestination}
-            setActiveRoute={() => loadActiveRoute(item.key)}
-          />
-        )}
-        ItemSeparatorComponent={() => (
-          <View
-            style={{ borderBottomWidth: 1, borderColor: 'black', minHeight: 1 }}
-          />
-        )}
-        keyExtractor={(_) => _.key}
-      />
-      <Button title="save" onPress={() => storeRoute(testRoute)} />
-      <Button title="load" onPress={() => setTempToggle(!tempToggle)} />
+      <View>
+        <Text style={basicStyles.charcoalHeader}>Welcome</Text>
+      </View>
+      <View style={{ minHeight: 50 }} />
+      <View style={[listStyles.listContainer, { minHeight: 120 }]}>
+        <Text style={listStyles.listHeader}>Recent route:</Text>
+        <TouchableOpacity
+          style={listStyles.touchableListItem}
+          onPress={loadActiveRoute}
+        >
+          <Text style={listStyles.listItemHeader}>
+            {lastRoute ? lastRoute?.routeName : 'No recently viewed route'}
+          </Text>
+          {lastRoute ? (
+            <Text>{`${lastRoute.originPlace}->${lastRoute.finalDestination}`}</Text>
+          ) : null}
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={listStyles.touchableListItem}
+          onPress={() => navigation.navigate('Browse')}
+        >
+          <Text style={listStyles.listItemHeader}>Browse more routes...</Text>
+        </TouchableOpacity>
+      </View>
+      <TouchableOpacity style={[listStyles.listContainer]}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingEnd: 5,
+          }}
+        >
+          <Text style={[listStyles.listHeader, { borderBottomWidth: 0 }]}>
+            Press here for the tutorial
+          </Text>
+          <Text style={{ fontSize: 23, textAlign: 'right' }}> 💡</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity style={[listStyles.listContainer]}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingEnd: 5,
+          }}
+        >
+          <Text style={[listStyles.listHeader, { borderBottomWidth: 0 }]}>
+            Settings{' '}
+          </Text>
+          <Text style={{ fontSize: 23, textAlign: 'right' }}> 🔧</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }

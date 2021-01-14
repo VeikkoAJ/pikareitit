@@ -8,9 +8,7 @@ export function RouteMiddleSplitSector({ travelTimes }: RouteMiddleSectorProps) 
   return (
     <View
       style={{
-        marginVertical: 10,
         alignItems: 'center',
-        paddingHorizontal: 10,
       }}
     >
       <View
