@@ -1,15 +1,23 @@
-import { Text, TextInput, View } from 'react-native';
+import { Pressable, Text, TextInput, View } from 'react-native';
 import { listForm, routeLegColors } from '../styles/BasicColors';
 import React, { useState } from 'react';
 import { TransportModePicker } from './TransportModePicker';
 import { TransportMode } from '../types';
 import { AddRemoveButton } from './AddRemoveButton';
 
-export function RouteLegForm() {
+interface RouteLegFormProps {
+  showSettings: boolean;
+  setShowSettings: () => void;
+}
+
+export function RouteLegForm({
+  showSettings,
+  setShowSettings,
+}: RouteLegFormProps) {
   const [transportModes, setTransportModes] = useState<TransportMode[]>([]);
 
   return (
-    <View
+    <Pressable
       style={{
         marginBottom: 5,
         paddingBottom: 5,
@@ -18,6 +26,7 @@ export function RouteLegForm() {
         borderRadius: 10,
         elevation: 1,
       }}
+      onLongPress={() => setShowSettings()}
     >
       <View style={listForm.listTextInput}>
         <Text style={listForm.fieldName}>from:</Text>
@@ -38,11 +47,29 @@ export function RouteLegForm() {
       <View style={{ position: 'absolute', right: 0 }}>
         <AddRemoveButton
           addRemove="remove"
-          size={20}
+          size={16}
           color={routeLegColors.lightVisited}
           onButtonPress={() => console.log('press')}
         />
       </View>
-    </View>
+      {showSettings && (
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            minHeight: 50,
+          }}
+        >
+          <Text>hello</Text>
+          <AddRemoveButton
+            addRemove="remove"
+            size={16}
+            color={routeLegColors.lightVisited}
+            onButtonPress={() => console.log('press')}
+          />
+        </View>
+      )}
+    </Pressable>
   );
 }

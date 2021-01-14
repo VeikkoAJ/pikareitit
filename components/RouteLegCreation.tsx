@@ -7,7 +7,6 @@ import {
   View,
 } from 'react-native';
 import React, { useState } from 'react';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Route, RouteTransportLegRow } from '../types';
 import { RouteLegForm } from './RouteLegForm';
 import { AddRemoveButton } from './AddRemoveButton';
@@ -16,6 +15,7 @@ export function RouteLegCreation() {
   const [routeTransportLegRow, setRouteTransportLegRow] = useState<
     RouteTransportLegRow | undefined
   >(undefined);
+
   return (
     <ScrollView
       style={[
