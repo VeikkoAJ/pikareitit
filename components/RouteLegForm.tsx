@@ -2,17 +2,29 @@ import { Pressable, Text, TextInput, View } from 'react-native';
 import { listForm, routeLegColors } from '../styles/BasicColors';
 import React, { useState } from 'react';
 import { TransportModePicker } from './TransportModePicker';
-import { TransportMode } from '../types';
+import {
+  RouteTransportLeg,
+  RouteTransportLegRow,
+  TransportMode,
+} from '../types';
 import { AddRemoveButton } from './AddRemoveButton';
 
 interface RouteLegFormProps {
+  routeLeg: RouteTransportLeg;
   showSettings: boolean;
   setShowSettings: () => void;
+  setHideSettings: () => void;
+  removeRouteLeg: () => void;
+  moveForm: (oldIndex: number, newIndex: number) => void;
 }
 
 export function RouteLegForm({
+  routeLeg,
   showSettings,
   setShowSettings,
+  setHideSettings,
+  removeRouteLeg,
+  moveForm,
 }: RouteLegFormProps) {
   const [transportModes, setTransportModes] = useState<TransportMode[]>([]);
 
@@ -26,6 +38,7 @@ export function RouteLegForm({
         borderRadius: 10,
         elevation: 1,
       }}
+      onPress={() => setHideSettings()}
       onLongPress={() => setShowSettings()}
     >
       <View style={listForm.listTextInput}>
@@ -49,7 +62,7 @@ export function RouteLegForm({
           addRemove="remove"
           size={16}
           color={routeLegColors.lightVisited}
-          onButtonPress={() => console.log('press')}
+          onButtonPress={() => removeRouteLeg()}
         />
       </View>
       {showSettings && (

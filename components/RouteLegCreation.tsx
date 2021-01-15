@@ -10,11 +10,18 @@ import React, { useState } from 'react';
 import { Route, RouteTransportLegRow } from '../types';
 import { RouteLegForm } from './RouteLegForm';
 import { AddRemoveButton } from './AddRemoveButton';
+import { UseRouteCreation } from '../hooks/UseRouteCreation';
+import index from '@react-native-community/masked-view';
 
 export function RouteLegCreation() {
-  const [routeTransportLegRow, setRouteTransportLegRow] = useState<
-    RouteTransportLegRow | undefined
-  >(undefined);
+  const {
+    routeLegs,
+    settingsIndex,
+    appendRouteLeg,
+    removeRouteLeg,
+    moveRouteLeg,
+    changeSettingsIndex,
+  } = UseRouteCreation();
 
   return (
     <ScrollView
@@ -28,15 +35,24 @@ export function RouteLegCreation() {
         },
       ]}
     >
-      <RouteLegForm />
-      <RouteLegForm />
-      <RouteLegForm />
-      <RouteLegForm />
+      {routeLegs.map((routeLeg, i) => (
+        <RouteLegForm
+          key={routeLeg.from}
+          routeLeg={routeLeg}
+          showSettings={settingsIndex === i}
+          setShowSettings={() => changeSettingsIndex(i)}
+          setHideSettings={() => changeSettingsIndex(undefined)}
+          removeRouteLeg={() => removeRouteLeg(i)}
+          moveForm={(oldIndex: number, newIndex: number) =>
+            moveRouteLeg(i, newIndex)
+          }
+        />
+      ))}
       <AddRemoveButton
         addRemove="add"
         size={30}
         color={routeLegColors.light}
-        onButtonPress={() => console.log('press')}
+        onButtonPress={() => appendRouteLeg()}
       />
       <View key="prevent clipping" style={{ minHeight: 20 }} />
     </ScrollView>

@@ -98,8 +98,12 @@ export function UseRouteCreation() {
   /** sets new settingsIndex
    * @param index new settingsIndex
    */
-  const changeSettingsIndex = (index: number) => {
-    if (settingsIndex && settingsIndex >= routeLegs.length) {
+  const changeSettingsIndex = (index?: number) => {
+    if (index === undefined) {
+      setSettingsIndex(undefined);
+      return;
+    }
+    if (index >= routeLegs.length) {
       return;
     }
     setSettingsIndex(index);
