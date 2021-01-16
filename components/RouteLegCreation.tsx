@@ -1,27 +1,17 @@
-import { listForm, listStyles, routeLegColors } from '../styles/BasicColors';
-import {
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React, { useState } from 'react';
-import {
-  Route,
-  RouteLegKeyPair,
-  RouteTransportLeg,
-  RouteTransportLegRow,
-} from '../types';
+import React from 'react';
+import { ScrollView, View } from 'react-native';
+
+import { listStyles, routeLegColors } from '../styles/BasicColors';
 import { RouteLegForm } from './RouteLegForm';
 import { ListManipulationButton } from './ListManipulationButton';
 import { UseRouteCreation } from '../hooks/UseRouteCreation';
+import { RouteTransportLeg } from '../types';
 
 export function RouteLegCreation() {
   const {
-    routeLegKeyPairs,
+    routeLegKeyPairRows,
     settingsIndex,
-    appendRouteLeg,
+    addRouteLeg,
     removeRouteLeg,
     moveRouteLeg,
     setRouteLeg,
@@ -36,29 +26,41 @@ export function RouteLegCreation() {
           paddingHorizontal: 0,
           paddingVertical: 0,
           paddingTop: 0,
-          maxHeight: '80%',
+          marginBottom: 50,
         },
       ]}
     >
-      {routeLegKeyPairs.map((routeLegKeyPair, i) => (
-        <RouteLegForm
-          key={routeLegKeyPair.key}
-          routeLegKeyPair={routeLegKeyPair}
-          showSettings={settingsIndex === i}
-          setShowSettings={() => setNewSettingsIndex(i)}
-          setHideSettings={() => setNewSettingsIndex(undefined)}
-          removeRouteLeg={() => removeRouteLeg(i)}
-          moveRouteLeg={(newIndex: number) => moveRouteLeg(i, i + newIndex)}
-          setRouteLeg={(currentRouteLeg: RouteLegKeyPair) =>
-            setRouteLeg(i, currentRouteLeg)
-          }
-        />
+      {routeLegKeyPairRows.map((routeLegKeyPairRow, row) => (
+        <View
+          key={`${routeLegKeyPairRow[0].key} row`}
+          style={{ flexDirection: 'row' }}
+        >
+          {routeLegKeyPairRow.map((routeLegKeyPair, column) => (
+            <RouteLegForm
+              key={routeLegKeyPair.key}
+              routeLeg={routeLegKeyPair.routeLeg}
+              showSettings={
+                settingsIndex?.row === row && settingsIndex.column === column
+              }
+              setShowSettings={() => setNewSettingsIndex(row, column)}
+              setHideSettings={() => setNewSettingsIndex(undefined)}
+              removeRouteLeg={() => removeRouteLeg(row, column)}
+              addRouteLeg={() => addRouteLeg(true, row)}
+              moveRouteLeg={(yOffset: number, xOffset: number) =>
+                moveRouteLeg(row, column, row + yOffset, column + xOffset)
+              }
+              setRouteLeg={(currentRouteLeg: RouteTransportLeg) =>
+                setRouteLeg(currentRouteLeg, row, column)
+              }
+            />
+          ))}
+        </View>
       ))}
       <ListManipulationButton
         buttonIcon="add"
         size={30}
         color={routeLegColors.light}
-        onButtonPress={() => appendRouteLeg()}
+        onButtonPress={() => addRouteLeg(false)}
       />
       <View key="prevent clipping" style={{ minHeight: 20 }} />
     </ScrollView>

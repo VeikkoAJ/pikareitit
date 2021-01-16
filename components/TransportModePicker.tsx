@@ -47,11 +47,11 @@ export function TransportModePicker({
   };
 
   return (
-    <View style={listForm.listTextInput}>
+    <View style={[listForm.listTextInput, { flex: 1, flexWrap: 'wrap' }]}>
       {defaultTransportModes.map((transportMode) => (
         <TouchableOpacity
           key={transportMode.mode}
-          style={{ justifyContent: 'space-between', alignItems: 'center' }}
+          style={{ alignItems: 'center' }}
           onPress={() => setTransportModes(mapTransportModes(transportMode))}
         >
           <RouteLegIcon
@@ -62,7 +62,7 @@ export function TransportModePicker({
           <Text
             style={{
               color: activeColor(transportMode),
-              fontSize: 14,
+              fontSize: 12,
             }}
           >
             {transportMode.mode}

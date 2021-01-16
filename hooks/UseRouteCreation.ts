@@ -3,141 +3,172 @@
 import { useState } from 'react';
 import { RouteLegKeyPair, RouteTransportLeg } from '../types';
 
-const emptyLeg = (): RouteLegKeyPair => {
-  return {
-    key: new Date().getTime().toString(),
-    routeLeg: {move
-      from: '',
-      to: '',
-      transportModes: [],
-    },
-  };
-};
+const emptyLeg = (): RouteLegKeyPair => ({
+  key: new Date().getTime().toString(),
+  routeLeg: {
+    from: '',
+    to: '',
+    transportModes: [],
+  },
+});
+
+interface SettingsIndex {
+  row: number;
+  column: number;
+}
+
 export function UseRouteCreation() {
-  const [routeLegKeyPairs, setRouteLegKeyPairs] = useState<RouteLegKeyPair[]>([
-    emptyLeg(),
-  ]);
-  const [settingsIndex, setSettingsIndex] = useState<number | undefined>(
+  const [routeLegKeyPairRows, setRouteLegKeyPairRows] = useState<
+    RouteLegKeyPair[][]
+  >([[emptyLeg()]]);
+  const [settingsIndex, setSettingsIndex] = useState<SettingsIndex | undefined>(
     undefined
   );
 
   /** appends empty routeLeg to the array and moves the settingsIndex
-   * @param index appends the routeLeg after it. If undefined adds it to the end of the array
+   * @param nextTo decides if new leg will be added to the same or the next row
+   * @param row appends the routeLeg after it. If undefined adds it to the end of the array
    */
-  const appendRouteLeg = (index?: number) => {
-    if (!index) {
-      if (settingsIndex === routeLegKeyPairs.length - 1) {
-        setSettingsIndex(settingsIndex - 1);
-      }
-      setRouteLegKeyPairs([...routeLegKeyPairs, emptyLeg()]);
+  const addRouteLeg = (nextTo: boolean, row?: number) => {
+    if (row === undefined) {
+      setRouteLegKeyPairRows([...routeLegKeyPairRows, [emptyLeg()]]);
       return;
     }
-    if (index === 0) {
-      if (settingsIndex) {
-        setSettingsIndex(settingsIndex + 1);
-      }
-      setRouteLegKeyPairs([emptyLeg(), ...routeLegKeyPairs]);
+    if (settingsIndex && row < settingsIndex.row) {
+      setSettingsIndex({
+        row: settingsIndex.row + 1,
+        column: settingsIndex.column,
+      });
+    }
+    if (nextTo) {
+      setRouteLegKeyPairRows([
+        ...routeLegKeyPairRows.slice(0, row),
+        [...routeLegKeyPairRows[row], emptyLeg()],
+        ...routeLegKeyPairRows.slice(row + 1),
+      ]);
       return;
     }
-    if (settingsIndex && index < settingsIndex) {
-      setSettingsIndex(settingsIndex + 1);
-    }
-    setRouteLegKeyPairs([
-      ...routeLegKeyPairs.slice(0, index + 1),
-      emptyLeg(),
-      ...routeLegKeyPairs.slice(index + 1),
+    setRouteLegKeyPairRows([
+      ...routeLegKeyPairRows.slice(0, row + 1),
+      [emptyLeg()],
+      ...routeLegKeyPairRows.slice(row + 1),
     ]);
   };
 
   /** removes the routeLeg at current index and moves the settingsIndex
-   * @param index location of the removable routeLeg
+   * @param row location of the removable routeLeg
+   * @param column location of the removable routeLeg
    */
-  const removeRouteLeg = (index: number) => {
-    if (index === 0) {
-      if (settingsIndex) {
-        setSettingsIndex(settingsIndex - 1);
-      }
-      setRouteLegKeyPairs(routeLegKeyPairs.slice(1));
-      return;
-    }
-    if (index === routeLegKeyPairs.length - 1) {
-      if (settingsIndex === routeLegKeyPairs.length - 1) {
-        setSettingsIndex(settingsIndex - 1);
-      }
-      setRouteLegKeyPairs(routeLegKeyPairs.slice(0, index));
-      return;
-    }
-    if (settingsIndex === index) {
+  const removeRouteLeg = (row: number, column: number) => {
+    if (settingsIndex?.row === row && settingsIndex?.column === column) {
       setSettingsIndex(undefined);
     }
-    if (settingsIndex && settingsIndex > index) {
-      setSettingsIndex(settingsIndex - 1);
+    if (settingsIndex) {
+      setSettingsIndex({
+        row: settingsIndex.row + settingsIndex.row < row ? -1 : 0,
+        column: settingsIndex.column + settingsIndex.column < column ? -1 : 0,
+      });
     }
-    setRouteLegKeyPairs([
-      ...routeLegKeyPairs.slice(0, index),
-      ...routeLegKeyPairs.slice(index + 1),
+    if (routeLegKeyPairRows[row].length === 1) {
+      setRouteLegKeyPairRows([
+        ...routeLegKeyPairRows.slice(0, row),
+        ...routeLegKeyPairRows.slice(row + 1),
+      ]);
+      return;
+    }
+
+    setRouteLegKeyPairRows([
+      ...routeLegKeyPairRows.slice(0, row),
+      [
+        ...routeLegKeyPairRows[row].slice(0, column),
+        ...routeLegKeyPairRows[row].slice(column + 1),
+      ],
+      ...routeLegKeyPairRows.slice(row + 1),
     ]);
   };
 
   /** moves the routeLeg at current index to the newIndex and sets the settingsIndex to newIndex
    * meaning this should be used from the components settings panel only.
-   * @param index starting location of the movable routeLeg
-   * @param newIndex destination of the movable routeLeg
+   * @param row starting location of the movable routeLeg
+   * @param column starting location of the movable routeLeg
+   * @param newRow destination of the movable routeLeg
+   * @param newColumn destination of the movable routeLeg
    */
-  const moveRouteLeg = (index: number, newIndex: number) => {
-    const movableRouteLeg = routeLegKeyPairs[index];
-    const filteredRouteLegs = routeLegKeyPairs.filter(
-      (_) => _ === movableRouteLeg
+  const moveRouteLeg = (
+    row: number,
+    column: number,
+    newRow: number,
+    newColumn: number
+  ) => {
+    if (row === newRow && column === newColumn) {
+      return;
+    }
+    setSettingsIndex({ row: newRow, column: newColumn });
+
+    const movableRouteLegRowKeyPair = routeLegKeyPairRows[row];
+    const filteredRouteLegRows = routeLegKeyPairRows.filter(
+      (_) => _ !== movableRouteLegRowKeyPair
     );
-    setSettingsIndex(newIndex);
-    if (index === newIndex) {
-      return;
-    }
-    if (newIndex === 0) {
-      setRouteLegKeyPairs([movableRouteLeg, ...filteredRouteLegs]);
-      return;
-    }
-    if (newIndex === routeLegKeyPairs.length - 1) {
-      setRouteLegKeyPairs([...filteredRouteLegs, movableRouteLeg]);
-      return;
-    }
-    setRouteLegKeyPairs([
-      ...filteredRouteLegs.slice(0, newIndex),
-      movableRouteLeg,
-      ...filteredRouteLegs.slice(newIndex),
-    ]);
-  };
-  // TODO name second param better
-  /** sets new settingsIndex
-   * @param index new settingsIndex
-   * @param routeLeg editable routeleg
-   */
-  const setRouteLeg = (index: number, routeLeg: RouteLegKeyPair) => {
-    if (index >= routeLegKeyPairs.length) {
-      return;
-    }
-    setRouteLegKeyPairs([
-      ...routeLegKeyPairs.slice(0, index),
-      routeLeg,
-      ...routeLegKeyPairs.slice(index + 1),
+
+    setRouteLegKeyPairRows([
+      ...filteredRouteLegRows.slice(0, newRow),
+      movableRouteLegRowKeyPair,
+      ...filteredRouteLegRows.slice(newRow),
     ]);
   };
 
-  const setNewSettingsIndex = (index?: number) => {
-    if (index === undefined) {
+  /** sets new parameters to routeLeg
+   * @param routeLeg editable routeLeg
+   * @param row position of routeLeg
+   * @param column position of routeLeg
+   */
+  const setRouteLeg = (
+    routeLeg: RouteTransportLeg,
+    row: number,
+    column: number
+  ) => {
+    // test row and column limits
+    if (row >= routeLegKeyPairRows.length) {
+      return;
+    }
+    if (column >= routeLegKeyPairRows[row].length) {
+      return;
+    }
+
+    const newRouteLegRow: RouteLegKeyPair[] = [
+      ...routeLegKeyPairRows[row].slice(0, column),
+      { key: routeLegKeyPairRows[row][column].key, routeLeg },
+      ...routeLegKeyPairRows[row].slice(column + 1),
+    ];
+
+    setRouteLegKeyPairRows([
+      ...routeLegKeyPairRows.slice(0, row),
+      newRouteLegRow,
+      ...routeLegKeyPairRows.slice(row + 1),
+    ]);
+  };
+  /** sets new settingsIndex
+   * @param row
+   * @param column
+   */
+  const setNewSettingsIndex = (row?: number, column?: number) => {
+    if (row === undefined || column === undefined) {
       setSettingsIndex(undefined);
       return;
     }
-    if (index >= routeLegKeyPairs.length) {
+    if (row >= routeLegKeyPairRows.length) {
       return;
     }
-    setSettingsIndex(index);
+    if (column >= routeLegKeyPairRows[row].length) {
+      return;
+    }
+    setSettingsIndex({ row, column });
   };
 
   return {
-    routeLegKeyPairs,
+    routeLegKeyPairRows,
     settingsIndex,
-    appendRouteLeg,
+    addRouteLeg,
     removeRouteLeg,
     moveRouteLeg,
     setRouteLeg,
