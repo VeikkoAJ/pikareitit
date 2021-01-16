@@ -1,16 +1,22 @@
 // TODO Add initial route for editing existing routes
 
 import { useState } from 'react';
-import { RouteTransportLeg } from '../types';
+import { RouteLegKeyPair, RouteTransportLeg } from '../types';
 
-const emptyLeg: RouteTransportLeg = {
-  from: '',
-  to: '',
-  transportModes: [],
+const emptyLeg = (): RouteLegKeyPair => {
+  return {
+    key: new Date().getTime().toString(),
+    routeLeg: {move
+      from: '',
+      to: '',
+      transportModes: [],
+    },
+  };
 };
-
 export function UseRouteCreation() {
-  const [routeLegs, setRouteLegs] = useState<RouteTransportLeg[]>([emptyLeg]);
+  const [routeLegKeyPairs, setRouteLegKeyPairs] = useState<RouteLegKeyPair[]>([
+    emptyLeg(),
+  ]);
   const [settingsIndex, setSettingsIndex] = useState<number | undefined>(
     undefined
   );
@@ -20,26 +26,26 @@ export function UseRouteCreation() {
    */
   const appendRouteLeg = (index?: number) => {
     if (!index) {
-      if (settingsIndex === routeLegs.length - 1) {
+      if (settingsIndex === routeLegKeyPairs.length - 1) {
         setSettingsIndex(settingsIndex - 1);
       }
-      setRouteLegs([...routeLegs, emptyLeg]);
+      setRouteLegKeyPairs([...routeLegKeyPairs, emptyLeg()]);
       return;
     }
     if (index === 0) {
       if (settingsIndex) {
         setSettingsIndex(settingsIndex + 1);
       }
-      setRouteLegs([emptyLeg, ...routeLegs]);
+      setRouteLegKeyPairs([emptyLeg(), ...routeLegKeyPairs]);
       return;
     }
     if (settingsIndex && index < settingsIndex) {
       setSettingsIndex(settingsIndex + 1);
     }
-    setRouteLegs([
-      ...routeLegs.slice(0, index + 1),
-      emptyLeg,
-      ...routeLegs.slice(index + 1),
+    setRouteLegKeyPairs([
+      ...routeLegKeyPairs.slice(0, index + 1),
+      emptyLeg(),
+      ...routeLegKeyPairs.slice(index + 1),
     ]);
   };
 
@@ -51,14 +57,14 @@ export function UseRouteCreation() {
       if (settingsIndex) {
         setSettingsIndex(settingsIndex - 1);
       }
-      setRouteLegs(routeLegs.slice(1));
+      setRouteLegKeyPairs(routeLegKeyPairs.slice(1));
       return;
     }
-    if (index === routeLegs.length - 1) {
-      if (settingsIndex === routeLegs.length - 1) {
+    if (index === routeLegKeyPairs.length - 1) {
+      if (settingsIndex === routeLegKeyPairs.length - 1) {
         setSettingsIndex(settingsIndex - 1);
       }
-      setRouteLegs(routeLegs.slice(0, index));
+      setRouteLegKeyPairs(routeLegKeyPairs.slice(0, index));
       return;
     }
     if (settingsIndex === index) {
@@ -67,54 +73,74 @@ export function UseRouteCreation() {
     if (settingsIndex && settingsIndex > index) {
       setSettingsIndex(settingsIndex - 1);
     }
-    setRouteLegs([...routeLegs.slice(0, index), ...routeLegs.slice(index + 1)]);
+    setRouteLegKeyPairs([
+      ...routeLegKeyPairs.slice(0, index),
+      ...routeLegKeyPairs.slice(index + 1),
+    ]);
   };
+
   /** moves the routeLeg at current index to the newIndex and sets the settingsIndex to newIndex
    * meaning this should be used from the components settings panel only.
    * @param index starting location of the movable routeLeg
    * @param newIndex destination of the movable routeLeg
    */
   const moveRouteLeg = (index: number, newIndex: number) => {
-    const movableRouteLeg = routeLegs[index];
-    const filteredRouteLegs = routeLegs.filter((_) => _ === movableRouteLeg);
+    const movableRouteLeg = routeLegKeyPairs[index];
+    const filteredRouteLegs = routeLegKeyPairs.filter(
+      (_) => _ === movableRouteLeg
+    );
     setSettingsIndex(newIndex);
     if (index === newIndex) {
       return;
     }
     if (newIndex === 0) {
-      setRouteLegs([movableRouteLeg, ...filteredRouteLegs]);
+      setRouteLegKeyPairs([movableRouteLeg, ...filteredRouteLegs]);
       return;
     }
-    if (newIndex === routeLegs.length - 1) {
-      setRouteLegs([...filteredRouteLegs, movableRouteLeg]);
+    if (newIndex === routeLegKeyPairs.length - 1) {
+      setRouteLegKeyPairs([...filteredRouteLegs, movableRouteLeg]);
       return;
     }
-    setRouteLegs([
+    setRouteLegKeyPairs([
       ...filteredRouteLegs.slice(0, newIndex),
       movableRouteLeg,
       ...filteredRouteLegs.slice(newIndex),
     ]);
   };
+  // TODO name second param better
   /** sets new settingsIndex
    * @param index new settingsIndex
+   * @param routeLeg editable routeleg
    */
-  const changeSettingsIndex = (index?: number) => {
+  const setRouteLeg = (index: number, routeLeg: RouteLegKeyPair) => {
+    if (index >= routeLegKeyPairs.length) {
+      return;
+    }
+    setRouteLegKeyPairs([
+      ...routeLegKeyPairs.slice(0, index),
+      routeLeg,
+      ...routeLegKeyPairs.slice(index + 1),
+    ]);
+  };
+
+  const setNewSettingsIndex = (index?: number) => {
     if (index === undefined) {
       setSettingsIndex(undefined);
       return;
     }
-    if (index >= routeLegs.length) {
+    if (index >= routeLegKeyPairs.length) {
       return;
     }
     setSettingsIndex(index);
   };
 
   return {
-    routeLegs,
+    routeLegKeyPairs,
     settingsIndex,
     appendRouteLeg,
     removeRouteLeg,
     moveRouteLeg,
-    changeSettingsIndex,
+    setRouteLeg,
+    setNewSettingsIndex,
   };
 }

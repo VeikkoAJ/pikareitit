@@ -1,28 +1,35 @@
-import { routeLegColors } from '../styles/BasicColors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import React from 'react';
 
-interface AddRemoveButtonProps {
-  addRemove: 'add' | 'remove';
+interface listManipulationButtonProps {
+  buttonIcon: 'add' | 'remove' | 'moveUp' | 'moveDown';
   size: number;
   color: string;
   secondaryColor?: string;
   onButtonPress: () => void;
 }
 
-export function AddRemoveButton({
-  addRemove,
+export function ListManipulationButton({
+  buttonIcon,
   size,
   color,
   secondaryColor,
   onButtonPress,
-}: AddRemoveButtonProps) {
-  const name = () => {
-    if (addRemove === 'add') {
-      return 'plus';
+}: listManipulationButtonProps) {
+  const iconName = () => {
+    switch (buttonIcon) {
+      case 'add':
+        return 'plus';
+      case 'remove':
+        return 'close';
+      case 'moveUp':
+        return 'arrow-up';
+      case 'moveDown':
+        return 'arrow-down';
+      default:
+        return 'walk';
     }
-    return 'close';
   };
 
   return (
@@ -40,7 +47,7 @@ export function AddRemoveButton({
       onPress={onButtonPress}
     >
       <MaterialCommunityIcons
-        name={name()}
+        name={iconName()}
         size={size}
         color={secondaryColor || 'white'}
       />

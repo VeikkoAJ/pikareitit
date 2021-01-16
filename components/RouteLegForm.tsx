@@ -1,32 +1,61 @@
 import { Pressable, Text, TextInput, View } from 'react-native';
 import { listForm, routeLegColors } from '../styles/BasicColors';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TransportModePicker } from './TransportModePicker';
-import {
-  RouteTransportLeg,
-  RouteTransportLegRow,
-  TransportMode,
-} from '../types';
-import { AddRemoveButton } from './AddRemoveButton';
+import { ListManipulationButton } from './ListManipulationButton';
+import { RouteLegKeyPair, RouteTransportLeg, TransportMode } from '../types';
 
 interface RouteLegFormProps {
-  routeLeg: RouteTransportLeg;
+  routeLegKeyPair: RouteLegKeyPair;
   showSettings: boolean;
   setShowSettings: () => void;
   setHideSettings: () => void;
   removeRouteLeg: () => void;
-  moveForm: (oldIndex: number, newIndex: number) => void;
+  moveRouteLeg: (newIndex: number) => void;
+  setRouteLeg: (routeLegKeyPair1: RouteLegKeyPair) => void;
 }
 
 export function RouteLegForm({
-  routeLeg,
+  routeLegKeyPair,
   showSettings,
   setShowSettings,
   setHideSettings,
   removeRouteLeg,
-  moveForm,
+  moveRouteLeg,
+  setRouteLeg,
 }: RouteLegFormProps) {
-  const [transportModes, setTransportModes] = useState<TransportMode[]>([]);
+  const [from, setFrom] = useState<string>(routeLegKeyPair.routeLeg.from);
+  const [to, setTo] = useState<string>(routeLegKeyPair.routeLeg.to);
+  const [secondaryTo, setSecondaryTo] = useState<string>(
+    routeLegKeyPair.routeLeg.to
+  );
+  const [transportModes, setTransportModes] = useState<TransportMode[]>(
+    routeLegKeyPair.routeLeg.transportModes
+  );
+
+  useEffect(() => {
+    setRouteLeg({
+      key: routeLegKeyPair.key,
+      routeLeg: {
+        from,
+        to,
+        secondaryTo,
+        transportModes,
+      },
+    });
+  }, [transportModes]);
+
+  const refresh = () => {
+    setRouteLeg({
+      key: routeLegKeyPair.key,
+      routeLeg: {
+        from,
+        to,
+        secondaryTo,
+        transportModes,
+      },
+    });
+  };
 
   return (
     <Pressable
@@ -45,12 +74,19 @@ export function RouteLegForm({
         <Text style={listForm.fieldName}>from:</Text>
         <TextInput
           style={[listForm.fieldAnswer, { marginRight: 30 }]}
-          value="empty"
+          value={from}
+          onChangeText={(text) => setFrom(text)}
+          onEndEditing={() => refresh()}
         />
       </View>
       <View style={listForm.listTextInput}>
         <Text style={listForm.fieldName}>to:</Text>
-        <TextInput style={listForm.fieldAnswer} value="empty" />
+        <TextInput
+          style={listForm.fieldAnswer}
+          value={to}
+          onChangeText={(text) => setTo(text)}
+          onEndEditing={() => refresh()}
+        />
       </View>
       <Text style={listForm.fieldName}>Travel modes:</Text>
       <TransportModePicker
@@ -58,8 +94,8 @@ export function RouteLegForm({
         setTransportModes={setTransportModes}
       />
       <View style={{ position: 'absolute', right: 0 }}>
-        <AddRemoveButton
-          addRemove="remove"
+        <ListManipulationButton
+          buttonIcon="remove"
           size={16}
           color={routeLegColors.lightVisited}
           onButtonPress={() => removeRouteLeg()}
@@ -75,11 +111,17 @@ export function RouteLegForm({
           }}
         >
           <Text>hello</Text>
-          <AddRemoveButton
-            addRemove="remove"
+          <ListManipulationButton
+            buttonIcon="moveUp"
             size={16}
             color={routeLegColors.lightVisited}
-            onButtonPress={() => console.log('press')}
+            onButtonPress={() => moveRouteLeg(1)}
+          />
+          <ListManipulationButton
+            buttonIcon="moveDown"
+            size={16}
+            color={routeLegColors.lightVisited}
+            onButtonPress={() => moveRouteLeg(-1)}
           />
         </View>
       )}

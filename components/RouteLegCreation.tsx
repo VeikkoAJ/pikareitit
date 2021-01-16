@@ -7,20 +7,25 @@ import {
   View,
 } from 'react-native';
 import React, { useState } from 'react';
-import { Route, RouteTransportLegRow } from '../types';
+import {
+  Route,
+  RouteLegKeyPair,
+  RouteTransportLeg,
+  RouteTransportLegRow,
+} from '../types';
 import { RouteLegForm } from './RouteLegForm';
-import { AddRemoveButton } from './AddRemoveButton';
+import { ListManipulationButton } from './ListManipulationButton';
 import { UseRouteCreation } from '../hooks/UseRouteCreation';
-import index from '@react-native-community/masked-view';
 
 export function RouteLegCreation() {
   const {
-    routeLegs,
+    routeLegKeyPairs,
     settingsIndex,
     appendRouteLeg,
     removeRouteLeg,
     moveRouteLeg,
-    changeSettingsIndex,
+    setRouteLeg,
+    setNewSettingsIndex,
   } = UseRouteCreation();
 
   return (
@@ -35,21 +40,22 @@ export function RouteLegCreation() {
         },
       ]}
     >
-      {routeLegs.map((routeLeg, i) => (
+      {routeLegKeyPairs.map((routeLegKeyPair, i) => (
         <RouteLegForm
-          key={routeLeg.from}
-          routeLeg={routeLeg}
+          key={routeLegKeyPair.key}
+          routeLegKeyPair={routeLegKeyPair}
           showSettings={settingsIndex === i}
-          setShowSettings={() => changeSettingsIndex(i)}
-          setHideSettings={() => changeSettingsIndex(undefined)}
+          setShowSettings={() => setNewSettingsIndex(i)}
+          setHideSettings={() => setNewSettingsIndex(undefined)}
           removeRouteLeg={() => removeRouteLeg(i)}
-          moveForm={(oldIndex: number, newIndex: number) =>
-            moveRouteLeg(i, newIndex)
+          moveRouteLeg={(newIndex: number) => moveRouteLeg(i, i + newIndex)}
+          setRouteLeg={(currentRouteLeg: RouteLegKeyPair) =>
+            setRouteLeg(i, currentRouteLeg)
           }
         />
       ))}
-      <AddRemoveButton
-        addRemove="add"
+      <ListManipulationButton
+        buttonIcon="add"
         size={30}
         color={routeLegColors.light}
         onButtonPress={() => appendRouteLeg()}

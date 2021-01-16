@@ -72,3 +72,8 @@ export interface RouteKeyPair {
   route: Route;
   key: string;
 }
+
+export interface RouteLegKeyPair {
+  key: string;
+  routeLeg: RouteTransportLeg;
+}
