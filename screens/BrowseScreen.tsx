@@ -16,15 +16,14 @@ interface BrowseScreenProps {
 
 export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
   const [routeKeyPairs, setRouteKeyPairs] = useState<RouteKeyPair[]>([]);
-  const [activeRouteKey, setActiveRouteKey] = useState<string | undefined>(
-    undefined
-  );
-  const databaseInfo = useContext(DatabaseContext);
+  const [routeKey, setRouteKey] = useState<string | undefined>(undefined);
+  const [listChangeTracker, setListChangeTracker] = useState<number>(0);
+  const useRouteDatabase = useContext(DatabaseContext);
 
   useEffect(() => {
     const getRouteKeyPairs = async () => {
       try {
-        const fetchedRouteKeyPairs = await databaseInfo?.getRoutes();
+        const fetchedRouteKeyPairs = await useRouteDatabase?.getRoutes();
         if (fetchedRouteKeyPairs !== undefined) {
           setRouteKeyPairs(fetchedRouteKeyPairs);
         }
@@ -33,23 +32,14 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
       }
     };
     getRouteKeyPairs();
-  }, []);
+  }, [listChangeTracker]);
 
   const loadActiveRoute = (routeKey: string) => {
-    setActiveRouteKey(routeKey);
+    setRouteKey(routeKey);
     // Markup caused by not properly defining tabNavigationNavigate as a route prop
     route.params.tabNavigationNavigate.navigate('Current route', {
       routeKey,
     });
-  };
-
-  const storeRoute = async (currentRoute: Route) => {
-    try {
-      const jsonRoute = JSON.stringify(currentRoute);
-      await AsyncStorage.setItem('testKey', jsonRoute);
-    } catch (e) {
-      console.log('failed to save route:', e);
-    }
   };
 
   // TODO add top bar
@@ -62,12 +52,17 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
       <FlatList
         style={[listStyles.listContainer]}
         data={routeKeyPairs}
+        extraData={listChangeTracker}
         renderItem={({ item }) => (
           <RouteNameList
             name={item.route.routeName}
             originPlace={item.route.originPlace}
             finalDestination={item.route.finalDestination}
             setActiveRoute={() => loadActiveRoute(item.key)}
+            deleteRoute={() => {
+              useRouteDatabase.deleteRoute(item.key);
+              setListChangeTracker(listChangeTracker + 1);
+            }}
           />
         )}
         ItemSeparatorComponent={() => (

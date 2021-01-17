@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 // import PouchDB from 'pouchdb-react-native'; //mobile
 import PouchDB from 'pouchdb'; // web testing
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Route, RouteKeyPair } from '../types';
 
 type DatabaseContextValues =
@@ -11,6 +12,7 @@ type DatabaseContextValues =
       getRoutes: () => Promise<RouteKeyPair[] | undefined>;
       setLatestRoute: (routeId: string) => void;
       setRoute: (id: string, route: Route) => void;
+      deleteRoute: (id: string) => void;
     };
 
 export const testRoute: Route = {
@@ -71,10 +73,36 @@ export const testRoute: Route = {
 const db = new PouchDB('routes');
 
 export function UseRouteDatabase() {
-  // TODO ADD locastorage saving for latestRoute
+  // TODO ADD localStorage saving for latestRoute
   const [latestRouteId, setLatestRouteId] = useState<string | undefined>(
     undefined
   );
+
+  useEffect(() => {
+    const getLatestRouteKey = async () => {
+      try {
+        const key = await AsyncStorage.getItem('latestRoute');
+        if (key !== null) {
+          setLatestRouteId(key);
+        }
+      } catch (e) {}
+    };
+    getLatestRouteKey();
+  });
+
+  useEffect(() => {
+    const storeLatestRouteKey = async () => {
+      try {
+        if (latestRouteId !== undefined) {
+          await AsyncStorage.setItem('latestRoute', latestRouteId);
+        }
+      } catch (e) {
+        console.log('saving latestRouteKey failed', e);
+      }
+    };
+    storeLatestRouteKey();
+  }, [latestRouteId]);
+
   const setup = () => {
     db.info().then((info) => {
       db.put({
@@ -106,10 +134,10 @@ export function UseRouteDatabase() {
       return undefined;
     }
     try {
-      const response = await db.get(latestRouteId);
+      const { _id, route } = await db.get(latestRouteId);
       return {
-        route: JSON.parse(response.route),
-        key: response._id,
+        route: JSON.parse(route),
+        key: _id,
       };
     } catch (e) {
       console.log('getting latest route failed', e);
@@ -119,15 +147,16 @@ export function UseRouteDatabase() {
 
   const getRoutes = async (): Promise<RouteKeyPair[] | undefined> => {
     try {
+      console.log('getting routes');
       const response = await db.allDocs({
         include_docs: true,
         startkey: 'user',
         endkey: 'user\ufff0',
       });
       if (response.rows.length > 0) {
-        return response.rows.map((row) => ({
-          route: JSON.parse(row.doc.route),
-          key: row.doc._id,
+        return response.rows.map(({ doc: { _id, route } }) => ({
+          route: JSON.parse(route),
+          key: _id,
         }));
       }
       return undefined;
@@ -150,12 +179,23 @@ export function UseRouteDatabase() {
     });
   };
 
+  const deleteRoute = async (routeIdd: string) => {
+    console.log('deleting');
+    try {
+      const response = await db.get(routeIdd);
+      await db.remove(response);
+    } catch (e) {
+      console.log('error in deleting route', e);
+    }
+  };
+
   const databaseContextValues: DatabaseContextValues = {
     getLatestRoute,
     getRoute,
     getRoutes,
     setLatestRoute,
     setRoute,
+    deleteRoute,
   };
 
   return {

@@ -68,12 +68,6 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
             <Text>{`${lastRouteKeyPair.route.originPlace}->${lastRouteKeyPair.route.finalDestination}`}</Text>
           ) : null}
         </TouchableOpacity>
-        <TouchableOpacity
-          style={listStyles.listItem}
-          onPress={() => navigation.navigate('Browse', { screen: 'Browse' })}
-        >
-          <Text style={listStyles.listItemHeader}>Browse more routes...</Text>
-        </TouchableOpacity>
       </View>
       <TouchableOpacity style={[listStyles.listContainer]}>
         <View

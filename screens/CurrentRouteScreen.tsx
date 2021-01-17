@@ -110,7 +110,9 @@ export function CurrentRouteScreen({
                     <Text>No route selected, </Text>
                     <Text
                       style={{ color: 'blue' }}
-                      onPress={() => console.log('y')}
+                      onPress={() =>
+                        navigation.navigate('Browse', { screen: 'Browse' })
+                      }
                     >
                       press here to select a route.
                     </Text>
