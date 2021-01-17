@@ -6,7 +6,7 @@ import { RouteLegUnit } from './RouteLegUnit';
 import { QueryData, RouteTransportLeg } from '../types';
 import { routeLegColors } from '../styles/BasicColors';
 import { routeRequest } from '../services/RouteFetcher';
-import RouteLegIcon from './RouteLegIcon';
+import TransportModeIcon from './TransportModeIcon';
 import UseRouteQuery from '../hooks/UseRouteQuery';
 
 interface RouteLegProps {
@@ -86,7 +86,7 @@ export default function RouteLeg({
 
   return (
     <TouchableOpacity
-      key={`${routeLeg.from  } to ${  routeLeg.to}`}
+      key={`${routeLeg.from} to ${routeLeg.to}`}
       style={{
         flex: 1,
         flexShrink: 1,
@@ -127,7 +127,7 @@ export default function RouteLeg({
         >
           {stopName()}
         </Text>
-        <RouteLegIcon
+        <TransportModeIcon
           transportMode={routeLeg?.transportModes[0]}
           size={30}
           color="white"

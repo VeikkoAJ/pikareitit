@@ -1,80 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  FlatList,
-  StatusBar,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Route, RouteKeyPair } from '../types';
-import {
-  basicColors,
-  basicStyles,
-  listStyles,
-  routeLegColors,
-} from '../styles/BasicColors';
+import { basicStyles, listStyles } from '../styles/BasicColors';
 import { RouteNameList } from '../components/RouteNameList';
 import { StackParamList } from '../NavigationTypes';
-
-const testRoute: Route = {
-  routeName: 'Porukoille',
-  description: 'there is no description to this cursed shit',
-  originPlace: 'Majurinkulma',
-  finalDestination: 'Lehmustie',
-  startWalkDuration: 2.3 * 60,
-  routeTransportLegRows: [
-    {
-      routeLegs: [
-        {
-          from: 'Majurinkulma 2, Espoo::60.2112299,24.8230712',
-          to: 'Leppävaaran asema, Espoo::60.2193775,24.8113851',
-          transportModes: [{ mode: 'BUS' }, { mode: 'WALK' }],
-        },
-      ],
-      middleSector: 'single',
-    },
-    {
-      routeLegs: [
-        {
-          from: 'Leppävaaran asema, Espoo::60.2193775,24.8113851',
-          to: 'Pasilan asema, Helsinki, Helsinki::60.1986935,24.9345064',
-          transportModes: [{ mode: 'RAIL' }],
-        },
-      ],
-      middleSector: 'single',
-    },
-    {
-      routeLegs: [
-        {
-          from: 'Pasilan asema, Helsinki::60.1986935,24.9345064',
-          to: 'Pukinmäen asema, Helsinki::60.2424651,24.9917559',
-          secondaryTo: 'Malmin asema, Helsinki::60.2506078,25.0094086',
-          transportModes: [{ mode: 'RAIL' }],
-        },
-      ],
-      middleSector: 'split',
-    },
-    {
-      routeLegs: [
-        {
-          from: 'Pukinmäen asema, Helsinki::60.2424651,24.9917559',
-          to: 'Syystie 19, Helsinki::60.2567313,24.9973389',
-          transportModes: [{ mode: 'BUS' }],
-        },
-        {
-          from: 'Malmin asema, Helsinki::60.2506078,25.0094086',
-          to: 'Syystie 19, Helsinki::60.2567313,24.9973389',
-          transportModes: [{ mode: 'BUS' }],
-        },
-      ],
-      middleSector: 'merge',
-    },
-  ],
-};
+import { DatabaseContext } from '../hooks/UseRouteDatabase';
 
 interface BrowseScreenProps {
   navigation: BottomTabNavigationProp<StackParamList, 'Browse'>;
@@ -82,47 +15,29 @@ interface BrowseScreenProps {
 }
 
 export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
-  const [routeKeys, setRouteKeys] = useState<string[]>([]);
-  const [routes, setRoutes] = useState<RouteKeyPair[]>([]);
+  const [routeKeyPairs, setRouteKeyPairs] = useState<RouteKeyPair[]>([]);
   const [activeRouteKey, setActiveRouteKey] = useState<string | undefined>(
     undefined
   );
+  const databaseInfo = useContext(DatabaseContext);
 
   useEffect(() => {
-    async function getRouteKeys() {
+    const getRouteKeyPairs = async () => {
       try {
-        const keys = await AsyncStorage.getAllKeys();
-        if (keys !== undefined) {
-          setRouteKeys(keys);
-          const fetchedRoutes = await AsyncStorage.multiGet(keys);
-          if (fetchedRoutes !== undefined) {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // TODO fix mapping
-            setRoutes(
-              fetchedRoutes
-                .map((route) => {
-                  if (route[1] !== null && route[1][0] === '{') {
-                    console.log('route', route);
-                    return {
-                      route: JSON.parse(route[1]),
-                      key: route[0],
-                    };
-                  }
-                  return undefined;
-                })
-                .filter((_) => _ !== undefined)
-            );
-          }
+        const fetchedRouteKeyPairs = await databaseInfo?.getRoutes();
+        if (fetchedRouteKeyPairs !== undefined) {
+          setRouteKeyPairs(fetchedRouteKeyPairs);
         }
       } catch (e) {
-        console.log('error fetching routes from async storage', e);
+        console.log('error loading routes', e);
       }
-    }
-    getRouteKeys();
+    };
+    getRouteKeyPairs();
   }, []);
 
   const loadActiveRoute = (routeKey: string) => {
     setActiveRouteKey(routeKey);
+    // Markup caused by not properly defining tabNavigationNavigate as a route prop
     route.params.tabNavigationNavigate.navigate('Current route', {
       routeKey,
     });
@@ -146,7 +61,7 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
       <View style={{ minHeight: 30 }} />
       <FlatList
         style={[listStyles.listContainer]}
-        data={routes}
+        data={routeKeyPairs}
         renderItem={({ item }) => (
           <RouteNameList
             name={item.route.routeName}

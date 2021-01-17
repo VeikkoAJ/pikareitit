@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Route, RouteTransportLegRow } from '../types';
 import {
@@ -10,6 +10,7 @@ import {
 } from '../styles/BasicColors';
 import { TextInputBar } from './TextInputBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { DatabaseContext } from '../hooks/UseRouteDatabase';
 
 interface SaveRouteModalProps {
   routeTransportLegRows: RouteTransportLegRow[];
@@ -28,10 +29,12 @@ export default function SaveRouteModal({
     startWalkDuration: 0,
     routeTransportLegRows,
   });
+  const useRouteDatabase = useContext(DatabaseContext);
   const saveRoute = async () => {
     try {
-      const jsonRoute = JSON.stringify(route);
-      await AsyncStorage.setItem(route.routeName, jsonRoute);
+      const routeId = `user${route.routeName}Route`;
+      useRouteDatabase?.setRoute(routeId, route);
+      console.log(route);
     } catch (e) {
       console.log('saving failed', e);
     }
@@ -43,7 +46,6 @@ export default function SaveRouteModal({
       transparent={false}
       presentationStyle="fullScreen"
       onRequestClose={() => closeModal()}
-      style={{ minHeight: '100%' }}
     >
       <View style={basicStyles.background}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

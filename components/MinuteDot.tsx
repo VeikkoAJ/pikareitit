@@ -4,11 +4,10 @@ import React from 'react';
 
 interface IconDotProps {
   travelTime: number;
-  showSign?: string
-};
+  showSign?: string;
+}
 
-export function IconDot({ travelTime, showSign = ''}: IconDotProps) {
-
+export function MinuteDot({ travelTime, showSign = '' }: IconDotProps) {
   return (
     <View
       style={{

@@ -8,8 +8,9 @@ import {
   View,
 } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { RouteProp, CommonActions } from '@react-navigation/native';
+
 import { StackParamList } from '../NavigationTypes';
-import { RouteProp } from '@react-navigation/native';
 import {
   basicColors,
   basicStyles,
@@ -55,7 +56,14 @@ export default function CreateRouteScreen({
       {showModal && routeTransportLegRow && (
         <SaveRouteModal
           routeTransportLegRows={routeTransportLegRow}
-          closeModal={() => setShowModal(false)}
+          closeModal={() => {
+            setShowModal(false);
+            navigation.dispatch(
+              CommonActions.reset({
+                routes: [{ name: 'Browse' }, { name: 'Browse' }],
+              })
+            );
+          }}
         />
       )}
     </View>

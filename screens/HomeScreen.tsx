@@ -1,25 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  FlatList,
-  StatusBar,
-  Text,
-  ToastAndroid,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Route, RouteKeyPair } from '../types';
-import { RouteNameList } from '../components/RouteNameList';
-import {
-  basicColors,
-  basicStyles,
-  listStyles,
-  routeLegColors,
-} from '../styles/BasicColors';
-import { RootTabParamList } from '../NavigationTypes';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { Route, RouteKeyPair } from '../types';
+import { basicStyles, listStyles } from '../styles/BasicColors';
+import { RootTabParamList } from '../NavigationTypes';
+import { DatabaseContext } from '../hooks/UseRouteDatabase';
 
 // TODO move this to types after async storage is working
 interface HomeScreenScreenProps {
@@ -28,31 +14,27 @@ interface HomeScreenScreenProps {
 }
 
 export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
-  const [lastRouteKey, setLastRouteKey] = useState<string | undefined>(
-    undefined
-  );
-  const [lastRoute, setLastRoute] = useState<Route | undefined>(undefined);
+  const [lastRouteKeyPair, setLastRouteKeyPair] = useState<
+    RouteKeyPair | undefined
+  >(undefined);
+  const useRouteDatabase = useContext(DatabaseContext);
 
   useEffect(() => {
     async function getLastRoute() {
       try {
-        const key = await AsyncStorage.getItem('lastRouteKey');
-        if (key !== null) {
-          setLastRouteKey(key);
-          const routeJSON = await AsyncStorage.getItem(key);
-          if (routeJSON !== null) {
-            setLastRoute(JSON.parse(routeJSON));
-          }
+        const fetchedRoute = await useRouteDatabase?.getLatestRoute();
+        if (fetchedRoute !== undefined) {
+          setLastRouteKeyPair(fetchedRoute);
         }
       } catch (e) {
         console.log('error fetching last route from async storage', e);
       }
     }
     getLastRoute();
-  }, []);
+  }, [useRouteDatabase]);
 
   const loadActiveRoute = () => {
-    if (!lastRouteKey) {
+    if (!lastRouteKeyPair) {
       ToastAndroid.showWithGravity(
         'no recently used routes',
         200,
@@ -60,9 +42,9 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
       );
       return;
     }
-    if (lastRouteKey) {
+    if (lastRouteKeyPair) {
       navigation.navigate('Current route', {
-        routeKey: lastRouteKey,
+        routeKey: lastRouteKeyPair.key,
       });
     }
   };
@@ -78,10 +60,12 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
         <Text style={listStyles.listHeader}>Recent route:</Text>
         <TouchableOpacity style={listStyles.listItem} onPress={loadActiveRoute}>
           <Text style={listStyles.listItemHeader}>
-            {lastRoute ? lastRoute?.routeName : 'No recently viewed route'}
+            {lastRouteKeyPair !== undefined
+              ? lastRouteKeyPair.route.routeName
+              : 'No recently viewed route'}
           </Text>
-          {lastRoute ? (
-            <Text>{`${lastRoute.originPlace}->${lastRoute.finalDestination}`}</Text>
+          {lastRouteKeyPair !== undefined ? (
+            <Text>{`${lastRouteKeyPair.route.originPlace}->${lastRouteKeyPair.route.finalDestination}`}</Text>
           ) : null}
         </TouchableOpacity>
         <TouchableOpacity

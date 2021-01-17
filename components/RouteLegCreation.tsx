@@ -25,7 +25,7 @@ export function RouteLegCreation({ saveRoute }: RouteLegCreationProps) {
 
   useEffect(() => {
     saveRoute(formatRouteLegRows(routeLegKeyPairRows));
-  }, []);
+  }, [routeLegKeyPairRows]);
 
   return (
     <ScrollView

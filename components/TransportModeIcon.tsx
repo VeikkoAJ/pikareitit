@@ -8,7 +8,7 @@ type RouteLegIconProps = {
   color: string;
 };
 
-export default function RouteLegIcon({
+export default function TransportModeIcon({
   transportMode,
   size,
   color,

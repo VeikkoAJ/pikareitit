@@ -8,7 +8,7 @@ import {
   listForm,
   routeLegColors,
 } from '../styles/BasicColors';
-import RouteLegIcon from './RouteLegIcon';
+import TransportModeIcon from './TransportModeIcon';
 
 interface TransportModePickerProps {
   transportModes: TransportMode[];
@@ -54,7 +54,7 @@ export function TransportModePicker({
           style={{ alignItems: 'center' }}
           onPress={() => setTransportModes(mapTransportModes(transportMode))}
         >
-          <RouteLegIcon
+          <TransportModeIcon
             transportMode={transportMode}
             size={26}
             color={activeColor(transportMode)}

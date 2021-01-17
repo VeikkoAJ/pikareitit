@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StatusBar, View, Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ClipLoader } from 'react-spinners';
@@ -9,6 +9,7 @@ import { RouteContainer } from '../components/RouteContainer';
 import { basicColors, routeLegColors } from '../styles/BasicColors';
 import { Route } from '../types';
 import { RootTabParamList } from '../NavigationTypes';
+import { DatabaseContext, testRoute } from '../hooks/UseRouteDatabase';
 
 interface CurrentRouteScreenProps {
   navigation: BottomTabNavigationProp<RootTabParamList, 'Current route'>;
@@ -24,7 +25,7 @@ export function CurrentRouteScreen({
     undefined
   );
   const [error, setError] = useState(false);
-
+  const useRouteDatabase = useContext(DatabaseContext);
   useEffect(() => {
     async function getRouteFromStorage() {
       try {
@@ -32,31 +33,19 @@ export function CurrentRouteScreen({
           console.log('RouteKey undefined');
           return;
         }
-        const jsonFetchedRoute = await AsyncStorage.getItem(
+        const fetchedRoute = await useRouteDatabase?.getRoute(
           route.params.routeKey
         );
-        if (jsonFetchedRoute !== null) {
-          setTransportRoute(JSON.parse(jsonFetchedRoute));
-          console.log('route set');
+        if (fetchedRoute !== undefined) {
+          setTransportRoute(fetchedRoute.route);
+          useRouteDatabase?.setLatestRoute(route.params.routeKey);
         }
       } catch (e) {
         console.log('error in fetching route:', e);
         setError(true);
       }
     }
-    async function storeLastActiveRouteKey() {
-      try {
-        if (route.params.routeKey !== undefined) {
-          await AsyncStorage.setItem('lastRouteKey', route.params.routeKey);
-        }
-      } catch (e) {
-        console.log('failed to save last route key:', e);
-      }
-    }
     getRouteFromStorage();
-    if (!transportRoute) {
-      storeLastActiveRouteKey();
-    }
   }, [route.params.routeKey]);
 
   return (
@@ -76,7 +65,7 @@ export function CurrentRouteScreen({
         <RouteScreenTopBar
           setSearchTime={(time: Date) => setSearchTime(time)}
         />
-        {transportRoute ? (
+        {transportRoute !== undefined ? (
           <RouteContainer
             currentRoute={transportRoute}
             searchTime={searchTime}
@@ -99,7 +88,9 @@ export function CurrentRouteScreen({
               </>
             ) : (
               <>
-                <ClipLoader color={routeLegColors.light} loading size={50} />
+                {/* <ClipLoader color={routeLegColors.light} loading size={50} />
+                //TODO ClipLoader causes a crash on android
+              */}
                 {route.params.routeKey !== undefined ? (
                   <Text
                     style={{
@@ -119,7 +110,7 @@ export function CurrentRouteScreen({
                     <Text>No route selected, </Text>
                     <Text
                       style={{ color: 'blue' }}
-                      onPress={() => navigation.navigate('Browse')}
+                      onPress={() => console.log('y')}
                     >
                       press here to select a route.
                     </Text>
