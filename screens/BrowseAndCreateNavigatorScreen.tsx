@@ -20,8 +20,16 @@ export default function BrowseAndCreateNavigatorScreen({
 }: BrowseAndCreateNavigatorScreenProps) {
   return (
     <Stack.Navigator headerMode="none">
-      <Stack.Screen name="Browse" component={BrowseScreen} />
-      <Stack.Screen name="Create route" component={CreateRouteScreen} />
+      <Stack.Screen
+        name="Browse"
+        component={BrowseScreen}
+        initialParams={{ tabNavigationNavigate: navigation }}
+      />
+      <Stack.Screen
+        name="Create route"
+        component={CreateRouteScreen}
+        initialParams={{ tabNavigationNavigate: navigation }}
+      />
     </Stack.Navigator>
   );
 }

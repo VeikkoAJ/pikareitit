@@ -5,6 +5,6 @@ export type RootTabParamList = {
 };
 
 export type StackParamList = {
-  Browse: undefined;
-  'Create route': undefined;
+  Browse: { tabNavigationNavigate: any };
+  'Create route': { tabNavigationNavigate: any };
 };

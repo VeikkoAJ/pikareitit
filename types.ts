@@ -28,7 +28,6 @@ export type RouteTransportLeg = {
 export type RouteTransportLegRow = {
   routeLegs: RouteTransportLeg[];
   middleSector: MiddleSector;
-  middleSectorTransportModes: TransportMode[];
 };
 
 export type Route = {

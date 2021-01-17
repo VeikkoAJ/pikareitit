@@ -36,7 +36,6 @@ const testRoute: Route = {
         },
       ],
       middleSector: 'single',
-      middleSectorTransportModes: [{ mode: 'BUS' }],
     },
     {
       routeLegs: [
@@ -47,7 +46,6 @@ const testRoute: Route = {
         },
       ],
       middleSector: 'single',
-      middleSectorTransportModes: [{ mode: 'RAIL' }],
     },
     {
       routeLegs: [
@@ -59,7 +57,6 @@ const testRoute: Route = {
         },
       ],
       middleSector: 'split',
-      middleSectorTransportModes: [{ mode: 'RAIL' }],
     },
     {
       routeLegs: [
@@ -75,7 +72,6 @@ const testRoute: Route = {
         },
       ],
       middleSector: 'merge',
-      middleSectorTransportModes: [{ mode: 'BUS' }],
     },
   ],
 };
@@ -127,7 +123,7 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
 
   const loadActiveRoute = (routeKey: string) => {
     setActiveRouteKey(routeKey);
-    navigation.navigate('Current route', {
+    route.params.tabNavigationNavigate.navigate('Current route', {
       routeKey,
     });
   };
@@ -168,7 +164,12 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
       />
       <TouchableOpacity
         style={[listStyles.listContainer]}
-        onPress={() => navigation.navigate('Create route')}
+        onPress={() =>
+          navigation.navigate(
+            'Create route',
+            route.params.tabNavigationNavigate
+          )
+        }
       >
         <Text style={[listStyles.listHeader, { borderBottomWidth: 0 }]}>
           <Text>Add new + </Text>

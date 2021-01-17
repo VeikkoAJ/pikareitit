@@ -60,7 +60,10 @@ export default function UseRouteLegStartTimes(
           }
           if (itinerary.legs.length === 1) {
             // single leg means only walking
-            return { ...itinerary.legs[0], route: {...itinerary.legs[0].route, shortName: 'Walk' }};
+            return {
+              ...itinerary.legs[0],
+              route: { ...itinerary.legs[0].route, shortName: 'Walk' },
+            };
           }
           return undefined;
         })
