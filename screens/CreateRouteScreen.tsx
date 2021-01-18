@@ -1,23 +1,9 @@
 import React, { useState } from 'react';
-import {
-  ScrollView,
-  StatusBar,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { RouteProp, CommonActions } from '@react-navigation/native';
-
 import { StackParamList } from '../NavigationTypes';
-import {
-  basicColors,
-  basicStyles,
-  listForm,
-  listStyles,
-  routeLegColors,
-} from '../styles/BasicColors';
+import { basicStyles, routeLegColors } from '../styles/BasicColors';
 import { RouteLegCreation } from '../components/RouteLegCreation';
 import { RouteTransportLegRow } from '../types';
 import SaveRouteModal from '../components/SaveRouteModal';
@@ -31,7 +17,7 @@ export default function CreateRouteScreen({
   navigation,
   route,
 }: CreateRouteScreenProps) {
-  const [routeTransportLegRow, setRouteTransportLegRow] = useState<
+  const [routeTransportLegRows, setRouteTransportLegRows] = useState<
     RouteTransportLegRow[] | undefined
   >(undefined);
   const [showModal, setShowModal] = useState(false);
@@ -59,10 +45,10 @@ export default function CreateRouteScreen({
         </TouchableOpacity>
       </View>
       <View style={{ minHeight: 30 }} />
-      <RouteLegCreation saveRoute={setRouteTransportLegRow} />
-      {showModal && routeTransportLegRow && (
+      <RouteLegCreation saveRoute={setRouteTransportLegRows} />
+      {showModal && routeTransportLegRows && (
         <SaveRouteModal
-          routeTransportLegRows={routeTransportLegRow}
+          routeTransportLegRows={routeTransportLegRows}
           closeModal={() => {
             setShowModal(false);
             navigation.dispatch(

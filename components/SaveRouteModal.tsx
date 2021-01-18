@@ -1,15 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Modal, Text, TouchableOpacity, View } from 'react-native';
 import { Route, RouteTransportLegRow } from '../types';
-import {
-  basicColors,
-  basicStyles,
-  listForm,
-  listStyles,
-  routeLegColors,
-} from '../styles/BasicColors';
+import { basicStyles, listStyles, routeLegColors } from '../styles/BasicColors';
 import { TextInputBar } from './TextInputBar';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { DatabaseContext } from '../hooks/UseRouteDatabase';
 
 interface SaveRouteModalProps {

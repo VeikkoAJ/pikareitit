@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { Route, RouteKeyPair } from '../types';
+import { RouteKeyPair } from '../types';
 import { basicStyles, listStyles } from '../styles/BasicColors';
 import { RootTabParamList } from '../NavigationTypes';
 import { DatabaseContext } from '../hooks/UseRouteDatabase';

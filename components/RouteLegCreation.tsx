@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { ScrollView, View } from 'react-native';
-
 import { listStyles, routeLegColors } from '../styles/BasicColors';
 import { RouteLegForm } from './RouteLegForm';
 import { ListManipulationButton } from './ListManipulationButton';
