@@ -1,9 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { format } from 'date-fns';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { RouteTransportLegUnit } from '../types';
 import { routeLegColors } from '../styles/BasicColors';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { currentRouteStyles } from '../styles/CurrentRouteStyles';
 
 interface RouteLegUnitProps {
   legUnit: RouteTransportLegUnit;
@@ -14,75 +15,54 @@ export function RouteLegUnit({
   legUnit,
   showAdditional = true,
 }: RouteLegUnitProps) {
-  const routeName = () => {
-    if (legUnit.name === 'Walk') {
-      return (
-        <MaterialCommunityIcons
-          key={legUnit.startTime + legUnit.name}
-          style={{
-            alignSelf: 'flex-end',
-            paddingBottom: 3,
-          }}
-          name="walk"
-          size={18}
-          color={routeLegColors.charCoalText}
-        />
-      );
-    }
-    return (
-      <Text
-        key={legUnit.startTime + legUnit.name}
-        style={{
-          fontSize: 16,
-          fontWeight: 'bold',
-          color: routeLegColors.charCoalText,
-        }}
-      >
-        {legUnit.name}
-      </Text>
-    );
-  };
+  /** Replaces the bus or train name with a walking icon */
+  const walkIcon = () => (
+    <MaterialCommunityIcons
+      key={legUnit.startTime + legUnit.name}
+      style={{
+        alignSelf: 'flex-end',
+        paddingBottom: 3,
+      }}
+      name="walk"
+      size={18}
+      color={routeLegColors.charCoalText}
+    />
+  );
 
   return (
     <View
       key={legUnit.startTime + legUnit.name}
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        borderBottomWidth: 1,
-      }}
+      style={currentRouteStyles.legListRow}
     >
-      {routeName()}
+      {legUnit.name !== 'walk' ? (
+        walkIcon()
+      ) : (
+        <Text
+          key={legUnit.startTime + legUnit.name}
+          style={[currentRouteStyles.listText, { fontWeight: 'bold' }]}
+        >
+          {legUnit.name}
+        </Text>
+      )}
       <Text key={`${legUnit.startTime + legUnit.name}text`}>
         <Text
-          key={legUnit.startTime + legUnit.name + 'starTime'}
-          style={{
-            fontSize: 16,
-            fontWeight: 'bold',
-            color: routeLegColors.charCoalText,
-          }}
+          key={`${legUnit.startTime + legUnit.name}starTime`}
+          style={[currentRouteStyles.listText, { fontWeight: 'bold' }]}
         >
           {`${format(legUnit.startTime, 'HH:mm')}`}
         </Text>
         {showAdditional && (
           <Text
-            key={legUnit.startTime + legUnit.name + 'end time'}
-            style={{
-              fontSize: 16,
-              color: routeLegColors.charCoalText,
-            }}
+            key={`${legUnit.startTime + legUnit.name}end time`}
+            style={currentRouteStyles.listText}
           >
             {`→${format(legUnit.endTime, 'HH:mm')}`}
           </Text>
         )}
         {showAdditional && legUnit.secondaryEndTime && (
           <Text
-            key={legUnit.startTime + legUnit.name + 'secondary time'}
-            style={{
-              fontSize: 16,
-              fontStyle: 'italic',
-              color: routeLegColors.charCoalText,
-            }}
+            key={`${legUnit.startTime + legUnit.name}secondary time`}
+            style={[currentRouteStyles.listText, { fontStyle: 'italic' }]}
           >
             {`→${format(legUnit.secondaryEndTime, 'HH:mm')}`}
           </Text>
@@ -91,11 +71,3 @@ export function RouteLegUnit({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  greyText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: routeLegColors.charCoalText,
-  },
-});

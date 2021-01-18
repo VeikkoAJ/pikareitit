@@ -24,6 +24,5 @@ export function UseRouteLegDurations(routeLegRowCount: number) {
       );
     }
   };
-  useEffect(() => console.log(routeLegDurations), [routeLegDurations]);
   return { routeLegDurations, updateRouteLegDurations };
 }

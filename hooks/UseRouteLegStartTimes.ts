@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react';
-import { format } from 'date-fns';
-import { ToastAndroid } from 'react-native';
+import { useState } from 'react';
 
 export default function UseRouteLegStartTimes(
   routeLegRowCount: number,
@@ -27,27 +25,30 @@ export default function UseRouteLegStartTimes(
     ) {
       setRouteLegStartDates(
         routeLegStartDates.map((row, i) =>
-          row.map((date, j) => {
+          row.map((startTime, j) => {
             if (index[0] === i && index[1] === j) {
               return newStartTime;
             }
-            return date;
+            return startTime;
           })
         )
       );
     }
   };
 
+  /** Resets the start times to start from current index, startTimes before index are set undefined
+   *
+   */
   const updateStartTime = (
     newStartTime: Date,
     startRouteLegIndex: [number, number]
   ) => {
     const temp = emptyArray.map((row, i) =>
-      row.map((date, j) => {
+      row.map((startTime, j) => {
         if (startRouteLegIndex[0] === i && startRouteLegIndex[1] === j) {
           return newStartTime;
         }
-        return date;
+        return startTime;
       })
     );
     setRouteLegStartDates(temp);

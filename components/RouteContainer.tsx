@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import RouteLeg from './RouteLeg';
-import RouteStartEnd from './RouteStartEnd';
+import RouteStartEnd from './RouteStartEndLeg';
 import RouteMiddleSector from './RouteMiddleSector';
 import { Route } from '../types';
 import { UseRouteLegDurations } from '../hooks/UseRouteLegDurations';
 import UseRouteLegStartTimes from '../hooks/UseRouteLegStartTimes';
 import MiddleSectorWrapper from './MiddleSectorWrapper';
+import { currentRouteStyles } from '../styles/CurrentRouteStyles';
 
 export type RouteContainerProps = {
   currentRoute: Route;
@@ -30,21 +31,15 @@ export function RouteContainer({
   const { routeLegDurations, updateRouteLegDurations } = UseRouteLegDurations(
     currentRoute.routeTransportLegRows.length
   );
-  console.log('searchTime', routeLegStartDates[0][0]);
+
   return (
-    <ScrollView style={{ paddingHorizontal: 10 }}>
-      <View style={{ height: 75 }} />
-      <RouteStartEnd name={currentRoute.originPlace} iconName="home" />
+    <ScrollView style={currentRouteStyles.scrollView}>
+      <RouteStartEnd headerText={currentRoute.originPlace} iconName="home" />
       <RouteMiddleSector travelTimes={[currentRoute.startWalkDuration]} />
       {currentRoute.routeTransportLegRows.map((routeLegRow, rowIndex) => (
         <>
           <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'center',
-              width: '100%',
-            }}
+            style={currentRouteStyles.row}
             key={`${routeLegRow.routeLegs[0].from} to ${routeLegRow.routeLegs[0].to} row`}
           >
             {routeLegRow.routeLegs.map((routeLeg, index) => (
@@ -88,10 +83,9 @@ export function RouteContainer({
         </>
       ))}
       <RouteStartEnd
-        name={currentRoute.finalDestination}
+        headerText={currentRoute.finalDestination}
         iconName="office-building"
       />
-      <View style={{ height: 56 }} />
     </ScrollView>
   );
 }

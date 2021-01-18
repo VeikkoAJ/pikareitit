@@ -8,11 +8,7 @@ export default function RouteMiddleSector({
   travelTimes,
 }: RouteMiddleSectorProps) {
   return (
-    <View
-      style={{
-        alignItems: 'center',
-      }}
-    >
+    <View style={{ alignItems: 'center' }}>
       <SmallDot />
       <MinuteDot travelTime={travelTimes[0]} />
       <SmallDot />

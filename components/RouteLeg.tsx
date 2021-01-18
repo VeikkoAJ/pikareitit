@@ -8,6 +8,7 @@ import { routeLegColors } from '../styles/BasicColors';
 import { routeRequest } from '../services/RouteFetcher';
 import TransportModeIcon from './TransportModeIcon';
 import UseRouteQuery from '../hooks/UseRouteQuery';
+import { currentRouteStyles } from '../styles/CurrentRouteStyles';
 
 interface RouteLegProps {
   routeLeg: RouteTransportLeg;
@@ -64,64 +65,29 @@ export default function RouteLeg({
     return routeLeg.from.split(',')[0];
   };
 
-  const borderColor = () => {
+  const style = () => {
     if (isActive) {
-      return 'red'; // TODO Change to a better color
+      return currentRouteStyles.legActiveModifier;
     }
     if (isOld) {
-      return routeLegColors.lightVisited;
+      return currentRouteStyles.legOldModifier;
     }
-    return routeLegColors.light;
-  };
-
-  const elevation = () => {
-    if (isActive) {
-      return 5;
-    }
-    if (isOld) {
-      return 0;
-    }
-    return 1;
+    return undefined;
   };
 
   return (
     <TouchableOpacity
       key={`${routeLeg.from} to ${routeLeg.to}`}
-      style={{
-        flex: 1,
-        flexShrink: 1,
-        backgroundColor: !isOld
-          ? routeLegColors.light
-          : routeLegColors.lightVisited,
-        borderRadius: 20,
-        borderWidth: 2,
-        borderColor: borderColor(),
-        paddingHorizontal: 10,
-        paddingTop: 5,
-        paddingBottom: 15,
-        elevation: elevation(),
-      }}
+      style={[currentRouteStyles.legPressable, style()]}
       onPress={() => {
         setRouteStartTime();
         setActive();
       }}
     >
-      <View
-        style={{
-          flexShrink: 1,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          paddingVertical: 5,
-        }}
-      >
+      <View style={currentRouteStyles.legHeaderRow}>
         <Text
           key="stopName"
-          style={{
-            flexShrink: 1,
-            color: 'white',
-            fontSize: 24,
-          }}
+          style={currentRouteStyles.headerText}
           numberOfLines={1}
           ellipsizeMode="tail"
         >

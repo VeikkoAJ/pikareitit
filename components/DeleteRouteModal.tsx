@@ -14,7 +14,18 @@ export default function DeleteRouteModal({
   closeModal,
 }: DeleteRouteModalProps) {
   return (
-    <Modal animationType="slide" transparent presentationStyle="overFullScreen">
+    <Modal
+      animationType="slide"
+      transparent
+      presentationStyle="overFullScreen"
+      style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        minWidth: '60%',
+        minHeight: '20%',
+      }}
+    >
       <View>
         <Text>{`Delete ${routeName}?`}</Text>
         <View style={{ flexDirection: 'row' }}>

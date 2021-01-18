@@ -1,23 +1,14 @@
 import React, { useEffect, useState } from 'react';
-// import PouchDB from 'pouchdb-react-native'; //mobile
-import PouchDB from 'pouchdb'; // web testing
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Route, RouteKeyPair } from '../types';
 
-type DatabaseContextValues =
-  | undefined
-  | {
-      getRoute: (routeId: string) => Promise<RouteKeyPair | undefined>;
-      getLatestRoute: () => Promise<RouteKeyPair | undefined>;
-      getRoutes: () => Promise<RouteKeyPair[] | undefined>;
-      setLatestRoute: (routeId: string) => void;
-      setRoute: (id: string, route: Route) => void;
-      deleteRoute: (id: string) => void;
-    };
+// Dirty fix for using 2 different database modules for android and web
+// eslint-disable-next-line import/extensions
+import { db } from '../services/ImportPouchDB';
 
-export const testRoute: Route = {
+const testRoute1: Route = {
   routeName: 'Porukoille',
-  description: 'there is no description to this cursed shit',
+  description: 'placeholder route',
   originPlace: 'Majurinkulma',
   finalDestination: 'Lehmustie',
   startWalkDuration: 2.3 * 60,
@@ -70,13 +61,103 @@ export const testRoute: Route = {
     },
   ],
 };
-const db = new PouchDB('routes');
+const testRoute2: Route = {
+  routeName: 'Kotiin',
+  description: 'placeholder route',
+  originPlace: 'Lehmustie',
+  finalDestination: 'Majurinkulma',
+  startWalkDuration: 2.3 * 60,
+  routeTransportLegRows: [
+    {
+      routeLegs: [
+        {
+          from: 'Lehmustie 7, Helsinki::60.2517485,24.9854004',
+          to: 'Pukinmäen asema, Helsinki::60.2424651,24.9917559',
+          transportModes: [{ mode: 'BUS' }],
+        },
+        {
+          from: 'Lehmustie 7, Helsinki::60.2517485,24.9854004',
+          to: 'Malmin asema, Helsinki::60.2506078,25.0094086',
+          transportModes: [{ mode: 'BUS' }],
+        },
+      ],
+      middleSector: 'two',
+    },
+    {
+      routeLegs: [
+        {
+          from: 'Pukinmäen asema, Helsinki::60.2424651,24.9917559',
+          to: 'Pasilan asema, Helsinki, Helsinki::60.1986935,24.9345064',
+          transportModes: [{ mode: 'RAIL' }],
+        },
+        {
+          from: 'Malmin asema, Helsinki::60.2506078,25.0094086',
+          to: 'Pasilan asema, Helsinki, Helsinki::60.1986935,24.9345064',
+          transportModes: [{ mode: 'RAIL' }],
+        },
+      ],
+      middleSector: 'merge',
+    },
+    {
+      routeLegs: [
+        {
+          from: 'Pasilan asema, Helsinki::60.1986935,24.9345064',
+          to: 'Leppävaaran asema, Espoo::60.2193775,24.8113851',
+          secondaryTo: 'Malmin asema, Helsinki::60.2506078,25.0094086',
+          transportModes: [{ mode: 'RAIL' }],
+        },
+      ],
+      middleSector: 'single',
+    },
+    {
+      routeLegs: [
+        {
+          from: 'Leppävaaran asema, Espoo::60.2193775,24.8113851',
+          to: 'Majurinkulma 2, Espoo::60.2112299,24.8230712',
+          transportModes: [{ mode: 'BUS' }],
+        },
+      ],
+      middleSector: 'single',
+    },
+  ],
+};
+
+type DatabaseContextValues =
+  | undefined
+  | {
+      getRoute: (routeId: string) => Promise<RouteKeyPair | undefined>;
+      getLatestRoute: () => Promise<RouteKeyPair | undefined>;
+      getRoutes: () => Promise<RouteKeyPair[] | undefined>;
+      setLatestRoute: (routeId: string) => void;
+      setRoute: (id: string, route: Route) => void;
+      deleteRoute: (id: string) => void;
+    };
 
 export function UseRouteDatabase() {
-  // TODO ADD localStorage saving for latestRoute
   const [latestRouteId, setLatestRouteId] = useState<string | undefined>(
     undefined
   );
+  // TODO check if database isn't empty
+  /** Ads example routes */
+  const setup = () => {
+    db.info()
+      .then((info) => {
+        db.put({
+          _id: 'userExampleRoute',
+          route: JSON.stringify(testRoute1),
+        }).catch((err) => {
+          console.log(err);
+        });
+      })
+      .then(() => {
+        db.put({
+          _id: 'userExampleRoute2',
+          route: JSON.stringify(testRoute2),
+        }).catch((err) => {
+          console.log(err);
+        });
+      });
+  };
 
   useEffect(() => {
     const getLatestRouteKey = async () => {
@@ -88,7 +169,7 @@ export function UseRouteDatabase() {
       } catch (e) {}
     };
     getLatestRouteKey();
-  });
+  }, []);
 
   useEffect(() => {
     const storeLatestRouteKey = async () => {
@@ -102,17 +183,6 @@ export function UseRouteDatabase() {
     };
     storeLatestRouteKey();
   }, [latestRouteId]);
-
-  const setup = () => {
-    db.info().then((info) => {
-      db.put({
-        _id: 'userExampleRoute',
-        route: JSON.stringify(testRoute),
-      }).catch((err) => {
-        console.log(err);
-      });
-    });
-  };
 
   const getRoute = async (
     routeId: string
@@ -147,7 +217,6 @@ export function UseRouteDatabase() {
 
   const getRoutes = async (): Promise<RouteKeyPair[] | undefined> => {
     try {
-      console.log('getting routes');
       const response = await db.allDocs({
         include_docs: true,
         startkey: 'user',
@@ -189,6 +258,7 @@ export function UseRouteDatabase() {
     }
   };
 
+  /** Pass database hooks down with context.provider from root */
   const databaseContextValues: DatabaseContextValues = {
     getLatestRoute,
     getRoute,

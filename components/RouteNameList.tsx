@@ -13,7 +13,6 @@ interface RouteNameListProps {
 }
 
 export function RouteNameList({
-  key,
   name,
   originPlace,
   finalDestination,

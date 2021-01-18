@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { StatusBar, View, Text } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ClipLoader } from 'react-spinners';
+import { View, Text } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { RouteProp } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { RouteScreenTopBar } from '../components/RouteScreenTopBar';
 import { RouteContainer } from '../components/RouteContainer';
-import { basicColors, routeLegColors } from '../styles/BasicColors';
 import { Route } from '../types';
 import { RootTabParamList } from '../NavigationTypes';
-import { DatabaseContext, testRoute } from '../hooks/UseRouteDatabase';
+import { DatabaseContext } from '../hooks/UseRouteDatabase';
+import { routeLegColors } from '../styles/BasicColors';
+import { currentRouteStyles } from '../styles/CurrentRouteStyles';
 
 interface CurrentRouteScreenProps {
   navigation: BottomTabNavigationProp<RootTabParamList, 'Current route'>;
@@ -49,18 +49,7 @@ export function CurrentRouteScreen({
   }, [route.params.routeKey]);
 
   return (
-    <View
-      style={{
-        backgroundColor: basicColors.topBarLight,
-        flex: 1,
-      }}
-    >
-      <View
-        style={{
-          height: StatusBar.currentHeight,
-          backgroundColor: 'black',
-        }}
-      />
+    <SafeAreaProvider style={currentRouteStyles.background}>
       <View style={{ flex: 1 }}>
         <RouteScreenTopBar
           setSearchTime={(time: Date) => setSearchTime(time)}
@@ -71,58 +60,26 @@ export function CurrentRouteScreen({
             searchTime={searchTime}
           />
         ) : (
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {error ? (
-              <>
-                <Text
-                  style={{ paddingTop: 5, color: routeLegColors.charCoalText }}
-                >
-                  Something went wrong 😞 try restarting the app
-                </Text>
-              </>
-            ) : (
-              <>
-                {/* <ClipLoader color={routeLegColors.light} loading size={50} />
-                //TODO ClipLoader causes a crash on android
-              */}
-                {route.params.routeKey !== undefined ? (
-                  <Text
-                    style={{
-                      paddingTop: 10,
-                      color: routeLegColors.charCoalText,
-                    }}
-                  >
-                    loading...
-                  </Text>
-                ) : (
-                  <Text
-                    style={{
-                      paddingTop: 10,
-                      color: routeLegColors.charCoalText,
-                    }}
-                  >
-                    <Text>No route selected, </Text>
-                    <Text
-                      style={{ color: 'blue' }}
-                      onPress={() =>
-                        navigation.navigate('Browse', { screen: 'Browse' })
-                      }
-                    >
-                      press here to select a route.
-                    </Text>
-                  </Text>
-                )}
-              </>
+          <View style={currentRouteStyles.errorLoadingRouteView}>
+            {route.params.routeKey !== undefined && !error && (
+              <Text style={currentRouteStyles.basicText}>loading...</Text>
             )}
+            {error && (
+              <Text style={currentRouteStyles.basicText}>
+                Something went wrong 😞 try restarting the app
+              </Text>
+            )}
+            <Text
+              style={{ color: 'blue' }}
+              onPress={() =>
+                navigation.navigate('Browse', { screen: 'Browse' })
+              }
+            >
+              press here to browse saved routes.
+            </Text>
           </View>
         )}
       </View>
-    </View>
+    </SafeAreaProvider>
   );
 }

@@ -38,17 +38,24 @@ export default function CreateRouteScreen({
 
   return (
     <View style={basicStyles.background}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         <Text style={basicStyles.charcoalHeader}>Create a new route</Text>
         <TouchableOpacity
           style={{
-            padding: 10,
+            paddingHorizontal: 10,
+            paddingVertical: 5,
             borderRadius: 10,
             backgroundColor: routeLegColors.light,
           }}
           onPress={() => setShowModal(true)}
         >
-          <Text>Save</Text>
+          <Text style={basicStyles.whiteHeader}>Save</Text>
         </TouchableOpacity>
       </View>
       <View style={{ minHeight: 30 }} />
