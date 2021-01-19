@@ -5,10 +5,10 @@ Pikareitit on vaihtoehtoinen sovellus__. Sovelluksen tarkoituksena ei ole
 
 ## Asennus ja käyttö
 
-this app can be run locally with Expo package manager. Tai asentamalla sen:
+Sovellusta voi testata paikallisesti Expo:n avulla, tai:
 
-* Google Play-store:sta [*ei vielä julkaistu*]()
-* Käyttämällä selaimessa [*ei vielä julkaistu*]()
+* lataamalla sovelluksen Google Play:sta [*ei vielä julkaistu*]()
+* käyttämällä selainversiota [*ei vielä julkaistu*]()
 
 ## Usage
 
