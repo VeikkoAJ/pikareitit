@@ -3,15 +3,12 @@
 
 Pikareitit on vaihtoehtoinen sovellus__. Sovelluksen tarkoituksena ei ole 
 
-## Installation
+## Asennus ja käyttö
 
-this app can be run locally with Expo package manager. Or by installing it from:
+this app can be run locally with Expo package manager. Tai asentamalla sen:
 
-* Google Play-store [*not yet released*]()
-
-```bash
-pip install foobar
-```
+* Google Play-store:sta [*ei vielä julkaistu*]()
+* Käyttämällä selaimessa [*ei vielä julkaistu*]()
 
 ## Usage
 
