@@ -1,4 +1,4 @@
-[![Version](https://badge.fury.io/gh/tterb%2FHyde.svg)](https://badge.fury.io/gh/tterb%2FHyde)
+[![0.1.0](https://badge.fury.io/gh/tterb%2FHyde.svg)](https://badge.fury.io/gh/tterb%2FHyde)
 
 # Pikareitit
 [*English description at the end of this file*](https://github.com/VeikkoAJ/sbora_dash/#english)
