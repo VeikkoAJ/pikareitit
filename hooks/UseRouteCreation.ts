@@ -8,7 +8,16 @@ const emptyLeg = (): RouteLegKeyPair => ({
   routeLeg: {
     from: '',
     to: '',
-    transportModes: [],
+    transportModes: [{ mode: 'WALK' }],
+  },
+});
+
+const filledEmptyLeg = (from: string): RouteLegKeyPair => ({
+  key: new Date().getTime().toString(),
+  routeLeg: {
+    from,
+    to: '',
+    transportModes: [{ mode: 'WALK' }],
   },
 });
 
@@ -27,11 +36,20 @@ export function UseRouteCreation() {
 
   /** appends empty routeLeg to the array and moves the settingsIndex
    * @param nextTo decides if new leg will be added to the same or the next row
-   * @param row appends the routeLeg after it. If undefined adds it to the end of the array
+   * @param row appends the routeLeg after it. If undefined adds it to the end of the array. If earlier routeLeg exists uses it's to as the
+   * new routeLegs from
    */
   const addRouteLeg = (nextTo: boolean, row?: number) => {
-    if (row === undefined) {
+    if (routeLegKeyPairRows.length === 0) {
       setRouteLegKeyPairRows([...routeLegKeyPairRows, [emptyLeg()]]);
+      return;
+    }
+    if (row === undefined) {
+      const lastRow = routeLegKeyPairRows[routeLegKeyPairRows.length - 1];
+      setRouteLegKeyPairRows([
+        ...routeLegKeyPairRows,
+        [filledEmptyLeg(lastRow[0].routeLeg.to)],
+      ]);
       return;
     }
     if (settingsIndex && row < settingsIndex.row) {
@@ -41,9 +59,19 @@ export function UseRouteCreation() {
       });
     }
     if (nextTo) {
+      const lastRow = routeLegKeyPairRows[routeLegKeyPairRows.length - 1];
+      const presetFrom = () => {
+        if (lastRow[0].routeLeg.secondaryTo !== undefined) {
+          return lastRow[0].routeLeg.secondaryTo;
+        }
+        if (lastRow.length > 1) {
+          return lastRow[1].routeLeg.to;
+        }
+        return '';
+      };
       setRouteLegKeyPairRows([
         ...routeLegKeyPairRows.slice(0, row),
-        [...routeLegKeyPairRows[row], emptyLeg()],
+        [...routeLegKeyPairRows[row], filledEmptyLeg(presetFrom())],
         ...routeLegKeyPairRows.slice(row + 1),
       ]);
       return;
