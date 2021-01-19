@@ -1,33 +1,42 @@
 # Pikareitit
-**NOTE** *[English description is can be found at the end*](http://a.com)
+[*English description at the end of this file*](https://github.com/VeikkoAJ/sbora_dash/#english)
 
-Foobar is a Python library for dealing with word pluralization.
+Pikareitit on sovellus pääkaupunkiseudun julkisen liikenteen reittiaikatalujen reaaliaikaiseen seurantaan. Sovelluksessa on mahdollista luoda vapaasti muokattavia reittiaikataluja HSL:n pysäkkien välillä. Tarkoituksena on nopeuttaa julkisten liikennevälineiden käyttöä ennalta tutuilla reiteillä, kuten työmatkoilla.
 
-## Installation
+**Pääominaisuudet**
+* aikataulujen ketjutus
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Seuraavan etapin aikataulut lasketaan edellisen etapin nopeimman siirtymän mukaan. Sovellus näyttää lyhyimmätkin vaihtoajat linjojen välillä, jolloin käyttäjän on mahdollista juosta seuraavaan liikennevälineeseen. *Esimerkiksi Pasilan asemalla lähijunien aikataulu mahdollistaa junien vaihtamisen juoksemalla laiturilta toiselle.*
+* reitin halkaisu
 
-```bash
-pip install foobar
-```
+Sovellukessa on mahdollista luoda reittejä, jotka jakautuvat kahteen määränpäähän, esimerkiksi perättäisiin juna-asemiin. Ominaisuus on hyödyllinen jos määränpää on kahden pysäkin välissä ja käyttäjä haluaa näyttää.
+* reittien tallentaminen ja muokkaaminen
 
-## Usage
+reittejä on mahdollista luoda ja tallentaa paikallisesti omalle laitteelle. 
 
-```python
-import foobar
+## Asennus ja käyttö
 
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
-```
+Sovellusta voi testata paikallisesti Expo:n avulla, tai:
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+* lataamalla sovelluksen Google Play:sta [*ei vielä julkaistu*]()
+* käyttämällä selainversiota [*ei vielä julkaistu*]()
 
-Please make sure to update tests as appropriate.
+
+## Käytetyt Frameworkit ja kirjastot
+* kieli: Typescript
+* framework: React Native
+* aikataulujen hakeminen: Apolla ja GraphQL
+* reittien paikallinen tallennus: PouchDB
+
+## Ylläpitäjä
+Veikko Jääskeläinen
+
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+
+- Transit data is from HSL Routing AP, licensed under cc by 4.0
+- Addres search data is from HSL Geocoding API, licensed under cc by 4.0
 
 
-##In english
+## English
+Pikareitit is an mobile app for creating and viewing custom local (Helsinki region) transit schedules.
