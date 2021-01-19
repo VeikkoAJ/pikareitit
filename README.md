@@ -28,7 +28,8 @@ Sovellusta voi testata paikallisesti Expo:n avulla, tai:
 * aikataulujen hakeminen: Apolla ja GraphQL
 * reittien paikallinen tallennus: PouchDB
 
-## Käytetyt Frameworkit ja kirjastot
+## Ylläpitäjä
+Veikko Jääskeläinen
 
 
 ## License
@@ -36,3 +37,4 @@ Sovellusta voi testata paikallisesti Expo:n avulla, tai:
 
 
 ## English
+Pikareitit is an mobile app for creating and viewing custom local (Helsinki region) transit schedules.
