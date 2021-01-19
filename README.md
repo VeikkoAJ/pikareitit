@@ -1,5 +1,5 @@
 # Pikareitit
-*NOTE:* [*English description at the end of this file*](##English)
+*NOTE:* [*English description at the end of this file*](https://github.com/VeikkoAJ/sbora_dash/#english)
 
 Pikareitit on sovellus pääkaupunkiseudun julkisen liikenteen reittiaikatalujen reaaliaikaiseen seurantaan. Sovelluksessa on mahdollista luoda vapaasti muokattavia reittiaikataluja HSL:n pysäkkien välillä. Tarkoituksena on nopeuttaa julkisten liikennevälineiden käyttöä ennalta tutuilla reiteillä, kuten työmatkoilla.
 
