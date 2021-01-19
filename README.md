@@ -5,10 +5,13 @@ Pikareitit on vaihtoehtoinen sovellus__. Sovellus tarjoaa mahdollisuuden luoda v
 
 **Pääominaisuudet**
 * aikataulujen ketjutus
-Seuraavan etapin aikataulut lasketaan edellisen etapin nopeimman siirtymän mukaan. Sovellus näyttää lyhyimmätkin vaihtoajat linjojen välillä, jolloin käyttäjän on mahdollista juosta seuraavaan liikennevälineeseen. *Esimerkiksi Pasilan asemalla lähijunien aikataulu mahdollistaa junien vaihtamisen juoksemalla laiturilta toiselle.
+
+Seuraavan etapin aikataulut lasketaan edellisen etapin nopeimman siirtymän mukaan. Sovellus näyttää lyhyimmätkin vaihtoajat linjojen välillä, jolloin käyttäjän on mahdollista juosta seuraavaan liikennevälineeseen. *Esimerkiksi Pasilan asemalla lähijunien aikataulu mahdollistaa junien vaihtamisen juoksemalla laiturilta toiselle.*
 * reitin halkaisu
+
 Sovellukessa on mahdollista luoda reittejä, jotka jakautuvat kahteen määränpäähän, esimerkiksi perättäisiin juna-asemiin. Ominaisuus on hyödyllinen jos määränpää on kahden pysäkin välissä ja käyttäjä haluaa näyttää.
 * reittien tallentaminen ja muokkaaminen
+
 reittejä on mahdollista luoda ja tallentaa paikallisesti omalle laitteelle. 
 
 ## Asennus ja käyttö
