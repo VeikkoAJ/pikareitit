@@ -33,7 +33,9 @@ Veikko Jääskeläinen
 
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+
+- Transit data is from HSL Routing AP, licensed under cc by 4.0
+- Addres search data is from HSL Geocoding API, licensed under cc by 4.0
 
 
 ## English
