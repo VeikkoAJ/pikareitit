@@ -1,7 +1,7 @@
 # Pikareitit
 *NOTE: * [*English description at the end of this file*](##English)
 
-Pikareitit on vaihtoehtoinen sovellus__. Sovellus tarjoaa mahdollisuuden luoda vapaasti muokattavia reittiaikataluja HSL:n pysäkkien välillä. Tarkoituksena on nopeuttaa julkisten liikennevälineiden käyttöä ennalta tutuilla reiteillä, kuten työmatkoilla.
+Pikareitit on sovellus pääkaupunkiseudun julkisen liikenteen reittiaikatalujen reaaliaikaiseen seurantaan. Sovelluksessa on mahdollista luoda vapaasti muokattavia reittiaikataluja HSL:n pysäkkien välillä. Tarkoituksena on nopeuttaa julkisten liikennevälineiden käyttöä ennalta tutuilla reiteillä, kuten työmatkoilla.
 
 **Pääominaisuudet**
 * aikataulujen ketjutus
