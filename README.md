@@ -1,5 +1,5 @@
 # Pikareitit
-**NOTE** *[English description is can be found at the end*](##english)
+**NOTE** [*English description is can be found at the end*](##English)
 
 Foobar is a Python library for dealing with word pluralization.
 
