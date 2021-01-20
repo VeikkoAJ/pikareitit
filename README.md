@@ -1,42 +1,50 @@
 # Pikareitit
-[*English description at the end of this file*](https://github.com/VeikkoAJ/sbora_dash/#english)
 
-Pikareitit on sovellus pääkaupunkiseudun julkisen liikenteen reittiaikatalujen reaaliaikaiseen seurantaan. Sovelluksessa on mahdollista luoda vapaasti muokattavia reittiaikataluja HSL:n pysäkkien välillä. Tarkoituksena on nopeuttaa julkisten liikennevälineiden käyttöä ennalta tutuilla reiteillä, kuten työmatkoilla.
+*Pikareitit is an mobile app for creating and viewing custom local (Helsinki region) transit schedules.*
+
+Sovellus pääkaupunkiseudun julkisen liikenteen reittiaikatalujen reaaliaikaiseen seurantaan. Sovelluksella on mahdollista luoda kustomoituja reittiaikatauluja HSL:n pysäkkien välillä. Tarkoituksena on nopeuttaa julkisten käyttöä ennalta tutuilla reiteillä, kuten työmatkoilla.
 
 **Pääominaisuudet**
 * aikataulujen ketjutus
 
 Seuraavan etapin aikataulut lasketaan edellisen etapin nopeimman siirtymän mukaan. Sovellus näyttää lyhyimmätkin vaihtoajat linjojen välillä, jolloin käyttäjän on mahdollista juosta seuraavaan liikennevälineeseen. *Esimerkiksi Pasilan asemalla lähijunien aikataulu mahdollistaa junien vaihtamisen juoksemalla laiturilta toiselle.*
+
 * reitin halkaisu
 
-Sovellukessa on mahdollista luoda reittejä, jotka jakautuvat kahteen määränpäähän, esimerkiksi perättäisiin juna-asemiin. Ominaisuus on hyödyllinen jos määränpää on kahden pysäkin välissä ja käyttäjä haluaa näyttää.
+Sovellukessa on mahdollista luoda reittejä, jotka jakautuvat kahteen määränpäähän, esimerkiksi perkkäisiin juna-asemiin.
+
 * reittien tallentaminen ja muokkaaminen
 
-reittejä on mahdollista luoda ja tallentaa paikallisesti omalle laitteelle. 
+Reittejä on mahdollista luoda ja tallentaa paikallisesti omalle laitteelle. 
 
-## Asennus ja käyttö
+## Usage
 
-Sovellusta voi testata paikallisesti Expo:n avulla, tai:
+The app can be run locally with [Expo Client](https://docs.expo.io/) or by:
 
-* lataamalla sovelluksen Google Play:sta [*ei vielä julkaistu*]()
-* käyttämällä selainversiota [*ei vielä julkaistu*]()
+* Downloading the App from Google Play [*not yet released*]()
 
+## Built with
 
-## Käytetyt Frameworkit ja kirjastot
-* kieli: Typescript
-* framework: React Native
-* aikataulujen hakeminen: Apolla ja GraphQL
-* reittien paikallinen tallennus: PouchDB
+* [React Native](https://reactnative.dev/)
+* [React Navigation](https://reactnavigation.org/)
+* [Apollo client](https://www.apollographql.com/docs/react/) - [GraphQL](https://graphql.org/) - live transit schedules from HSL Routing API
+* [PouchDB](https://pouchdb.com/) local database for storing user created routes
 
-## Ylläpitäjä
+## Upcoming Features and known bugs
+**features**
+ * Individual time shifts for each timetable
+ * support for 3 or more parallel timetables
+ * searching routes by stop name instead of street name
+ * settings tab and dark theme
+ **bugs**
+ * Browse screen not updating when a deleting route
+
+## Author
 Veikko Jääskeläinen
-
 
 ## License
 
-- Transit data is from HSL Routing AP, licensed under cc by 4.0
-- Addres search data is from HSL Geocoding API, licensed under cc by 4.0
+- Transit data is from HSL Routing API, licensed under cc by 4.0
+- Address data is from HSL Geocoding API, licensed under cc by 4.0
 
-
-## English
-Pikareitit is an mobile app for creating and viewing custom local (Helsinki region) transit schedules.
+MIT
