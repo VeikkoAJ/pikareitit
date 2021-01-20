@@ -4,7 +4,7 @@ import { RouteProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { RouteKeyPair } from '../types';
 import { basicStyles, listStyles } from '../styles/BasicColors';
-import { RootTabParamList } from '../NavigationTypes';
+import { RootTabParamList } from '../navigationTypes';
 import { DatabaseContext } from '../hooks/UseRouteDatabase';
 
 // TODO move this to types after async storage is working
@@ -56,10 +56,10 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
         <Text style={basicStyles.charcoalHeader}>Welcome</Text>
       </View>
       <View style={{ minHeight: 30 }} />
-      <View style={[listStyles.listContainer, { minHeight: 120 }]}>
-        <Text style={listStyles.listHeader}>Recent route:</Text>
-        <TouchableOpacity style={listStyles.listItem} onPress={loadActiveRoute}>
-          <Text style={listStyles.listItemHeader}>
+      <View style={[listStyles.container, { minHeight: 120 }]}>
+        <Text style={listStyles.header}>Recent route:</Text>
+        <TouchableOpacity style={listStyles.item} onPress={loadActiveRoute}>
+          <Text style={listStyles.itemHeader}>
             {lastRouteKeyPair !== undefined
               ? lastRouteKeyPair.route.routeName
               : 'No recently viewed route'}
@@ -69,7 +69,7 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
           ) : null}
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={[listStyles.listContainer]}>
+      <TouchableOpacity style={[listStyles.container]}>
         <View
           style={{
             flexDirection: 'row',
@@ -77,13 +77,13 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
             paddingEnd: 5,
           }}
         >
-          <Text style={[listStyles.listHeader, { borderBottomWidth: 0 }]}>
+          <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
             Press here for the tutorial
           </Text>
           <Text style={{ fontSize: 23, textAlign: 'right' }}> 💡</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={[listStyles.listContainer]}>
+      <TouchableOpacity style={[listStyles.container]}>
         <View
           style={{
             flexDirection: 'row',
@@ -91,14 +91,14 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
             paddingEnd: 5,
           }}
         >
-          <Text style={[listStyles.listHeader, { borderBottomWidth: 0 }]}>
+          <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
             Settings
           </Text>
           <Text style={{ fontSize: 23, textAlign: 'right' }}> 🔧</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[listStyles.listContainer]}
+        style={[listStyles.container]}
         onPress={() =>
           navigation.navigate('Browse', { screen: 'Create route' })
         }
@@ -110,7 +110,7 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
             paddingEnd: 5,
           }}
         >
-          <Text style={[listStyles.listHeader, { borderBottomWidth: 0 }]}>
+          <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
             Create new
           </Text>
           <Text style={{ fontSize: 23, textAlign: 'right' }}> +</Text>

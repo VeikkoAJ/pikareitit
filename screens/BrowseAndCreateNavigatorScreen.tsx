@@ -5,7 +5,7 @@ import { View } from 'react-native';
 import { BrowseScreen } from './BrowseScreen';
 import CreateRouteScreen from './CreateRouteScreen';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { RootTabParamList, StackParamList } from '../NavigationTypes';
+import { RootTabParamList, StackParamList } from '../navigationTypes';
 
 const Stack = createStackNavigator<StackParamList>();
 

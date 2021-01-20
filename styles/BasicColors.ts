@@ -46,7 +46,7 @@ export const basicStyles = StyleSheet.create({
 });
 
 export const listStyles = StyleSheet.create({
-  listContainer: {
+  container: {
     paddingTop: 15,
     paddingBottom: 10,
     paddingHorizontal: 10,
@@ -55,23 +55,23 @@ export const listStyles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: basicColors.topBarBackground,
   },
-  listHeader: {
+  header: {
     fontSize: 24,
     color: routeLegColors.charCoalText,
     borderBottomWidth: 1,
     borderColor: routeLegColors.normal,
   },
-  listItem: {
+  item: {
     paddingTop: 5,
     paddingBottom: 5,
     borderBottomWidth: 1,
     borderColor: routeLegColors.normal,
   },
-  listItemHeader: {
+  itemHeader: {
     fontSize: 18,
     color: routeLegColors.charCoalText,
   },
-  listSeparator: {
+  separator: {
     borderBottomWidth: 1,
     borderColor: routeLegColors.normal,
     minHeight: 1,
@@ -79,19 +79,19 @@ export const listStyles = StyleSheet.create({
 });
 
 export const listForm = StyleSheet.create({
-  listTextInput: {
+  textInput: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingTop: 5,
     paddingBottom: 5,
   },
   fieldName: {
-    ...listStyles.listItemHeader,
+    ...listStyles.itemHeader,
     flex: 1,
     fontWeight: 'bold',
   },
   fieldAnswer: {
-    ...listStyles.listItemHeader,
+    ...listStyles.itemHeader,
     flex: 2,
     marginLeft: 6,
     borderBottomWidth: 1,

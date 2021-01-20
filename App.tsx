@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import { RootTabParamList } from './NavigationTypes';
+import { RootTabParamList } from './navigationTypes';
 import { HomeScreen } from './screens/HomeScreen';
 import { CurrentRouteScreen } from './screens/CurrentRouteScreen';
 import { basicColors, routeLegColors } from './styles/BasicColors';

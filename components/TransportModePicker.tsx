@@ -47,7 +47,7 @@ export function TransportModePicker({
   };
 
   return (
-    <View style={[listForm.listTextInput, { flex: 1, flexWrap: 'wrap' }]}>
+    <View style={[listForm.textInput, { flex: 1, flexWrap: 'wrap' }]}>
       {defaultTransportModes.map((transportMode) => (
         <TouchableOpacity
           key={transportMode.mode}

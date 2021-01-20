@@ -1,13 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { format } from 'date-fns';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { RouteTransportLegUnit } from '../types';
 import { routeLegColors } from '../styles/BasicColors';
 import { currentRouteStyles } from '../styles/CurrentRouteStyles';
 
 interface RouteLegUnitProps {
-  legUnit: RouteTransportLegUnit;
+  legUnit: {
+    name: string;
+    startTime: number;
+    endTime: number;
+    secondaryEndTime?: number;
+    realTime: boolean;
+  };
   showAdditional: boolean;
 }
 
@@ -15,7 +20,7 @@ export function RouteLegUnit({
   legUnit,
   showAdditional = true,
 }: RouteLegUnitProps) {
-  /** Replaces the bus or train name with a walking icon */
+  /** Walking icon for when no route is available */
   const walkIcon = () => (
     <MaterialCommunityIcons
       key={legUnit.startTime + legUnit.name}
@@ -34,7 +39,7 @@ export function RouteLegUnit({
       key={legUnit.startTime + legUnit.name}
       style={currentRouteStyles.legListRow}
     >
-      {legUnit.name !== 'walk' ? (
+      {legUnit.name === 'WALK' ? (
         walkIcon()
       ) : (
         <Text

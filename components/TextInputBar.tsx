@@ -33,7 +33,7 @@ export function TextInputBar({
   };
 
   return (
-    <View style={listForm.listTextInput}>
+    <View style={listForm.textInput}>
       <Text style={[listForm.fieldName, { flex: flexValues().left }]}>
         {text}
       </Text>

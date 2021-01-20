@@ -24,7 +24,7 @@ export function RouteNameList({
   return (
     <TouchableOpacity
       style={[
-        listStyles.listItem,
+        listStyles.item,
         {
           flexDirection: 'row',
           justifyContent: 'space-between',
@@ -41,7 +41,7 @@ export function RouteNameList({
         />
       )}
       <View>
-        <Text style={[listStyles.listItemHeader, { borderBottomWidth: 0 }]}>
+        <Text style={[listStyles.itemHeader, { borderBottomWidth: 0 }]}>
           {name}
         </Text>
         <Text style={{}}>{`${originPlace} -> ${finalDestination}`}</Text>

@@ -46,6 +46,7 @@ export function UseRouteCreation() {
     }
     if (row === undefined) {
       const lastRow = routeLegKeyPairRows[routeLegKeyPairRows.length - 1];
+      console.log('lastrow', lastRow[0]);
       setRouteLegKeyPairRows([
         ...routeLegKeyPairRows,
         [filledEmptyLeg(lastRow[0].routeLeg.to)],
@@ -155,6 +156,7 @@ export function UseRouteCreation() {
     row: number,
     column: number
   ) => {
+    console.log('set routeLeg', routeLeg);
     // test row and column limits
     if (row >= routeLegKeyPairRows.length) {
       return;

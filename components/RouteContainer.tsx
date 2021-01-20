@@ -31,7 +31,7 @@ export function RouteContainer({
   const { routeLegDurations, updateRouteLegDurations } = UseRouteLegDurations(
     currentRoute.routeTransportLegRows.length
   );
-
+  console.log('routecontainer', currentRoute);
   return (
     <ScrollView style={currentRouteStyles.scrollView}>
       <RouteStartEnd headerText={currentRoute.originPlace} iconName="home" />

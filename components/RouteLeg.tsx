@@ -3,12 +3,13 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { format } from 'date-fns';
 import { RouteLegUnit } from './RouteLegUnit';
-import { QueryData, RouteTransportLeg } from '../types';
+import { RouteTransportLeg } from '../types';
 import { routeLegColors } from '../styles/BasicColors';
 import { routeRequest } from '../services/RouteFetcher';
 import TransportModeIcon from './TransportModeIcon';
 import UseRouteQuery from '../hooks/UseRouteQuery';
 import { currentRouteStyles } from '../styles/CurrentRouteStyles';
+import { QueryData } from '../routeQueryTypes';
 
 interface RouteLegProps {
   routeLeg: RouteTransportLeg;

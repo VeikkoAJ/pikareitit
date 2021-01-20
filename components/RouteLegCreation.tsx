@@ -29,7 +29,7 @@ export function RouteLegCreation({ saveRoute }: RouteLegCreationProps) {
   return (
     <ScrollView
       style={[
-        listStyles.listContainer,
+        listStyles.container,
         {
           paddingHorizontal: 0,
           paddingVertical: 0,

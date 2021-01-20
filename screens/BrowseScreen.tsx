@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Route, RouteKeyPair } from '../types';
 import { basicStyles, listStyles } from '../styles/BasicColors';
 import { RouteNameList } from '../components/RouteNameList';
-import { StackParamList } from '../NavigationTypes';
+import { StackParamList } from '../navigationTypes';
 import { DatabaseContext } from '../hooks/UseRouteDatabase';
 
 interface BrowseScreenProps {
@@ -16,7 +16,6 @@ interface BrowseScreenProps {
 
 export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
   const [routeKeyPairs, setRouteKeyPairs] = useState<RouteKeyPair[]>([]);
-  const [routeKey, setRouteKey] = useState<string | undefined>(undefined);
   const [listChangeTracker, setListChangeTracker] = useState<number>(0);
   const useRouteDatabase = useContext(DatabaseContext);
 
@@ -35,14 +34,12 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
   }, [listChangeTracker]);
 
   const loadActiveRoute = (routeKey: string) => {
-    setRouteKey(routeKey);
     // Markup caused by not properly defining tabNavigationNavigate as a route prop
     route.params.tabNavigationNavigate.navigate('Current route', {
       routeKey,
     });
   };
 
-  // TODO add top bar
   return (
     <View style={[basicStyles.background, { paddingBottom: 80 }]}>
       <View>
@@ -50,7 +47,7 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
       </View>
       <View style={{ minHeight: 30 }} />
       <FlatList
-        style={[listStyles.listContainer]}
+        style={[listStyles.container]}
         data={routeKeyPairs}
         extraData={listChangeTracker}
         renderItem={({ item }) => (
@@ -73,7 +70,7 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
         keyExtractor={(_) => _.key}
       />
       <TouchableOpacity
-        style={[listStyles.listContainer]}
+        style={[listStyles.container]}
         onPress={() =>
           navigation.navigate(
             'Create route',
@@ -81,7 +78,7 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
           )
         }
       >
-        <Text style={[listStyles.listHeader, { borderBottomWidth: 0 }]}>
+        <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
           <Text>Add new + </Text>
         </Text>
       </TouchableOpacity>

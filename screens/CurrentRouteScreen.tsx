@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StatusBar } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { RouteProp } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { RouteScreenTopBar } from '../components/RouteScreenTopBar';
 import { RouteContainer } from '../components/RouteContainer';
 import { Route } from '../types';
-import { RootTabParamList } from '../NavigationTypes';
+import { RootTabParamList } from '../navigationTypes';
 import { DatabaseContext } from '../hooks/UseRouteDatabase';
 import { routeLegColors } from '../styles/BasicColors';
 import { currentRouteStyles } from '../styles/CurrentRouteStyles';
@@ -26,11 +26,13 @@ export function CurrentRouteScreen({
   );
   const [error, setError] = useState(false);
   const useRouteDatabase = useContext(DatabaseContext);
+
   useEffect(() => {
     async function getRouteFromStorage() {
       try {
         if (route.params.routeKey === undefined) {
           console.log('RouteKey undefined');
+          setError(true);
           return;
         }
         const fetchedRoute = await useRouteDatabase?.getRoute(
@@ -49,7 +51,12 @@ export function CurrentRouteScreen({
   }, [route.params.routeKey]);
 
   return (
-    <SafeAreaProvider style={currentRouteStyles.background}>
+    <SafeAreaProvider
+      style={[
+        currentRouteStyles.background,
+        { marginTop: StatusBar !== undefined ? StatusBar.currentHeight : 0 },
+      ]}
+    >
       <View style={{ flex: 1 }}>
         <RouteScreenTopBar
           setSearchTime={(time: Date) => setSearchTime(time)}

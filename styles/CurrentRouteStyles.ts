@@ -59,6 +59,7 @@ export const currentRouteStyles = StyleSheet.create({
     paddingBottom: 15,
     borderRadius: 20,
     borderWidth: 2,
+    borderColor: routeLegColors.light,
     backgroundColor: routeLegColors.light,
     elevation: 1,
   },

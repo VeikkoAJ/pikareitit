@@ -3,7 +3,8 @@ import { Pressable, Text, TextInput, View } from 'react-native';
 import { listForm, routeLegColors } from '../styles/BasicColors';
 import { TransportModePicker } from './TransportModePicker';
 import { ListManipulationButton } from './ListManipulationButton';
-import { RouteTransportLeg, TransportMode } from '../types';
+import { RouteTransportLeg, TransportMode, MapLocation } from '../types';
+import AddressSearch from './AddressSearch';
 
 interface RouteLegFormProps {
   routeLeg: RouteTransportLeg;
@@ -26,30 +27,39 @@ export function RouteLegForm({
   moveRouteLeg,
   setRouteLeg,
 }: RouteLegFormProps) {
-  const [from, setFrom] = useState<string>(routeLeg.from);
-  const [to, setTo] = useState<string>(routeLeg.to);
-  const [secondaryTo, setSecondaryTo] = useState<string>(routeLeg.to);
+  const [from, setFrom] = useState<MapLocation>({
+    name: routeLeg.from.split(':')[0],
+    lat: undefined,
+    lon: undefined,
+  });
+  const [to, setTo] = useState<MapLocation>({
+    name: routeLeg.to.split(':')[0],
+    lat: undefined,
+    lon: undefined,
+  });
+  const [secondaryTo, setSecondaryTo] = useState<MapLocation | undefined>({
+    name:
+      routeLeg.secondaryTo === undefined
+        ? ''
+        : routeLeg.secondaryTo.split(':')[0],
+    lat: undefined,
+    lon: undefined,
+  });
   const [transportModes, setTransportModes] = useState<TransportMode[]>(
     routeLeg.transportModes
   );
 
   useEffect(() => {
     setRouteLeg({
-      from,
-      to,
-      secondaryTo,
+      from: `${from.name}::${from.lon},${from.lat}`,
+      to: `${to.name}::${to.lon},${to.lat}`,
+      secondaryTo:
+        secondaryTo === undefined
+          ? undefined
+          : `${secondaryTo.name}::${secondaryTo.lat},${secondaryTo.lon}`,
       transportModes,
     });
-  }, [transportModes]);
-
-  const refresh = () => {
-    setRouteLeg({
-      from,
-      to,
-      secondaryTo,
-      transportModes,
-    });
-  };
+  }, [transportModes, from, to, secondaryTo]);
 
   return (
     <Pressable
@@ -66,24 +76,21 @@ export function RouteLegForm({
       onLongPress={() => setShowSettings()}
     >
       <View style={{ marginRight: 30, flexWrap: 'wrap' }}>
-        <View style={[listForm.listTextInput, { flex: 1 }]}>
-          <Text style={listForm.fieldName}>from:</Text>
-          <TextInput
-            style={listForm.fieldAnswer}
-            value={from}
-            onChangeText={(text) => setFrom(text)}
-            onEndEditing={() => refresh()}
-          />
-        </View>
-        <View style={[listForm.listTextInput, { flex: 1 }]}>
-          <Text style={listForm.fieldName}>to:</Text>
-          <TextInput
-            style={listForm.fieldAnswer}
-            value={to}
-            onChangeText={(text) => setTo(text)}
-            onEndEditing={() => refresh()}
-          />
-        </View>
+        <AddressSearch
+          name="from:"
+          defaultValue={from.name}
+          changeLocation={(location) => setFrom(location)}
+        />
+        <AddressSearch
+          name="to:"
+          defaultValue={to.name}
+          changeLocation={(location) => setTo(location)}
+        />
+        <AddressSearch
+          name="secondary to"
+          defaultValue={secondaryTo?.name === undefined ? '' : secondaryTo.name}
+          changeLocation={(location) => setSecondaryTo(location)}
+        />
       </View>
       <TransportModePicker
         transportModes={transportModes}
@@ -99,6 +106,7 @@ export function RouteLegForm({
       </View>
       {showSettings && (
         <View
+          key="settings bar"
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',

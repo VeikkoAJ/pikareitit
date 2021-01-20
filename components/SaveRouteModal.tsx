@@ -28,12 +28,10 @@ export default function SaveRouteModal({
     try {
       const routeId = `user${route.routeName}Route`;
       useRouteDatabase?.setRoute(routeId, route);
-      console.log(route);
     } catch (e) {
       console.log('saving failed', e);
     }
   };
-
   return (
     <Modal
       animationType="slide"
@@ -48,7 +46,7 @@ export default function SaveRouteModal({
         <View style={{ minHeight: 30 }} />
         <View
           style={[
-            listStyles.listContainer,
+            listStyles.container,
             {
               flex: 1,
               justifyContent: 'space-between',

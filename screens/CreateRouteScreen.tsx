@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { RouteProp, CommonActions } from '@react-navigation/native';
-import { StackParamList } from '../NavigationTypes';
+import { StackParamList } from '../navigationTypes';
 import { basicStyles, routeLegColors } from '../styles/BasicColors';
 import { RouteLegCreation } from '../components/RouteLegCreation';
 import { RouteTransportLegRow } from '../types';

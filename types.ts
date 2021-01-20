@@ -4,14 +4,6 @@ export type RouteMiddleSectorProps = {
   sign?: string;
 };
 
-export type RouteTransportLegUnit = {
-  name: string;
-  startTime: number;
-  endTime: number;
-  secondaryEndTime?: number;
-  realTime: boolean;
-};
-
 export type TransportMode = {
   mode: 'BUS' | 'RAIL' | 'TRAM' | 'SUBWAY' | 'FERRY' | 'WALK';
 };
@@ -39,34 +31,6 @@ export type Route = {
   routeTransportLegRows: RouteTransportLegRow[];
 };
 
-type Leg = {
-  mode: string;
-  startTime: number;
-  endTime: number;
-  duration: number;
-  realTime: boolean;
-  from: {
-    name: string;
-  };
-  to: {
-    name: string;
-  };
-  route: {
-    shortName: string;
-  };
-};
-
-type Itinerary = {
-  duration: number;
-  legs: Leg[];
-};
-
-export type QueryData = {
-  plan: {
-    itineraries: Itinerary[];
-  };
-};
-
 export interface RouteKeyPair {
   route: Route;
   key: string;
@@ -76,3 +40,9 @@ export interface RouteLegKeyPair {
   key: string;
   routeLeg: RouteTransportLeg;
 }
+
+export type MapLocation = {
+  name: string;
+  lat: number | undefined;
+  lon: number | undefined;
+};

@@ -36,9 +36,7 @@ export default function UseRouteLegStartTimes(
     }
   };
 
-  /** Resets the start times to start from current index, startTimes before index are set undefined
-   *
-   */
+  /** Resets the start times to start from current index, startTimes before index are set undefined */
   const updateStartTime = (
     newStartTime: Date,
     startRouteLegIndex: [number, number]
@@ -53,5 +51,6 @@ export default function UseRouteLegStartTimes(
     );
     setRouteLegStartDates(temp);
   };
+
   return { routeLegStartDates, updateNextRouteLegStartTime, updateStartTime };
 }

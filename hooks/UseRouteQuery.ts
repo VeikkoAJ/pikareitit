@@ -1,7 +1,8 @@
 import { useQuery } from '@apollo/client';
 import { format } from 'date-fns';
-import { QueryData, RouteTransportLeg } from '../types';
+import { RouteTransportLeg } from '../types';
 import { routeRequest } from '../services/RouteFetcher';
+import { QueryData } from '../routeQueryTypes';
 
 export default function UseRouteLegStartTimes(
   routeLeg: RouteTransportLeg,
@@ -46,8 +47,8 @@ export default function UseRouteLegStartTimes(
   };
 
   const [
-    { loading: loading1, data: data1 },
-    { loading: loading2, data: data2 },
+    { loading: loading1, data: data1, error: error1 },
+    { loading: loading2, data: data2, error: error2 },
   ] = routeQueries();
 
   const formatLegData = (queryData: QueryData | undefined) => {
@@ -62,7 +63,7 @@ export default function UseRouteLegStartTimes(
             // single leg means only walking
             return {
               ...itinerary.legs[0],
-              route: { ...itinerary.legs[0].route, shortName: 'Walk' },
+              route: { ...itinerary.legs[0].route, shortName: 'walk' },
             };
           }
           return undefined;
@@ -76,6 +77,7 @@ export default function UseRouteLegStartTimes(
     return undefined;
   };
 
+  console.log('data1', data1, 'loading1', loading1, 'error1', error1);
   return {
     mainQueryLegs: formatLegData(data1),
     secondaryQueryLegs: formatLegData(data2),

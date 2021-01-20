@@ -1,6 +1,13 @@
 import React from 'react';
-import { Modal, Text, TouchableOpacity, View } from 'react-native';
-import { routeLegColors } from '../styles/BasicColors';
+import {
+  Modal,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from 'react-native';
+import { listForm, listStyles, routeLegColors } from '../styles/BasicColors';
+import { createRouteStyles } from '../styles/CreateRouteStyles';
 
 interface DeleteRouteModalProps {
   routeName: string;
@@ -14,21 +21,17 @@ export default function DeleteRouteModal({
   closeModal,
 }: DeleteRouteModalProps) {
   return (
-    <Modal
-      animationType="slide"
-      transparent
-      presentationStyle="overFullScreen"
-      style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        minWidth: '60%',
-        minHeight: '20%',
-      }}
-    >
-      <View>
-        <Text>{`Delete ${routeName}?`}</Text>
-        <View style={{ flexDirection: 'row' }}>
+    <Modal animationType="slide" transparent presentationStyle="overFullScreen">
+      <View
+        style={[
+          createRouteStyles.smallModal,
+          { marginTop: useWindowDimensions().height / 3 },
+        ]}
+      >
+        <Text
+          style={[listStyles.itemHeader, { flex: 1 }]}
+        >{`Delete ${routeName}?`}</Text>
+        <View style={{ flexDirection: 'row', flex: 1 }}>
           <TouchableOpacity
             style={{
               flex: 3,
@@ -42,20 +45,20 @@ export default function DeleteRouteModal({
               deleteRoute();
             }}
           >
-            <Text>Delete</Text>
+            <Text style={{ color: 'white' }}>Delete</Text>
           </TouchableOpacity>
-          <View style={{ width: 5 }} />
           <TouchableOpacity
             style={{
               flex: 3,
               alignItems: 'center',
               padding: 10,
+              marginHorizontal: 2.5,
               borderRadius: 10,
               backgroundColor: routeLegColors.light,
             }}
             onPress={() => closeModal()}
           >
-            <Text>CANCEL</Text>
+            <Text style={{ color: 'white' }}>CANCEL</Text>
           </TouchableOpacity>
         </View>
       </View>
