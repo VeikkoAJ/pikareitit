@@ -7,8 +7,8 @@ import { Route, RouteKeyPair } from '../types';
 import { db } from '../services/ImportPouchDB';
 
 const testRoute1: Route = {
-  routeName: 'Esimerkkireitti',
-  description: 'testaukseen ja esittelyyn',
+  routeName: 'mallireitti',
+  description: 'testaa tällä reitillä sovelluksen ominaisuudet',
   originPlace: 'toimisto',
   finalDestination: 'koti',
   startWalkDuration: 1.3 * 60,

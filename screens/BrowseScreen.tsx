@@ -43,7 +43,7 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
   return (
     <View style={[basicStyles.background, { paddingBottom: 80 }]}>
       <View>
-        <Text style={basicStyles.charcoalHeader}>Saved routes</Text>
+        <Text style={basicStyles.charcoalHeader}>Tallennetut reitit</Text>
       </View>
       <View style={{ minHeight: 30 }} />
       <FlatList
@@ -78,9 +78,25 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
           )
         }
       >
-        <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
-          <Text>Add new + </Text>
-        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingEnd: 5,
+          }}
+        >
+          <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
+            Luo uusi reitti
+          </Text>
+          <Text
+            style={[
+              listStyles.header,
+              { borderBottomWidth: 0, textAlign: 'right' },
+            ]}
+          >
+            {' + '}
+          </Text>
+        </View>
       </TouchableOpacity>
     </View>
   );

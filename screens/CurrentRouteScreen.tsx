@@ -24,13 +24,14 @@ export function CurrentRouteScreen({
     undefined
   );
   const [error, setError] = useState(false);
+  const [noKey, setNoKey] = useState(false);
   const useRouteDatabase = useContext(DatabaseContext);
   useEffect(() => {
     async function getRouteFromStorage() {
       try {
         if (route.params.routeKey === undefined) {
           console.log('RouteKey undefined');
-          setError(true);
+          setNoKey(true);
           return;
         }
         const fetchedRoute = await useRouteDatabase?.getRoute(
@@ -68,11 +69,16 @@ export function CurrentRouteScreen({
         ) : (
           <View style={currentRouteStyles.errorLoadingRouteView}>
             {route.params.routeKey !== undefined && !error && (
-              <Text style={currentRouteStyles.basicText}>loading...</Text>
+              <Text style={currentRouteStyles.basicText}>ladataan...</Text>
+            )}
+            {noKey && (
+              <Text style={currentRouteStyles.basicText}>
+                Ei valittua reittiä
+              </Text>
             )}
             {error && (
               <Text style={currentRouteStyles.basicText}>
-                Something went wrong 😞
+                Jotain meni pieleen 😞
               </Text>
             )}
             <Text
@@ -81,7 +87,7 @@ export function CurrentRouteScreen({
                 navigation.navigate('Browse', { screen: 'Browse' })
               }
             >
-              press here to browse saved routes.
+              siirry tallennettuihin reitteihin
             </Text>
           </View>
         )}

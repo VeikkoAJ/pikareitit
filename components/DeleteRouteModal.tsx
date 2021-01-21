@@ -30,7 +30,7 @@ export default function DeleteRouteModal({
       >
         <Text
           style={[listStyles.itemHeader, { flex: 1 }]}
-        >{`Delete ${routeName}?`}</Text>
+        >{`Poista reitti: ${routeName}?`}</Text>
         <View style={{ flexDirection: 'row', flex: 1 }}>
           <TouchableOpacity
             style={{
@@ -45,7 +45,7 @@ export default function DeleteRouteModal({
               deleteRoute();
             }}
           >
-            <Text style={{ color: 'white' }}>Delete</Text>
+            <Text style={{ color: 'white' }}>Poista</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{
@@ -58,7 +58,7 @@ export default function DeleteRouteModal({
             }}
             onPress={() => closeModal()}
           >
-            <Text style={{ color: 'white' }}>CANCEL</Text>
+            <Text style={{ color: 'white' }}>Peruuta</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -53,16 +53,16 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
   return (
     <View style={basicStyles.background}>
       <View>
-        <Text style={basicStyles.charcoalHeader}>Welcome</Text>
+        <Text style={basicStyles.charcoalHeader}>Pikareitit</Text>
       </View>
       <View style={{ minHeight: 30 }} />
       <View style={[listStyles.container, { minHeight: 120 }]}>
-        <Text style={listStyles.header}>Recent route:</Text>
+        <Text style={listStyles.header}>Viimeisin reitti:</Text>
         <TouchableOpacity style={listStyles.item} onPress={loadActiveRoute}>
           <Text style={listStyles.itemHeader}>
             {lastRouteKeyPair !== undefined
               ? lastRouteKeyPair.route.routeName
-              : 'No recently viewed route'}
+              : 'ei viimeaikaisia reittejä'}
           </Text>
           {lastRouteKeyPair !== undefined ? (
             <Text>{`${lastRouteKeyPair.route.originPlace} → ${lastRouteKeyPair.route.finalDestination}`}</Text>
@@ -78,7 +78,7 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
           }}
         >
           <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
-            Tutorial
+            Ohjeet
           </Text>
           <Text style={{ fontSize: 23, textAlign: 'right' }}> 💡</Text>
         </View>
@@ -92,7 +92,7 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
           }}
         >
           <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
-            Settings
+            Asetukset
           </Text>
           <Text style={{ fontSize: 23, textAlign: 'right' }}> 🔧</Text>
         </View>
@@ -111,9 +111,16 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
           }}
         >
           <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
-            Create new
+            Luo uusi reitti
           </Text>
-          <Text style={{ fontSize: 23, textAlign: 'right' }}> +</Text>
+          <Text
+            style={[
+              listStyles.header,
+              { borderBottomWidth: 0, textAlign: 'right' },
+            ]}
+          >
+            {' + '}
+          </Text>
         </View>
       </TouchableOpacity>
     </View>

@@ -41,7 +41,7 @@ export default function CreateRouteScreen({
           }}
           onPress={() => setShowModal(true)}
         >
-          <Text style={basicStyles.whiteHeader}>Save</Text>
+          <Text style={basicStyles.whiteHeader}>Tallenna</Text>
         </TouchableOpacity>
       </View>
       <View style={{ minHeight: 30 }} />

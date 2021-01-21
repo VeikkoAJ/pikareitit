@@ -86,7 +86,7 @@ export default function UseRouteQuery(
           if (itinerary.legs.length === 1) {
             return {
               ...itinerary.legs[0],
-              route: { ...itinerary.legs[0].route, shortName: 'walk' },
+              route: { ...itinerary.legs[0].route, shortName: 'WALK' },
             };
           }
           // disallowed routes set to undefined

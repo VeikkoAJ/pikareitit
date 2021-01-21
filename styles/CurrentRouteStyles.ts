@@ -14,6 +14,7 @@ export const currentRouteStyles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'stretch',
     zIndex: 1,
+    elevation: 1,
   },
   topBarItem: {
     flexDirection: 'row',

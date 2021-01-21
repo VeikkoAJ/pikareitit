@@ -29,6 +29,7 @@ export function CurrentRouteTopBar({
           style={{
             paddingStart: 20,
             paddingEnd: timeShift === 0 ? 15 : 5,
+            elevation: 3,
           }}
           onPress={() => {
             if (timeShift === 0) {
