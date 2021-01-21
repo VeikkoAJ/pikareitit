@@ -7,10 +7,11 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { listForm } from '../styles/BasicColors';
+import { listForm, routeLegColors } from '../styles/BasicColors';
 import { createRouteStyles } from '../styles/CreateRouteStyles';
 import { UseAddressSearch } from '../hooks/UseAddressSearch';
 import { MapLocation } from '../types';
+import { ListManipulationButton } from './ListManipulationButton';
 
 interface AddressSearchProps {
   name: string;
@@ -44,19 +45,39 @@ export default function AddressSearch({
           presentationStyle="overFullScreen"
           onRequestClose={() => setShowModal(false)}
         >
-          <View
-            style={[
-              createRouteStyles.largeModal,
-              { alignItems: undefined, justifyContent: undefined },
-            ]}
-          >
-            <Text style={listForm.fieldName}>Input an address or location</Text>
-            <ScrollView keyboardShouldPersistTaps="always">
+          <View style={[createRouteStyles.largeModal, {}]}>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={[listForm.fieldName, { paddingTop: 16 / 6 + 8 }]}>
+                kirjoita osoite tai paikan nimi
+              </Text>
+              <ListManipulationButton
+                buttonIcon="remove"
+                size={16}
+                color={routeLegColors.lightVisited}
+                onButtonPress={() => setShowModal(false)}
+              />
+            </View>
+
+            <ScrollView
+              style={{ alignSelf: 'stretch' }}
+              keyboardShouldPersistTaps="always"
+            >
               <TextInput
-                style={listForm.fieldAnswer}
+                style={[listForm.fieldAnswer, { alignSelf: 'stretch' }]}
+                placeholder=" esim. Rautatientori 2 "
                 defaultValue={defaultValue}
                 autoFocus
                 onChangeText={(text) => search(text)}
+                onSubmitEditing={() => {
+                  if (searchResult.length > 0) {
+                    changeLocation({
+                      address: searchResult[0].properties.label,
+                      lon: searchResult[0].geometry.coordinates[0],
+                      lat: searchResult[0].geometry.coordinates[1],
+                    });
+                    setShowModal(false);
+                  }
+                }}
               />
 
               {searchResult.map((result) => (

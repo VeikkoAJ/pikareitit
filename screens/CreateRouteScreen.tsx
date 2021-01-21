@@ -49,13 +49,15 @@ export default function CreateRouteScreen({
       {showModal && routeTransportLegRows && (
         <SaveRouteModal
           routeTransportLegRows={routeTransportLegRows}
-          closeModal={() => {
+          closeModal={(saved: boolean) => {
             setShowModal(false);
-            navigation.dispatch(
-              CommonActions.reset({
-                routes: [{ name: 'Browse' }, { name: 'Browse' }],
-              })
-            );
+            if (saved) {
+              navigation.dispatch(
+                CommonActions.reset({
+                  routes: [{ name: 'Browse' }, { name: 'Browse' }],
+                })
+              );
+            }
           }}
         />
       )}

@@ -30,6 +30,7 @@ export const createRouteStyles = StyleSheet.create({
     minWidth: '80%',
     minHeight: '40%',
     padding: 10,
+    paddingBottom: 30,
     borderWidth: 1,
     borderRadius: 10,
     backgroundColor: basicColors.topBarLight,

@@ -1,5 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { Modal, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Modal,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Route, RouteTransportLegRow } from '../types';
 import { basicStyles, listStyles, routeLegColors } from '../styles/BasicColors';
 import { TextInputBar } from './TextInputBar';
@@ -8,7 +14,7 @@ import { DatabaseContext } from '../hooks/UseRouteDatabase';
 
 interface SaveRouteModalProps {
   routeTransportLegRows: RouteTransportLegRow[];
-  closeModal: () => void;
+  closeModal: (saved: boolean) => void;
 }
 
 export default function SaveRouteModal({
@@ -37,7 +43,7 @@ export default function SaveRouteModal({
       animationType="slide"
       transparent={false}
       presentationStyle="fullScreen"
-      onRequestClose={() => closeModal()}
+      onRequestClose={() => closeModal(false)}
     >
       <View style={basicStyles.background}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -102,7 +108,7 @@ export default function SaveRouteModal({
                 borderRadius: 10,
                 backgroundColor: routeLegColors.light,
               }}
-              onPress={() => closeModal()}
+              onPress={() => closeModal(false)}
             >
               <Text>Close</Text>
             </TouchableOpacity>
@@ -116,8 +122,24 @@ export default function SaveRouteModal({
                 backgroundColor: routeLegColors.light,
               }}
               onPress={() => {
+                if (route.routeTransportLegRows.length === 0) {
+                  ToastAndroid.show(
+                    'Reitti ei voi olla tyhjä!',
+                    ToastAndroid.LONG
+                  );
+                  closeModal(false);
+                  return;
+                }
+                if (route.routeName.length < 2) {
+                  ToastAndroid.show(
+                    'Reitiltä puuttuu nimi tai sen nimi on liian lyhyt!',
+                    ToastAndroid.SHORT
+                  );
+                  return;
+                }
+
                 saveRoute();
-                closeModal();
+                closeModal(true);
               }}
             >
               <Text>Save</Text>
