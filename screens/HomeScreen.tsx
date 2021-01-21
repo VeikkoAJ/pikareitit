@@ -65,7 +65,7 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
               : 'No recently viewed route'}
           </Text>
           {lastRouteKeyPair !== undefined ? (
-            <Text>{`${lastRouteKeyPair.route.originPlace}->${lastRouteKeyPair.route.finalDestination}`}</Text>
+            <Text>{`${lastRouteKeyPair.route.originPlace} → ${lastRouteKeyPair.route.finalDestination}`}</Text>
           ) : null}
         </TouchableOpacity>
       </View>
@@ -78,7 +78,7 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
           }}
         >
           <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
-            Press here for the tutorial
+            Tutorial
           </Text>
           <Text style={{ fontSize: 23, textAlign: 'right' }}> 💡</Text>
         </View>

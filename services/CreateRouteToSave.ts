@@ -1,9 +1,4 @@
-import {
-  MiddleSector,
-  RouteLegKeyPair,
-  RouteTransportLeg,
-  RouteTransportLegRow,
-} from '../types';
+import { MiddleSector, RouteLegKeyPair, RouteTransportLegRow } from '../types';
 
 const mapMiddleSector = (
   rowLength: number,

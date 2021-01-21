@@ -10,10 +10,16 @@ export type TransportMode = {
 
 export type MiddleSector = 'single' | 'split' | 'two' | 'merge';
 
+export type MapLocation = {
+  address: string;
+  lat: number | undefined;
+  lon: number | undefined;
+};
+
 export type RouteTransportLeg = {
-  from: string;
-  to: string;
-  secondaryTo?: string;
+  from: MapLocation;
+  to: MapLocation;
+  secondaryTo?: MapLocation;
   transportModes: TransportMode[];
 };
 
@@ -40,9 +46,3 @@ export interface RouteLegKeyPair {
   key: string;
   routeLeg: RouteTransportLeg;
 }
-
-export type MapLocation = {
-  name: string;
-  lat: number | undefined;
-  lon: number | undefined;
-};

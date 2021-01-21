@@ -18,8 +18,6 @@ export const currentRouteStyles = StyleSheet.create({
   topBarItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingStart: 20,
-    paddingEnd: 20,
     backgroundColor: basicColors.topBarBackground,
     elevation: 1,
   },
@@ -94,5 +92,19 @@ export const currentRouteStyles = StyleSheet.create({
   listText: {
     fontSize: 16,
     color: routeLegColors.charCoalText,
+  },
+  topBarMinuteItem: {
+    paddingHorizontal: 5,
+    backgroundColor: basicColors.topBarBackground,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderColor: 'white',
+  },
+  topBarMinuteText: {
+    textAlign: 'center',
+    minWidth: 40,
+    fontSize: 24,
+    color: 'white',
+    textAlignVertical: 'bottom',
   },
 });

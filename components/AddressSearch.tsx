@@ -26,7 +26,17 @@ export default function AddressSearch({
   const [showModal, setShowModal] = useState(false);
   const { searchResult, search } = UseAddressSearch();
   return (
-    <View style={[listForm.textInput, { flex: 1, flexWrap: 'wrap' }]}>
+    <View style={{ paddingTop: 5 }}>
+      <Text numberOfLines={1} style={[listForm.fieldName, { flex: 1 }]}>
+        {name}
+      </Text>
+      <Text
+        style={[listForm.fieldAnswer, {}]}
+        onPress={() => setShowModal(true)}
+      >
+        {defaultValue}
+      </Text>
+
       {showModal && (
         <Modal
           animationType="slide"
@@ -34,33 +44,30 @@ export default function AddressSearch({
           presentationStyle="overFullScreen"
           onRequestClose={() => setShowModal(false)}
         >
-          <View style={createRouteStyles.largeModal}>
-            <View
-              style={[
-                listForm.textInput,
-                { flex: 1, flexWrap: 'wrap', margin: 10 },
-              ]}
-            >
-              <Text style={listForm.fieldName}>
-                Input an address or location
-              </Text>
+          <View
+            style={[
+              createRouteStyles.largeModal,
+              { alignItems: undefined, justifyContent: undefined },
+            ]}
+          >
+            <Text style={listForm.fieldName}>Input an address or location</Text>
+            <ScrollView keyboardShouldPersistTaps="always">
               <TextInput
                 style={listForm.fieldAnswer}
                 defaultValue={defaultValue}
                 autoFocus
                 onChangeText={(text) => search(text)}
               />
-            </View>
-            <ScrollView>
+
               {searchResult.map((result) => (
                 <Pressable
                   key={result.properties.id}
                   style={{ borderBottomWidth: 1, paddingTop: 5 }}
                   onPress={() => {
                     changeLocation({
-                      name: result.properties.label,
-                      lat: result.geometry.coordinates[0],
-                      lon: result.geometry.coordinates[1],
+                      address: result.properties.label,
+                      lon: result.geometry.coordinates[0],
+                      lat: result.geometry.coordinates[1],
                     });
                     setShowModal(false);
                   }}
@@ -72,10 +79,6 @@ export default function AddressSearch({
           </View>
         </Modal>
       )}
-      <Text style={listForm.fieldName}>{name}</Text>
-      <Text style={listForm.fieldAnswer} onPress={() => setShowModal(true)}>
-        {defaultValue}
-      </Text>
     </View>
   );
 }

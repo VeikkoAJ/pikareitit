@@ -1,22 +1,38 @@
 // TODO Add initial route for editing existing routes
 
 import { useState } from 'react';
-import { RouteLegKeyPair, RouteTransportLeg } from '../types';
+import { MapLocation, RouteLegKeyPair, RouteTransportLeg } from '../types';
 
 const emptyLeg = (): RouteLegKeyPair => ({
   key: new Date().getTime().toString(),
   routeLeg: {
-    from: '',
-    to: '',
+    from: {
+      address: '',
+      lat: 0,
+      lon: 0,
+    },
+    to: {
+      address: '',
+      lat: 0,
+      lon: 0,
+    },
     transportModes: [{ mode: 'WALK' }],
   },
 });
 
-const filledEmptyLeg = (from: string): RouteLegKeyPair => ({
+const filledEmptyLeg = (address: string): RouteLegKeyPair => ({
   key: new Date().getTime().toString(),
   routeLeg: {
-    from,
-    to: '',
+    from: {
+      address,
+      lat: 0,
+      lon: 0,
+    },
+    to: {
+      address: '',
+      lat: 0,
+      lon: 0,
+    },
     transportModes: [{ mode: 'WALK' }],
   },
 });
@@ -46,10 +62,9 @@ export function UseRouteCreation() {
     }
     if (row === undefined) {
       const lastRow = routeLegKeyPairRows[routeLegKeyPairRows.length - 1];
-      console.log('lastrow', lastRow[0]);
       setRouteLegKeyPairRows([
         ...routeLegKeyPairRows,
-        [filledEmptyLeg(lastRow[0].routeLeg.to)],
+        [filledEmptyLeg(lastRow[0].routeLeg.to.address)],
       ]);
       return;
     }
@@ -63,10 +78,10 @@ export function UseRouteCreation() {
       const lastRow = routeLegKeyPairRows[routeLegKeyPairRows.length - 1];
       const presetFrom = () => {
         if (lastRow[0].routeLeg.secondaryTo !== undefined) {
-          return lastRow[0].routeLeg.secondaryTo;
+          return lastRow[0].routeLeg.secondaryTo.address;
         }
         if (lastRow.length > 1) {
-          return lastRow[1].routeLeg.to;
+          return lastRow[1].routeLeg.to.address;
         }
         return '';
       };
@@ -181,8 +196,12 @@ export function UseRouteCreation() {
    * @param row
    * @param column
    */
-  const setNewSettingsIndex = (row?: number, column?: number) => {
-    if (row === undefined || column === undefined) {
+  const setNewSettingsIndex = (
+    toggle: boolean,
+    row: number,
+    column: number
+  ) => {
+    if (!toggle) {
       setSettingsIndex(undefined);
       return;
     }

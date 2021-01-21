@@ -24,9 +24,9 @@ const client = new ApolloClient({
 const MainTab = createBottomTabNavigator<RootTabParamList>();
 
 export default function App() {
-  const { setup, databaseContextValues } = UseRouteDatabase();
+  const { setExampleRoute, databaseContextValues } = UseRouteDatabase();
 
-  setup();
+  setExampleRoute();
 
   return (
     <ApolloProvider client={client}>

@@ -9,8 +9,7 @@ import AddressSearch from './AddressSearch';
 interface RouteLegFormProps {
   routeLeg: RouteTransportLeg;
   showSettings: boolean;
-  setShowSettings: () => void;
-  setHideSettings: () => void;
+  setShowSettings: (toggle: boolean) => void;
   addRouteLeg: () => void;
   removeRouteLeg: () => void;
   moveRouteLeg: (yOffset: number, xOffset: number) => void;
@@ -21,42 +20,25 @@ export function RouteLegForm({
   routeLeg,
   showSettings,
   setShowSettings,
-  setHideSettings,
   addRouteLeg,
   removeRouteLeg,
   moveRouteLeg,
   setRouteLeg,
 }: RouteLegFormProps) {
-  const [from, setFrom] = useState<MapLocation>({
-    name: routeLeg.from.split(':')[0],
-    lat: undefined,
-    lon: undefined,
-  });
-  const [to, setTo] = useState<MapLocation>({
-    name: routeLeg.to.split(':')[0],
-    lat: undefined,
-    lon: undefined,
-  });
-  const [secondaryTo, setSecondaryTo] = useState<MapLocation | undefined>({
-    name:
-      routeLeg.secondaryTo === undefined
-        ? ''
-        : routeLeg.secondaryTo.split(':')[0],
-    lat: undefined,
-    lon: undefined,
-  });
+  const [from, setFrom] = useState<MapLocation>(routeLeg.from);
+  const [to, setTo] = useState<MapLocation>(routeLeg.to);
+  const [secondaryTo, setSecondaryTo] = useState<MapLocation | undefined>(
+    routeLeg.secondaryTo
+  );
   const [transportModes, setTransportModes] = useState<TransportMode[]>(
     routeLeg.transportModes
   );
 
   useEffect(() => {
     setRouteLeg({
-      from: `${from.name}::${from.lon},${from.lat}`,
-      to: `${to.name}::${to.lon},${to.lat}`,
-      secondaryTo:
-        secondaryTo === undefined
-          ? undefined
-          : `${secondaryTo.name}::${secondaryTo.lat},${secondaryTo.lon}`,
+      from,
+      to,
+      secondaryTo,
       transportModes,
     });
   }, [transportModes, from, to, secondaryTo]);
@@ -64,38 +46,19 @@ export function RouteLegForm({
   return (
     <Pressable
       style={{
+        alignItems: 'stretch',
         flex: 1,
         marginBottom: 5,
         paddingBottom: 5,
         paddingHorizontal: 10,
+        paddingTop: 5,
         backgroundColor: routeLegColors.light,
         borderRadius: 10,
         elevation: 1,
       }}
-      onPress={() => setHideSettings()}
-      onLongPress={() => setShowSettings()}
+      onPress={() => setShowSettings(false)}
+      onLongPress={() => setShowSettings(true)}
     >
-      <View style={{ marginRight: 30, flexWrap: 'wrap' }}>
-        <AddressSearch
-          name="from:"
-          defaultValue={from.name}
-          changeLocation={(location) => setFrom(location)}
-        />
-        <AddressSearch
-          name="to:"
-          defaultValue={to.name}
-          changeLocation={(location) => setTo(location)}
-        />
-        <AddressSearch
-          name="secondary to"
-          defaultValue={secondaryTo?.name === undefined ? '' : secondaryTo.name}
-          changeLocation={(location) => setSecondaryTo(location)}
-        />
-      </View>
-      <TransportModePicker
-        transportModes={transportModes}
-        setTransportModes={setTransportModes}
-      />
       <View style={{ position: 'absolute', right: 0 }}>
         <ListManipulationButton
           buttonIcon="remove"
@@ -103,7 +66,43 @@ export function RouteLegForm({
           color={routeLegColors.lightVisited}
           onButtonPress={() => removeRouteLeg()}
         />
+        <ListManipulationButton
+          buttonIcon="info"
+          size={16}
+          color={routeLegColors.lightVisited}
+          onButtonPress={() => setShowSettings(!showSettings)}
+        />
       </View>
+      <View
+        style={{
+          flex: 1,
+          marginRight: 30,
+          paddingBottom: 10,
+          alignItems: 'stretch',
+        }}
+      >
+        <AddressSearch
+          name="lähtöpysäkki:"
+          defaultValue={from.address}
+          changeLocation={(location) => setFrom(location)}
+        />
+        <AddressSearch
+          name="määränpään pysäkki:"
+          defaultValue={to.address}
+          changeLocation={(location) => setTo(location)}
+        />
+        <AddressSearch
+          name="toinen määränpää"
+          defaultValue={
+            secondaryTo?.address === undefined ? '' : secondaryTo.address
+          }
+          changeLocation={(location) => setSecondaryTo(location)}
+        />
+      </View>
+      <TransportModePicker
+        transportModes={transportModes}
+        setTransportModes={setTransportModes}
+      />
       {showSettings && (
         <View
           key="settings bar"

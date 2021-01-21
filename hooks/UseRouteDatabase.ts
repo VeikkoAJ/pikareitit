@@ -7,18 +7,26 @@ import { Route, RouteKeyPair } from '../types';
 import { db } from '../services/ImportPouchDB';
 
 const testRoute1: Route = {
-  routeName: 'Porukoille',
-  description: 'placeholder route',
-  originPlace: 'Majurinkulma',
-  finalDestination: 'Lehmustie',
-  startWalkDuration: 2.3 * 60,
+  routeName: 'Esimerkkireitti',
+  description: 'testaukseen ja esittelyyn',
+  originPlace: 'toimisto',
+  finalDestination: 'koti',
+  startWalkDuration: 1.3 * 60,
   routeTransportLegRows: [
     {
       routeLegs: [
         {
-          from: 'Majurinkulma 2, Espoo::60.2112299,24.8230712',
-          to: 'Leppävaaran asema, Espoo::60.2193775,24.8113851',
-          transportModes: [{ mode: 'BUS' }, { mode: 'WALK' }],
+          from: {
+            address: 'Tarvaspääntie, Espoo',
+            lat: 60.2115478,
+            lon: 24.8292963,
+          },
+          to: {
+            address: 'Leppävaaran asema, Espoo',
+            lat: 60.2193775,
+            lon: 24.8113851,
+          },
+          transportModes: [{ mode: 'BUS' }],
         },
       ],
       middleSector: 'single',
@@ -26,8 +34,16 @@ const testRoute1: Route = {
     {
       routeLegs: [
         {
-          from: 'Leppävaaran asema, Espoo::60.2193775,24.8113851',
-          to: 'Pasilan asema, Helsinki, Helsinki::60.1986935,24.9345064',
+          from: {
+            address: 'Leppävaaran asema, Espoo',
+            lat: 60.2193775,
+            lon: 24.8113851,
+          },
+          to: {
+            address: 'Pasilan asema, Helsinki',
+            lat: 60.1986935,
+            lon: 24.9345064,
+          },
           transportModes: [{ mode: 'RAIL' }],
         },
       ],
@@ -36,9 +52,21 @@ const testRoute1: Route = {
     {
       routeLegs: [
         {
-          from: 'Pasilan asema, Helsinki::60.1986935,24.9345064',
-          to: 'Pukinmäen asema, Helsinki::60.2424651,24.9917559',
-          secondaryTo: 'Malmin asema, Helsinki::60.2506078,25.0094086',
+          from: {
+            address: 'Pasilan asema, Helsinki',
+            lat: 60.1986935,
+            lon: 24.9345064,
+          },
+          to: {
+            address: 'Pukinmäen asema, Helsinki',
+            lat: 60.2424651,
+            lon: 24.9917559,
+          },
+          secondaryTo: {
+            address: 'Malmin asema, Helsinki',
+            lat: 60.2506078,
+            lon: 25.0094086,
+          },
           transportModes: [{ mode: 'RAIL' }],
         },
       ],
@@ -47,13 +75,29 @@ const testRoute1: Route = {
     {
       routeLegs: [
         {
-          from: 'Pukinmäen asema, Helsinki::60.2424651,24.9917559',
-          to: 'Syystie 19, Helsinki::60.2567313,24.9973389',
+          from: {
+            address: 'Pukinmäen asema, Helsinki',
+            lat: 60.2424651,
+            lon: 24.9917559,
+          },
+          to: {
+            address: 'Syystie 19, Helsinki',
+            lat: 60.2567313,
+            lon: 24.9973389,
+          },
           transportModes: [{ mode: 'BUS' }],
         },
         {
-          from: 'Malmin asema, Helsinki::60.2506078,25.0094086',
-          to: 'Syystie 19, Helsinki::60.2567313,24.9973389',
+          from: {
+            address: 'Malmin asema, Helsinki',
+            lat: 60.2506078,
+            lon: 25.0094086,
+          },
+          to: {
+            address: 'Syystie 19, Helsinki',
+            lat: 60.2567313,
+            lon: 24.9973389,
+          },
           transportModes: [{ mode: 'BUS' }],
         },
       ],
@@ -61,67 +105,6 @@ const testRoute1: Route = {
     },
   ],
 };
-const testRoute2: Route = {
-  routeName: 'Kotiin',
-  description: 'placeholder route',
-  originPlace: 'Lehmustie',
-  finalDestination: 'Majurinkulma',
-  startWalkDuration: 2.3 * 60,
-  routeTransportLegRows: [
-    {
-      routeLegs: [
-        {
-          from: 'Lehmustie 7, Helsinki::60.2517485,24.9854004',
-          to: 'Pukinmäen asema, Helsinki::60.2424651,24.9917559',
-          transportModes: [{ mode: 'BUS' }],
-        },
-        {
-          from: 'Lehmustie 7, Helsinki::60.2517485,24.9854004',
-          to: 'Malmin asema, Helsinki::60.2506078,25.0094086',
-          transportModes: [{ mode: 'BUS' }],
-        },
-      ],
-      middleSector: 'two',
-    },
-    {
-      routeLegs: [
-        {
-          from: 'Pukinmäen asema, Helsinki::60.2424651,24.9917559',
-          to: 'Pasilan asema, Helsinki, Helsinki::60.1986935,24.9345064',
-          transportModes: [{ mode: 'RAIL' }],
-        },
-        {
-          from: 'Malmin asema, Helsinki::60.2506078,25.0094086',
-          to: 'Pasilan asema, Helsinki, Helsinki::60.1986935,24.9345064',
-          transportModes: [{ mode: 'RAIL' }],
-        },
-      ],
-      middleSector: 'merge',
-    },
-    {
-      routeLegs: [
-        {
-          from: 'Pasilan asema, Helsinki::60.1986935,24.9345064',
-          to: 'Leppävaaran asema, Espoo::60.2193775,24.8113851',
-          secondaryTo: 'Malmin asema, Helsinki::60.2506078,25.0094086',
-          transportModes: [{ mode: 'RAIL' }],
-        },
-      ],
-      middleSector: 'single',
-    },
-    {
-      routeLegs: [
-        {
-          from: 'Leppävaaran asema, Espoo::60.2193775,24.8113851',
-          to: 'Majurinkulma 2, Espoo::60.2112299,24.8230712',
-          transportModes: [{ mode: 'BUS' }],
-        },
-      ],
-      middleSector: 'single',
-    },
-  ],
-};
-
 type DatabaseContextValues =
   | undefined
   | {
@@ -139,24 +122,18 @@ export function UseRouteDatabase() {
   );
   // TODO check if database isn't empty
   /** Ads example routes */
-  const setup = () => {
-    db.info()
-      .then((info) => {
-        db.put({
+  const setExampleRoute = async () => {
+    try {
+      const response = await db.get('userExampleRoute');
+    } catch (error) {
+      console.log(error);
+      if (error.message === 'missing') {
+        await db.put({
           _id: 'userExampleRoute',
           route: JSON.stringify(testRoute1),
-        }).catch((err) => {
-          console.log(err);
         });
-      })
-      .then(() => {
-        db.put({
-          _id: 'userExampleRoute2',
-          route: JSON.stringify(testRoute2),
-        }).catch((err) => {
-          console.log(err);
-        });
-      });
+      }
+    }
   };
 
   useEffect(() => {
@@ -269,7 +246,7 @@ export function UseRouteDatabase() {
   };
 
   return {
-    setup,
+    setExampleRoute,
     databaseContextValues,
   };
 }

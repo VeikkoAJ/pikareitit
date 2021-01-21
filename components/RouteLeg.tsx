@@ -1,24 +1,20 @@
 import React, { useEffect } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { useQuery } from '@apollo/client';
-import { format } from 'date-fns';
 import { RouteLegUnit } from './RouteLegUnit';
 import { RouteTransportLeg } from '../types';
-import { routeLegColors } from '../styles/BasicColors';
-import { routeRequest } from '../services/RouteFetcher';
+
 import TransportModeIcon from './TransportModeIcon';
 import UseRouteQuery from '../hooks/UseRouteQuery';
 import { currentRouteStyles } from '../styles/CurrentRouteStyles';
-import { QueryData } from '../routeQueryTypes';
 
 interface RouteLegProps {
   routeLeg: RouteTransportLeg;
   startTime: Date | undefined;
-  setLegStartDate: (date: Date) => void;
-  setSecLegStartDate?: (date: Date) => void;
+  updateNextRouteLegStartTime: (date: Date) => void;
+  updateSecNextRouteLegStartTime: (date: Date) => void;
   setRouteStartTime: () => void;
   setRouteLegDuration: (time: number) => void;
-  setSecRouteLegDuration?: (time: number) => void;
+  setSecRouteLegDuration: (time: number) => void;
   setActive: () => void;
   isOld: boolean;
   isActive: boolean;
@@ -27,8 +23,8 @@ interface RouteLegProps {
 export default function RouteLeg({
   routeLeg,
   startTime,
-  setLegStartDate,
-  setSecLegStartDate,
+  updateNextRouteLegStartTime,
+  updateSecNextRouteLegStartTime,
   setRouteStartTime,
   setRouteLegDuration,
   setSecRouteLegDuration,
@@ -44,18 +40,14 @@ export default function RouteLeg({
 
   useEffect(() => {
     if (mainQueryLegs && mainQueryLegs[0]) {
-      setLegStartDate(new Date(mainQueryLegs[0]?.endTime));
+      updateNextRouteLegStartTime(new Date(mainQueryLegs[0]?.endTime));
       setRouteLegDuration(mainQueryLegs[0]?.duration);
     }
   }, [mainQueryLegs]);
   useEffect(() => {
     if (secondaryQueryLegs && secondaryQueryLegs[0]) {
-      if (setSecLegStartDate) {
-        setSecLegStartDate(new Date(secondaryQueryLegs[0]?.endTime));
-      }
-      if (setSecRouteLegDuration) {
-        setSecRouteLegDuration(secondaryQueryLegs[0]?.duration);
-      }
+      updateSecNextRouteLegStartTime(new Date(secondaryQueryLegs[0]?.endTime));
+      setSecRouteLegDuration(secondaryQueryLegs[0]?.duration);
     }
   }, [secondaryQueryLegs]);
 
@@ -63,7 +55,7 @@ export default function RouteLeg({
     if (mainQueryLegs && mainQueryLegs[0]) {
       return mainQueryLegs[0]?.from.name;
     }
-    return routeLeg.from.split(',')[0];
+    return routeLeg.from.address.split(',')[0];
   };
 
   const style = () => {
@@ -78,7 +70,7 @@ export default function RouteLeg({
 
   return (
     <TouchableOpacity
-      key={`${routeLeg.from} to ${routeLeg.to}`}
+      key={`${routeLeg.from.address} to ${routeLeg.to.address} touchableOpacity`}
       style={[currentRouteStyles.legPressable, style()]}
       onPress={() => {
         setRouteStartTime();
@@ -106,7 +98,7 @@ export default function RouteLeg({
               if (leg !== undefined) {
                 return (
                   <RouteLegUnit
-                    key={`${leg.route.shortName}@${leg.from}`}
+                    key={`${leg.route.shortName}from${leg.from.name}@${leg.startTime}`}
                     legUnit={{
                       name: leg.route.shortName,
                       startTime: leg.startTime,

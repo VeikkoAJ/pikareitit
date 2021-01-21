@@ -44,23 +44,33 @@ export function RouteLegCreation({ saveRoute }: RouteLegCreationProps) {
           style={{ flexDirection: 'row' }}
         >
           {routeLegKeyPairRow.map((routeLegKeyPair, column) => (
-            <RouteLegForm
-              key={routeLegKeyPair.key}
-              routeLeg={routeLegKeyPair.routeLeg}
-              showSettings={
-                settingsIndex?.row === row && settingsIndex.column === column
-              }
-              setShowSettings={() => setNewSettingsIndex(row, column)}
-              setHideSettings={() => setNewSettingsIndex(undefined)}
-              removeRouteLeg={() => removeRouteLeg(row, column)}
-              addRouteLeg={() => addRouteLeg(true, row)}
-              moveRouteLeg={(yOffset: number, xOffset: number) =>
-                moveRouteLeg(row, column, row + yOffset, column + xOffset)
-              }
-              setRouteLeg={(currentRouteLeg: RouteTransportLeg) =>
-                setRouteLeg(currentRouteLeg, row, column)
-              }
-            />
+            <React.Fragment key={`${routeLegKeyPair.key} fragment`}>
+              {column > 0 && (
+                <View
+                  key={`${routeLegKeyPair.key} spacer`}
+                  style={{ width: 5 }}
+                />
+              )}
+
+              <RouteLegForm
+                key={routeLegKeyPair.key}
+                routeLeg={routeLegKeyPair.routeLeg}
+                showSettings={
+                  settingsIndex?.row === row && settingsIndex.column === column
+                }
+                setShowSettings={(toggle: boolean) =>
+                  setNewSettingsIndex(toggle, row, column)
+                }
+                removeRouteLeg={() => removeRouteLeg(row, column)}
+                addRouteLeg={() => addRouteLeg(true, row)}
+                moveRouteLeg={(yOffset: number, xOffset: number) =>
+                  moveRouteLeg(row, column, row + yOffset, column + xOffset)
+                }
+                setRouteLeg={(currentRouteLeg: RouteTransportLeg) =>
+                  setRouteLeg(currentRouteLeg, row, column)
+                }
+              />
+            </React.Fragment>
           ))}
         </View>
       ))}

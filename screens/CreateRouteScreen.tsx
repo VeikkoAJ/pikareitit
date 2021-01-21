@@ -31,7 +31,7 @@ export default function CreateRouteScreen({
           alignItems: 'center',
         }}
       >
-        <Text style={basicStyles.charcoalHeader}>Create a new route</Text>
+        <Text style={basicStyles.charcoalHeader}>Tee uusi Reitti</Text>
         <TouchableOpacity
           style={{
             paddingHorizontal: 10,

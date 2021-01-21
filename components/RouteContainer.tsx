@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import RouteLeg from './RouteLeg';
 import RouteStartEnd from './RouteStartEndLeg';
@@ -11,66 +11,75 @@ import { currentRouteStyles } from '../styles/CurrentRouteStyles';
 
 export type RouteContainerProps = {
   currentRoute: Route;
-  searchTime: Date;
+  timeOffset: number;
 };
 
 export function RouteContainer({
   currentRoute,
-  searchTime,
+  timeOffset,
 }: RouteContainerProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  // TODO Add startTime hook and travelTime hook
   const {
     routeLegStartDates,
     updateNextRouteLegStartTime,
     updateStartTime,
   } = UseRouteLegStartTimes(
     currentRoute.routeTransportLegRows.length,
-    searchTime
+    new Date(),
+    timeOffset
   );
   const { routeLegDurations, updateRouteLegDurations } = UseRouteLegDurations(
     currentRoute.routeTransportLegRows.length
   );
-  console.log('routecontainer', currentRoute);
+  useEffect(() => {
+    updateStartTime(new Date(), timeOffset, { row: 0, column: 0 });
+  }, [timeOffset]);
+  console.log('timeoffset', timeOffset);
   return (
     <ScrollView style={currentRouteStyles.scrollView}>
       <RouteStartEnd headerText={currentRoute.originPlace} iconName="home" />
       <RouteMiddleSector travelTimes={[currentRoute.startWalkDuration]} />
-      {currentRoute.routeTransportLegRows.map((routeLegRow, rowIndex) => (
+      {currentRoute.routeTransportLegRows.map((routeLegRow, row) => (
         <>
           <View
             style={currentRouteStyles.row}
-            key={`${routeLegRow.routeLegs[0].from} to ${routeLegRow.routeLegs[0].to} row`}
+            key={`${routeLegRow.routeLegs[0].from.address} to ${routeLegRow.routeLegs[0].to.address} row`}
           >
-            {routeLegRow.routeLegs.map((routeLeg, index) => (
+            {routeLegRow.routeLegs.map((routeLeg, column) => (
               <React.Fragment
-                key={`${routeLeg.from} to ${routeLeg.to} fragment`}
+                key={`${routeLeg.from.address} to ${routeLeg.to.address} fragment`}
               >
                 <RouteLeg
-                  key={`${routeLeg.from} to ${routeLeg.to}`}
+                  key={`${routeLeg.from.address} to ${routeLeg.to.address}`}
                   routeLeg={routeLeg}
-                  startTime={routeLegStartDates[rowIndex][index]}
-                  setLegStartDate={(date: Date) =>
-                    updateNextRouteLegStartTime(date, [rowIndex + 1, index])
+                  startTime={routeLegStartDates[row][column]}
+                  updateNextRouteLegStartTime={(date: Date) =>
+                    updateNextRouteLegStartTime(date, {
+                      row: row + 1,
+                      column,
+                    })
                   }
-                  setSecLegStartDate={(date: Date) =>
-                    updateNextRouteLegStartTime(date, [rowIndex + 1, index + 1])
+                  updateSecNextRouteLegStartTime={(date: Date) =>
+                    updateNextRouteLegStartTime(date, {
+                      row: row + 1,
+                      column: column + 1,
+                    })
                   }
                   setRouteStartTime={() =>
-                    updateStartTime(new Date(), [rowIndex, index])
+                    updateStartTime(new Date(), timeOffset, { row, column })
                   }
                   setRouteLegDuration={(time: number) =>
-                    updateRouteLegDurations(time, [rowIndex, index])
+                    updateRouteLegDurations(time, [row, column])
                   }
                   setSecRouteLegDuration={(time: number) =>
-                    updateRouteLegDurations(time, [rowIndex, index + 1])
+                    updateRouteLegDurations(time, [row, column + 1])
                   }
-                  setActive={() => setActiveIndex(rowIndex)}
-                  isOld={activeIndex > rowIndex}
-                  isActive={activeIndex === rowIndex}
+                  setActive={() => setActiveIndex(row)}
+                  isOld={activeIndex > row}
+                  isActive={activeIndex === row}
                 />
                 <View
-                  key={`${routeLeg.from} to ${routeLeg.to} splitter`}
+                  key={`${routeLeg.from.address} to ${routeLeg.to.address} splitter`}
                   style={{ width: '1%' }}
                 />
               </React.Fragment>
@@ -78,7 +87,7 @@ export function RouteContainer({
           </View>
           <MiddleSectorWrapper
             middleSector={routeLegRow.middleSector}
-            routeLegDurations={routeLegDurations[rowIndex]}
+            routeLegDurations={routeLegDurations[row]}
           />
         </>
       ))}

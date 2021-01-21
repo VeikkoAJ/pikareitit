@@ -1,10 +1,23 @@
 import { useQuery } from '@apollo/client';
 import { format } from 'date-fns';
-import { RouteTransportLeg } from '../types';
-import { routeRequest } from '../services/RouteFetcher';
+import { MapLocation, RouteTransportLeg } from '../types';
+import { routeRequest } from '../services/RouteQuery';
 import { QueryData } from '../routeQueryTypes';
 
-export default function UseRouteLegStartTimes(
+/**
+ * converts mapLocation to a string format used by the graphQL schema
+ * @param mapLocation
+ */
+const mapLocationToString = (mapLocation: MapLocation) =>
+  `${mapLocation.address}::${mapLocation.lat},${mapLocation.lon}`;
+
+/**
+ * Queries HSL graphql servers for 3 itineraries
+ * @param routeLeg main parameters for itinerary
+ * @param startTime time when itinerary starts
+ * @param isOld if true skips the query
+ */
+export default function UseRouteQuery(
   routeLeg: RouteTransportLeg,
   startTime: Date | undefined,
   isOld: boolean
@@ -12,8 +25,8 @@ export default function UseRouteLegStartTimes(
   const routeQueries = () => {
     const mainResult = useQuery<QueryData>(routeRequest, {
       variables: {
-        from: routeLeg.from,
-        to: routeLeg.to,
+        fromPlace: mapLocationToString(routeLeg.from),
+        toPlace: mapLocationToString(routeLeg.to),
         date: format(
           startTime !== undefined ? startTime : new Date(),
           'yyyy-MM-dd'
@@ -22,14 +35,18 @@ export default function UseRouteLegStartTimes(
           startTime !== undefined ? startTime : new Date(),
           'HH:mm:ss'
         ),
+        transportModes: [...routeLeg.transportModes, { mode: 'WALK' }],
       },
       fetchPolicy: 'cache-first',
       skip: isOld || startTime === undefined,
     });
     const secondaryResult = useQuery<QueryData>(routeRequest, {
       variables: {
-        from: routeLeg.from,
-        to: routeLeg.secondaryTo,
+        fromPlace: mapLocationToString(routeLeg.from),
+        toPlace:
+          routeLeg.secondaryTo !== undefined
+            ? mapLocationToString(routeLeg.secondaryTo)
+            : '',
         date: format(
           startTime !== undefined ? startTime : new Date(),
           'yyyy-MM-dd'
@@ -38,6 +55,7 @@ export default function UseRouteLegStartTimes(
           startTime !== undefined ? startTime : new Date(),
           'HH:mm:ss'
         ),
+        transportModes: [...routeLeg.transportModes, { mode: 'WALK' }],
       },
       fetchPolicy: 'cache-first',
       skip:
@@ -51,24 +69,30 @@ export default function UseRouteLegStartTimes(
     { loading: loading2, data: data2, error: error2 },
   ] = routeQueries();
 
+  /**
+   * Removes walking sections from the start and end of the itinerary.
+   * maps single leg itineraries as walking
+   * @param queryData
+   */
   const formatLegData = (queryData: QueryData | undefined) => {
     if (queryData && queryData.plan.itineraries.length > 0) {
       const formattedLegs = queryData.plan.itineraries
         .map((itinerary) => {
+          // 3 legs = walk->vehicle->walk
           if (itinerary.legs.length === 3) {
-            // 3 legs means walk->vehicle->walk
             return itinerary.legs[1];
           }
+          // single leg = only walking
           if (itinerary.legs.length === 1) {
-            // single leg means only walking
             return {
               ...itinerary.legs[0],
               route: { ...itinerary.legs[0].route, shortName: 'walk' },
             };
           }
+          // disallowed routes set to undefined
           return undefined;
         })
-        .filter((leg) => leg !== undefined); // filters out disallowed routes and empty arrays
+        .filter((leg) => leg !== undefined); // filters out disallowed routes set undefined earlier
       if (formattedLegs.length === 0) {
         return undefined;
       }
@@ -77,9 +101,10 @@ export default function UseRouteLegStartTimes(
     return undefined;
   };
 
-  console.log('data1', data1, 'loading1', loading1, 'error1', error1);
   return {
+    /** query using routeLeg.from -> routeLeg.to) */
     mainQueryLegs: formatLegData(data1),
+    /** query using routeLeg.from -> routeLeg.secondaryTo) always undefined if secondaryTo is undefined */
     secondaryQueryLegs: formatLegData(data2),
   };
 }

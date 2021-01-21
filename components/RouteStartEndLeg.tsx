@@ -13,7 +13,12 @@ export default function RouteStartEndLeg({
   iconName,
 }: RouteStartEndLegProps) {
   return (
-    <View style={[currentRouteStyles.legStatic, { alignItems: 'flex-end' }]}>
+    <View
+      style={[
+        currentRouteStyles.legStatic,
+        { alignItems: 'flex-end', flexDirection: 'row' },
+      ]}
+    >
       <Text style={currentRouteStyles.headerText}>{headerText}</Text>
       <MaterialCommunityIcons name={iconName} size={30} color="white" />
     </View>

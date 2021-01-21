@@ -1,21 +1,20 @@
 import { gql } from '@apollo/client';
 
 export const routeRequest = gql`
-  query route($from: String, $to: String, $date: String, $time: String) {
+  query route(
+    $fromPlace: String
+    $toPlace: String
+    $date: String
+    $time: String
+    $transportModes: [TransportMode]
+  ) {
     plan(
-      fromPlace: $from
-      toPlace: $to
+      fromPlace: $fromPlace
+      toPlace: $toPlace
       date: $date
       time: $time
       numItineraries: 3
-      transportModes: [
-        { mode: BUS }
-        { mode: RAIL }
-        { mode: TRAM }
-        { mode: SUBWAY }
-        { mode: FERRY }
-        { mode: WALK }
-      ]
+      transportModes: $transportModes
     ) {
       itineraries {
         duration

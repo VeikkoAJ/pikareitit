@@ -3,12 +3,11 @@ import { View, Text, StatusBar } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { RouteProp } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { RouteScreenTopBar } from '../components/RouteScreenTopBar';
+import { CurrentRouteTopBar } from '../components/CurrentRouteTopBar';
 import { RouteContainer } from '../components/RouteContainer';
 import { Route } from '../types';
 import { RootTabParamList } from '../navigationTypes';
 import { DatabaseContext } from '../hooks/UseRouteDatabase';
-import { routeLegColors } from '../styles/BasicColors';
 import { currentRouteStyles } from '../styles/CurrentRouteStyles';
 
 interface CurrentRouteScreenProps {
@@ -20,13 +19,12 @@ export function CurrentRouteScreen({
   navigation,
   route,
 }: CurrentRouteScreenProps) {
-  const [searchTime, setSearchTime] = useState<Date>(new Date());
+  const [timeShift, setTimeShift] = useState<number>(0);
   const [transportRoute, setTransportRoute] = useState<Route | undefined>(
     undefined
   );
   const [error, setError] = useState(false);
   const useRouteDatabase = useContext(DatabaseContext);
-
   useEffect(() => {
     async function getRouteFromStorage() {
       try {
@@ -58,13 +56,14 @@ export function CurrentRouteScreen({
       ]}
     >
       <View style={{ flex: 1 }}>
-        <RouteScreenTopBar
-          setSearchTime={(time: Date) => setSearchTime(time)}
+        <CurrentRouteTopBar
+          timeShift={timeShift}
+          setTimeOffset={(time: number) => setTimeShift(time)}
         />
         {transportRoute !== undefined ? (
           <RouteContainer
             currentRoute={transportRoute}
-            searchTime={searchTime}
+            timeOffset={timeShift}
           />
         ) : (
           <View style={currentRouteStyles.errorLoadingRouteView}>
@@ -73,7 +72,7 @@ export function CurrentRouteScreen({
             )}
             {error && (
               <Text style={currentRouteStyles.basicText}>
-                Something went wrong 😞 try restarting the app
+                Something went wrong 😞
               </Text>
             )}
             <Text

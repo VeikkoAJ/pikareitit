@@ -2,12 +2,7 @@ import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TransportMode } from '../types';
 import { Text, TouchableOpacity, View } from 'react-native';
-import {
-  basicColors,
-  basicStyles,
-  listForm,
-  routeLegColors,
-} from '../styles/BasicColors';
+import { listForm, routeLegColors } from '../styles/BasicColors';
 import TransportModeIcon from './TransportModeIcon';
 
 interface TransportModePickerProps {
@@ -25,7 +20,6 @@ export function TransportModePicker({
     { mode: 'TRAM' },
     { mode: 'SUBWAY' },
     { mode: 'FERRY' },
-    { mode: 'WALK' },
   ];
 
   const mapTransportModes = (transportMode: TransportMode) => {
@@ -41,9 +35,26 @@ export function TransportModePicker({
 
   const activeColor = (transportMode: TransportMode) => {
     if (transportModes.map((_) => _.mode).includes(transportMode.mode)) {
-      return 'red';
+      return 'white';
     }
     return routeLegColors.lightVisited;
+  };
+
+  const underText = (mode: TransportMode) => {
+    switch (mode.mode) {
+      case 'BUS':
+        return 'bussi';
+      case 'RAIL':
+        return 'juna';
+      case 'TRAM':
+        return 'spora';
+      case 'SUBWAY':
+        return 'metro';
+      case 'FERRY':
+        return 'lautta';
+      default:
+        return 'kävellen';
+    }
   };
 
   return (
@@ -65,7 +76,7 @@ export function TransportModePicker({
               fontSize: 12,
             }}
           >
-            {transportMode.mode}
+            {underText(transportMode)}
           </Text>
         </TouchableOpacity>
       ))}

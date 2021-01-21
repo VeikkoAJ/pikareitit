@@ -12,23 +12,26 @@ const allowedCities = ['Helsinki', 'Espoo', 'Vantaa', 'Sipoo', 'Kauniainen'];
 export function UseAddressSearch() {
   const [searchResult, setSearchResult] = useState<Feature[]>([]);
   const [searchText, setSearchText] = useState<string | undefined>(undefined);
+
   const throttled = useRef(
     _.throttle((text: string) => {
       getAddresses(text);
     }, searchDelayMS)
   );
+
   const getAddresses = async (search: string) => {
     try {
-      const response = await fetch(
-        `${url}?text=${search}${layers}${focusPoint}`
-      );
-      const responseJSON: AddressSearchResponse = await response.json();
-      console.log(responseJSON.features);
-      setSearchResult(
-        responseJSON.features.filter((feature) =>
-          allowedCities.includes(feature.properties.locality)
-        )
-      );
+      if (search.length > 2) {
+        const response = await fetch(
+          `${url}?text=${search}${layers}${focusPoint}`
+        );
+        const responseJSON: AddressSearchResponse = await response.json();
+        setSearchResult(
+          responseJSON.features.filter((feature) =>
+            allowedCities.includes(feature.properties.locality)
+          )
+        );
+      }
     } catch (e) {
       console.log(e);
     }
