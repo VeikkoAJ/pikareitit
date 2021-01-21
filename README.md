@@ -1,33 +1,50 @@
 # Pikareitit
-**NOTE** *[English description is can be found at the end*](http://a.com)
 
-Foobar is a Python library for dealing with word pluralization.
+*Pikareitit is an mobile app for creating and viewing custom local (Helsinki region) transit schedules.*
 
-## Installation
+Sovellus pääkaupunkiseudun julkisen liikenteen reittiaikatalujen reaaliaikaiseen seurantaan. Sovelluksella on mahdollista luoda kustomoituja reittiaikatauluja HSL:n pysäkkien välillä. Tarkoituksena on nopeuttaa julkisten käyttöä ennalta tutuilla reiteillä, kuten työmatkoilla.
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+**Pääominaisuudet**
+* aikataulujen ketjutus
 
-```bash
-pip install foobar
-```
+Seuraavan etapin aikataulut lasketaan edellisen etapin nopeimman siirtymän mukaan. Sovellus näyttää lyhyimmätkin vaihtoajat linjojen välillä, jolloin käyttäjän on mahdollista juosta seuraavaan liikennevälineeseen. *Esimerkiksi Pasilan asemalla lähijunien aikataulu mahdollistaa junien vaihtamisen juoksemalla laiturilta toiselle.*
+
+* reitin halkaisu
+
+Sovellukessa on mahdollista luoda reittejä, jotka jakautuvat kahteen määränpäähän, esimerkiksi perkkäisiin juna-asemiin.
+
+* reittien tallentaminen ja muokkaaminen
+
+Reittejä on mahdollista luoda ja tallentaa paikallisesti omalle laitteelle. 
 
 ## Usage
 
-```python
-import foobar
+The app can be run locally with [Expo Client](https://docs.expo.io/) or by:
 
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
-```
+* Downloading the App from Google Play [*not yet released*]()
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+## Built with
 
-Please make sure to update tests as appropriate.
+* [React Native](https://reactnative.dev/)
+* [React Navigation](https://reactnavigation.org/)
+* [Apollo client](https://www.apollographql.com/docs/react/) - [GraphQL](https://graphql.org/) - live transit schedules from HSL Routing API
+* [PouchDB](https://pouchdb.com/) local database for storing user created routes
+
+## Upcoming Features and known bugs
+**features**
+ * Individual time shifts for each timetable
+ * support for 3 or more parallel timetables
+ * searching routes by stop name instead of street name
+ * settings tab and dark theme
+ **bugs**
+ * Browse screen not updating when a deleting route
+
+## Author
+Veikko Jääskeläinen
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
 
+- Transit data is from HSL Routing API, licensed under cc by 4.0
+- Address data is from HSL Geocoding API, licensed under cc by 4.0
 
-##In english
+MIT
