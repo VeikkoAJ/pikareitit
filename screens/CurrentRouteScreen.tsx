@@ -50,15 +50,10 @@ export function CurrentRouteScreen({
   }, [route.params.routeKey]);
 
   return (
-    <SafeAreaProvider
-      style={[
-        currentRouteStyles.background,
-        { marginTop: StatusBar !== undefined ? StatusBar.currentHeight : 0 },
-      ]}
-    >
+    <SafeAreaProvider style={[currentRouteStyles.background]}>
       <View style={{ flex: 1 }}>
         <CurrentRouteTopBar
-          timeShift={timeShift}
+          timeOffset={timeShift}
           setTimeOffset={(time: number) => setTimeShift(time)}
         />
         {transportRoute !== undefined ? (

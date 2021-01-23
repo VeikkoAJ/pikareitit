@@ -14,7 +14,12 @@ export default function BasicClock() {
   }, []);
 
   return (
-    <Text style={currentRouteStyles.headerText}>
+    <Text
+      style={currentRouteStyles.headerText}
+      numberOfLines={1}
+      ellipsizeMode="clip"
+      adjustsFontSizeToFit
+    >
       {format(currentDate, 'HH:mm:ss')}
     </Text>
   );
