@@ -3,9 +3,9 @@ import { Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { RouteKeyPair } from '../types';
-import { basicStyles, listStyles } from '../styles/BasicColors';
 import { RootTabParamList } from '../navigationTypes';
 import { DatabaseContext } from '../hooks/UseRouteDatabase';
+import { basicStyles, listStyles } from '../styles/BasicStyles';
 
 // TODO move this to types after async storage is working
 interface HomeScreenScreenProps {

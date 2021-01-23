@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Pressable, Text, TextInput, View } from 'react-native';
-import { listForm, routeLegColors } from '../styles/BasicColors';
+import { routeLegColors } from '../styles/BasicColors';
 import { TransportModePicker } from './TransportModePicker';
 import { ListManipulationButton } from './ListManipulationButton';
 import { RouteTransportLeg, TransportMode, MapLocation } from '../types';
 import AddressSearch from './AddressSearch';
+import { listForm } from '../styles/BasicStyles';
 
 interface RouteLegFormProps {
   routeLeg: RouteTransportLeg;

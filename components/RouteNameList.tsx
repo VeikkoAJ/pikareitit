@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { listStyles, routeLegColors } from '../styles/BasicColors';
+import { routeLegColors } from '../styles/BasicColors';
 import DeleteRouteModal from './DeleteRouteModal';
 import { ListManipulationButton } from './ListManipulationButton';
+import { listStyles } from '../styles/BasicStyles';
 
 interface RouteNameListProps {
   name: string;

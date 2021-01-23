@@ -3,10 +3,11 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { RouteProp, CommonActions } from '@react-navigation/native';
 import { StackParamList } from '../navigationTypes';
-import { basicStyles, routeLegColors } from '../styles/BasicColors';
+import { routeLegColors } from '../styles/BasicColors';
 import { RouteLegCreation } from '../components/RouteLegCreation';
 import { RouteTransportLegRow } from '../types';
 import SaveRouteModal from '../components/SaveRouteModal';
+import { basicStyles } from '../styles/BasicStyles';
 
 interface CreateRouteScreenProps {
   navigation: BottomTabNavigationProp<StackParamList, 'Create route'>;

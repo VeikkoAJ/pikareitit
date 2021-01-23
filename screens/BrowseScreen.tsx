@@ -4,10 +4,10 @@ import { RouteProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Route, RouteKeyPair } from '../types';
-import { basicStyles, listStyles } from '../styles/BasicColors';
 import { RouteNameList } from '../components/RouteNameList';
 import { StackParamList } from '../navigationTypes';
 import { DatabaseContext } from '../hooks/UseRouteDatabase';
+import { basicStyles, listStyles } from '../styles/BasicStyles';
 
 interface BrowseScreenProps {
   navigation: BottomTabNavigationProp<StackParamList, 'Browse'>;

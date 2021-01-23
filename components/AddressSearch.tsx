@@ -7,11 +7,12 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { listForm, routeLegColors } from '../styles/BasicColors';
+import { routeLegColors } from '../styles/BasicColors';
 import { createRouteStyles } from '../styles/CreateRouteStyles';
 import { UseAddressSearch } from '../hooks/UseAddressSearch';
 import { MapLocation } from '../types';
 import { ListManipulationButton } from './ListManipulationButton';
+import { listForm } from '../styles/BasicStyles';
 
 interface AddressSearchProps {
   name: string;

@@ -1,6 +1,6 @@
-import { listForm } from '../styles/BasicColors';
 import { Text, TextInput, View } from 'react-native';
 import React from 'react';
+import { listForm } from '../styles/BasicStyles';
 
 interface TextInputBarProps {
   defaultValue?: string;

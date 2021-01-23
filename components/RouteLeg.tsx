@@ -86,11 +86,13 @@ export default function RouteLeg({
         >
           {stopName()}
         </Text>
-        <TransportModeIcon
-          transportMode={routeLeg?.transportModes[0]}
-          size={30}
-          color="white"
-        />
+        <View style={{ minWidth: 30 }}>
+          <TransportModeIcon
+            transportMode={routeLeg?.transportModes[0]}
+            size={30}
+            color="white"
+          />
+        </View>
       </View>
       <View style={{ minHeight: 70 }}>
         {!isOld && mainQueryLegs

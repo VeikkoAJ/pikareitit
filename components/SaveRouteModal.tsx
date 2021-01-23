@@ -7,10 +7,11 @@ import {
   View,
 } from 'react-native';
 import { Route, RouteTransportLegRow } from '../types';
-import { basicStyles, listStyles, routeLegColors } from '../styles/BasicColors';
+import { routeLegColors } from '../styles/BasicColors';
 import { TextInputBar } from './TextInputBar';
 
 import { DatabaseContext } from '../hooks/UseRouteDatabase';
+import { basicStyles, listStyles } from '../styles/BasicStyles';
 
 interface SaveRouteModalProps {
   routeTransportLegRows: RouteTransportLegRow[];

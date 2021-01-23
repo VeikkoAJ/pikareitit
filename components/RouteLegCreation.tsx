@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { ScrollView, View } from 'react-native';
-import { listStyles, routeLegColors } from '../styles/BasicColors';
+import { routeLegColors } from '../styles/BasicColors';
 import { RouteLegForm } from './RouteLegForm';
 import { ListManipulationButton } from './ListManipulationButton';
 import { UseRouteCreation } from '../hooks/UseRouteCreation';
 import { RouteTransportLeg, RouteTransportLegRow } from '../types';
 import { formatRouteLegRows } from '../services/CreateRouteToSave';
+import { listStyles } from '../styles/BasicStyles';
 
 interface RouteLegCreationProps {
   saveRoute: (routeTransportLegRows: RouteTransportLegRow[]) => void;
