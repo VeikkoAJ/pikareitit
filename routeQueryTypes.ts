@@ -1,4 +1,4 @@
-type Leg = {
+export type Leg = {
   mode: string;
   startTime: number;
   endTime: number;

@@ -1,26 +1,34 @@
-import { StyleSheet } from 'react-native';
+import { StatusBar, StyleSheet } from 'react-native';
 import { basicColors, routeLegColors } from './BasicColors';
 
 export const currentRouteStyles = StyleSheet.create({
   background: {
     backgroundColor: basicColors.topBarLight,
-    flex: 1,
+    marginTop: StatusBar.currentHeight,
   },
   topBar: {
     height: 50,
-    width: '100%',
-    position: 'absolute',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'stretch',
+    flexDirection: 'row-reverse',
+    alignSelf: 'flex-start',
+    justifyContent: 'flex-end',
     zIndex: 1,
     elevation: 1,
+    flexWrap: 'nowrap',
   },
-  topBarItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  topBarMinuteItem: {
+    paddingHorizontal: 5,
+    paddingBottom: 5,
     backgroundColor: basicColors.topBarBackground,
-    elevation: 1,
+    flexShrink: 10,
+    borderColor: 'white',
+  },
+  topBarMinuteText: {
+    textAlign: 'center',
+    flexShrink: 10,
+    minWidth: 40,
+    fontSize: 24,
+    color: 'white',
+    textAlignVertical: 'bottom',
   },
   errorLoadingRouteView: {
     flex: 1,
@@ -67,7 +75,7 @@ export const currentRouteStyles = StyleSheet.create({
     borderColor: 'red',
     elevation: 5,
   },
-  legOldModifier: {
+  legDisabledModifier: {
     backgroundColor: routeLegColors.lightVisited,
     borderColor: routeLegColors.lightVisited,
     elevation: 0,
@@ -93,19 +101,5 @@ export const currentRouteStyles = StyleSheet.create({
   listText: {
     fontSize: 16,
     color: routeLegColors.charCoalText,
-  },
-  topBarMinuteItem: {
-    paddingHorizontal: 5,
-    backgroundColor: basicColors.topBarBackground,
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
-    borderColor: 'white',
-  },
-  topBarMinuteText: {
-    textAlign: 'center',
-    minWidth: 40,
-    fontSize: 24,
-    color: 'white',
-    textAlignVertical: 'bottom',
   },
 });

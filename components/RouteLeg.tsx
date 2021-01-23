@@ -6,6 +6,7 @@ import { RouteTransportLeg } from '../types';
 import TransportModeIcon from './TransportModeIcon';
 import UseRouteQuery from '../hooks/UseRouteQuery';
 import { currentRouteStyles } from '../styles/CurrentRouteStyles';
+import { MapSecondaryDestinationTimes } from '../services/MapSecondayDestinationTimes';
 
 interface RouteLegProps {
   routeLeg: RouteTransportLeg;
@@ -63,7 +64,7 @@ export default function RouteLeg({
       return currentRouteStyles.legActiveModifier;
     }
     if (isOld) {
-      return currentRouteStyles.legOldModifier;
+      return currentRouteStyles.legDisabledModifier;
     }
     return undefined;
   };
@@ -79,38 +80,42 @@ export default function RouteLeg({
     >
       <View style={currentRouteStyles.legHeaderRow}>
         <Text
-          key="stopName"
-          style={currentRouteStyles.headerText}
-          numberOfLines={1}
+          style={[currentRouteStyles.headerText]}
+          numberOfLines={2}
           ellipsizeMode="tail"
         >
           {stopName()}
         </Text>
-        <TransportModeIcon
-          transportMode={routeLeg?.transportModes[0]}
-          size={30}
-          color="white"
-        />
+        <View>
+          <TransportModeIcon
+            transportMode={routeLeg?.transportModes[0]}
+            size={30}
+            color="white"
+          />
+        </View>
       </View>
       <View style={{ minHeight: 70 }}>
-        {!isOld && mainQueryLegs && mainQueryLegs[0]
-          ? mainQueryLegs.map((leg) => {
-              if (leg !== undefined) {
-                return (
-                  <RouteLegUnit
-                    key={`${leg.route.shortName}from${leg.from.name}@${leg.startTime}`}
-                    legUnit={{
-                      name: leg.route.shortName,
-                      startTime: leg.startTime,
-                      endTime: leg.endTime,
-                      realTime: leg.realTime,
-                    }}
-                    showAdditional
-                  />
-                );
+        {!isOld && mainQueryLegs
+          ? MapSecondaryDestinationTimes(mainQueryLegs, secondaryQueryLegs).map(
+              (leg) => {
+                if (leg !== undefined) {
+                  return (
+                    <RouteLegUnit
+                      key={`${leg.mainQueryLeg.route.shortName}from${leg.mainQueryLeg.from.name}@${leg.mainQueryLeg.startTime}`}
+                      legUnit={{
+                        name: leg.mainQueryLeg.route.shortName,
+                        startTime: leg.mainQueryLeg.startTime,
+                        endTime: leg.mainQueryLeg.endTime,
+                        realTime: leg.mainQueryLeg.realTime,
+                        secondaryEndTime: leg.secondaryLegEndTime,
+                      }}
+                      showAdditional
+                    />
+                  );
+                }
+                return null;
               }
-              return null;
-            })
+            )
           : null}
       </View>
     </TouchableOpacity>
