@@ -80,17 +80,19 @@ export default function RouteLeg({
     >
       <View style={currentRouteStyles.legHeaderRow}>
         <Text
-          style={currentRouteStyles.headerText}
+          style={[currentRouteStyles.headerText]}
           numberOfLines={2}
           ellipsizeMode="tail"
         >
           {stopName()}
         </Text>
-        <TransportModeIcon
-          transportMode={routeLeg?.transportModes[0]}
-          size={30}
-          color="white"
-        />
+        <View>
+          <TransportModeIcon
+            transportMode={routeLeg?.transportModes[0]}
+            size={30}
+            color="white"
+          />
+        </View>
       </View>
       <View style={{ minHeight: 70 }}>
         {!isOld && mainQueryLegs

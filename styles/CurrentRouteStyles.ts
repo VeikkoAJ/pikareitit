@@ -1,9 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StatusBar, StyleSheet } from 'react-native';
 import { basicColors, routeLegColors } from './BasicColors';
 
 export const currentRouteStyles = StyleSheet.create({
   background: {
     backgroundColor: basicColors.topBarLight,
+    marginTop: StatusBar.currentHeight,
   },
   topBar: {
     height: 50,

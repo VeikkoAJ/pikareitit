@@ -50,7 +50,7 @@ export function CurrentRouteScreen({
   }, [route.params.routeKey]);
 
   return (
-    <SafeAreaProvider style={[currentRouteStyles.background]}>
+    <View style={[currentRouteStyles.background]}>
       <View style={{ flex: 1 }}>
         <CurrentRouteTopBar
           timeOffset={timeShift}
@@ -87,6 +87,6 @@ export function CurrentRouteScreen({
           </View>
         )}
       </View>
-    </SafeAreaProvider>
+    </View>
   );
 }

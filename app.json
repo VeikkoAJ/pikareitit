@@ -20,11 +20,12 @@
       "supportsTablet": true
     },
     "android": {
+      "icon": "./assets/icon.png",
       "package": "com.veikko.pikareitit",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#88c399"
+        "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
