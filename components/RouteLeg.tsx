@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { RouteLegUnit } from './RouteLegUnit';
 import { RouteTransportLeg } from '../types';
@@ -7,6 +7,7 @@ import TransportModeIcon from './TransportModeIcon';
 import UseRouteQuery from '../hooks/UseRouteQuery';
 import { currentRouteStyles } from '../styles/CurrentRouteStyles';
 import { MapSecondaryDestinationTimes } from '../services/MapSecondayDestinationTimes';
+import { Leg } from '../routeQueryTypes';
 
 interface RouteLegProps {
   routeLeg: RouteTransportLeg;
@@ -17,8 +18,11 @@ interface RouteLegProps {
   setRouteLegDuration: (time: number) => void;
   setSecRouteLegDuration: (time: number) => void;
   setActive: () => void;
+  setInfo: () => void;
+  hideInfo: () => void;
   isOld: boolean;
   isActive: boolean;
+  showInfo: boolean;
 }
 
 export default function RouteLeg({
@@ -30,8 +34,11 @@ export default function RouteLeg({
   setRouteLegDuration,
   setSecRouteLegDuration,
   setActive,
+  setInfo,
+  hideInfo,
   isOld,
   isActive,
+  showInfo,
 }: RouteLegProps) {
   const { mainQueryLegs, secondaryQueryLegs } = UseRouteQuery(
     routeLeg,
@@ -54,9 +61,19 @@ export default function RouteLeg({
 
   const stopName = () => {
     if (mainQueryLegs && mainQueryLegs[0]) {
-      return mainQueryLegs[0]?.from.name;
+      return mainQueryLegs[0]?.from.name.split(',')[0];
     }
     return routeLeg.from.address.split(',')[0];
+  };
+
+  const platFormCode = (leg: Leg) => {
+    if (leg.mode !== 'RAIL') {
+      return undefined;
+    }
+    if (leg.from.stop === null || leg.from.stop.platformCode === null) {
+      return undefined;
+    }
+    return leg.from.stop.platformCode;
   };
 
   const style = () => {
@@ -68,15 +85,20 @@ export default function RouteLeg({
     }
     return undefined;
   };
-
   return (
     <TouchableOpacity
       key={`${routeLeg.from.address} to ${routeLeg.to.address} touchableOpacity`}
       style={[currentRouteStyles.legPressable, style()]}
       onPress={() => {
-        setRouteStartTime();
-        setActive();
+        if (showInfo) {
+          hideInfo();
+        }
+        if (!showInfo) {
+          setRouteStartTime();
+          setActive();
+        }
       }}
+      onLongPress={() => setInfo()}
     >
       <View style={currentRouteStyles.legHeaderRow}>
         <Text
@@ -86,13 +108,6 @@ export default function RouteLeg({
         >
           {stopName()}
         </Text>
-        <View style={{ minWidth: 30 }}>
-          <TransportModeIcon
-            transportMode={routeLeg?.transportModes[0]}
-            size={30}
-            color="white"
-          />
-        </View>
       </View>
       <View style={{ minHeight: 70 }}>
         {!isOld && mainQueryLegs
@@ -104,12 +119,13 @@ export default function RouteLeg({
                       key={`${leg.mainQueryLeg.route.shortName}from${leg.mainQueryLeg.from.name}@${leg.mainQueryLeg.startTime}`}
                       legUnit={{
                         name: leg.mainQueryLeg.route.shortName,
+                        platformCode: platFormCode(leg.mainQueryLeg),
                         startTime: leg.mainQueryLeg.startTime,
                         endTime: leg.mainQueryLeg.endTime,
                         realTime: leg.mainQueryLeg.realTime,
                         secondaryEndTime: leg.secondaryLegEndTime,
                       }}
-                      showAdditional
+                      showAdditional={showInfo}
                     />
                   );
                 }

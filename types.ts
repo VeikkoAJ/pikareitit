@@ -3,9 +3,18 @@ export type RouteMiddleSectorProps = {
   travelTimes: number[];
   sign?: string;
 };
+export type TransportModeString =
+  | 'BUS'
+  | 'RAIL'
+  | 'TRAM'
+  | 'SUBWAY'
+  | 'FERRY'
+  | 'WALK'
+  | 'FUNICULAR'
+  | 'CABLE_CAR';
 
 export type TransportMode = {
-  mode: 'BUS' | 'RAIL' | 'TRAM' | 'SUBWAY' | 'FERRY' | 'WALK';
+  mode: TransportModeString;
 };
 
 export type MiddleSector = 'single' | 'split' | 'two' | 'merge';

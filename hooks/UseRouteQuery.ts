@@ -78,11 +78,11 @@ export default function UseRouteQuery(
     if (queryData && queryData.plan.itineraries.length > 0) {
       const formattedLegs = queryData.plan.itineraries
         .map((itinerary) => {
-          // 3 legs = walk->vehicle->walk
+          /** 3 legs = walk->vehicle->walk */
           if (itinerary.legs.length === 3) {
             return itinerary.legs[1];
           }
-          // single leg = only walking
+          /** single leg = only walking */
           if (itinerary.legs.length === 1) {
             return {
               ...itinerary.legs[0],

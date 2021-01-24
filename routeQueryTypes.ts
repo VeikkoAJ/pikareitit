@@ -1,11 +1,18 @@
+import { TransportModeString } from './types';
+
+type Stop = {
+  platformCode: string | null;
+} | null;
+
 export type Leg = {
-  mode: string;
+  mode: TransportModeString;
   startTime: number;
   endTime: number;
   duration: number;
   realTime: boolean;
   from: {
     name: string;
+    stop: Stop;
   };
   to: {
     name: string;
@@ -16,7 +23,6 @@ export type Leg = {
   };
 };
 type Itinerary = {
-  duration: number;
   legs: Leg[];
 };
 export type QueryData = {

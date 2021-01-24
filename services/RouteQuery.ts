@@ -17,7 +17,6 @@ export const routeRequest = gql`
       transportModes: $transportModes
     ) {
       itineraries {
-        duration
         legs {
           mode
           startTime
@@ -26,6 +25,9 @@ export const routeRequest = gql`
           realTime
           from {
             name
+            stop {
+              platformCode
+            }
           }
           to {
             name

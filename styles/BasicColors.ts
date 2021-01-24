@@ -9,8 +9,11 @@ export const basicColors = {
 // https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=9E9E9E
 export const routeLegColors = {
   light: '#ff7d47',
+  lightHighlight: '#ff9463',
   normal: '#e64a19',
   lightVisited: '#cfcfcf',
   normalVisited: '#9e9e9e',
   charCoalText: '#333366',
+  purpleText: '#a8259f',
+  greenText: '#336666',
 };

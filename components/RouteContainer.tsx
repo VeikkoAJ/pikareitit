@@ -19,6 +19,7 @@ export function RouteContainer({
   timeOffset,
 }: RouteContainerProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [infoIndex, setInfoIndex] = useState<undefined | number>(undefined);
   const {
     routeLegStartDates,
     updateNextRouteLegStartTime,
@@ -74,9 +75,17 @@ export function RouteContainer({
                   setSecRouteLegDuration={(time: number) =>
                     updateRouteLegDurations(time, [row, column + 1])
                   }
-                  setActive={() => setActiveIndex(row)}
+                  setActive={() => {
+                    if (infoIndex !== row) {
+                      setInfoIndex(undefined);
+                    }
+                    setActiveIndex(row);
+                  }}
+                  setInfo={() => setInfoIndex(row)}
+                  hideInfo={() => setInfoIndex(undefined)}
+                  showInfo={infoIndex === row}
                   isOld={activeIndex > row}
-                  isActive={activeIndex === row}
+                  isActive={activeIndex <= row}
                 />
                 <View
                   key={`${routeLeg.from.address} to ${routeLeg.to.address} splitter`}

@@ -44,7 +44,6 @@ export const currentRouteStyles = StyleSheet.create({
     paddingBottom: 50,
   },
   row: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     width: '100%',
@@ -60,7 +59,7 @@ export const currentRouteStyles = StyleSheet.create({
   },
   legPressable: {
     flex: 1,
-    flexShrink: 1,
+    justifyContent: 'space-between',
     paddingHorizontal: 10,
     paddingTop: 5,
     paddingBottom: 15,
@@ -89,16 +88,32 @@ export const currentRouteStyles = StyleSheet.create({
   legListRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomWidth: 1,
+    flexWrap: 'wrap',
+    marginBottom: 2,
+    paddingHorizontal: 3,
+    borderBottomWidth: 0.5,
+    borderBottomColor: routeLegColors.normal,
+    borderRadius: 4,
+    backgroundColor: routeLegColors.lightHighlight,
+    elevation: 1,
   },
   headerText: {
-    fontSize: 24,
+    flexShrink: 1,
+    fontSize: 22,
     color: 'white',
     paddingEnd: 5,
     textAlignVertical: 'bottom',
   },
-  listText: {
+  listTextCharcoal: {
     fontSize: 16,
     color: routeLegColors.charCoalText,
+  },
+  listTextPurple: {
+    fontSize: 16,
+    color: routeLegColors.charCoalText,
+  },
+  listTextGreen: {
+    fontSize: 16,
+    color: routeLegColors.greenText,
   },
 });
