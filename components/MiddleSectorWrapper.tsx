@@ -3,18 +3,21 @@ import { MiddleSector } from '../types';
 import RouteMiddleSector from './RouteMiddleSector';
 import { RouteMiddleSplitSector } from './RouteMiddleSplitSector';
 import { RouteMiddleMergeSector } from './RouteMiddleMergeSector';
+import { isOldContext } from '../contextTypes';
 
 type MiddleSectorWrapperProps = {
   middleSector: MiddleSector;
   routeLegDurations: number[];
+  isOld: boolean;
 };
 
 export default function MiddleSectorWrapper({
   middleSector,
   routeLegDurations,
+  isOld,
 }: MiddleSectorWrapperProps) {
   return (
-    <>
+    <isOldContext.Provider value={isOld}>
       {middleSector === 'single' && (
         <RouteMiddleSector travelTimes={routeLegDurations} />
       )}
@@ -27,6 +30,6 @@ export default function MiddleSectorWrapper({
       {middleSector === 'two' && (
         <RouteMiddleSector travelTimes={routeLegDurations} />
       )}
-    </>
+    </isOldContext.Provider>
   );
 }

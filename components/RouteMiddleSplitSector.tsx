@@ -37,10 +37,7 @@ export function RouteMiddleSplitSector({
         <SmallDot />
         <SmallDot />
         <SmallDot />
-        <MinuteDot
-          travelTime={travelTimes[1] - travelTimes[0]}
-          showSign={'+'}
-        />
+        <MinuteDot travelTime={travelTimes[1] - travelTimes[0]} showSign="+" />
       </View>
       <View
         key="thirdRow"

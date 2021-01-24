@@ -2,7 +2,7 @@ import { StatusBar, StyleSheet } from 'react-native';
 import { basicColors, routeLegColors } from './BasicColors';
 
 export const basicStyles = StyleSheet.create({
-  background: {
+  base: {
     alignItems: 'stretch',
     justifyContent: 'flex-start',
     height: '100%',

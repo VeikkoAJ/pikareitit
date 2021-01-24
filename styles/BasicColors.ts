@@ -1,7 +1,7 @@
 // https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=B9F6CA&secondary.color=E64A19
 export const basicColors = {
   transparent: 'rgba(0, 0, 0, 0)',
-  background: 'light-gray',
+  base: 'light-gray',
   topBarBackground: '#88c399',
   topBarLight: '#b9f6ca',
 };

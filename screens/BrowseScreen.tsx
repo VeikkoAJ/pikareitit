@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Route, RouteKeyPair } from '../types';
+
+import { RouteKeyPair } from '../types';
 import { RouteNameList } from '../components/RouteNameList';
 import { StackParamList } from '../navigationTypes';
-import { DatabaseContext } from '../hooks/UseRouteDatabase';
+
 import { basicStyles, listStyles } from '../styles/BasicStyles';
+import { DatabaseContext } from '../contextTypes';
 
 interface BrowseScreenProps {
   navigation: BottomTabNavigationProp<StackParamList, 'Browse'>;
@@ -41,7 +42,7 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
   };
 
   return (
-    <View style={[basicStyles.background, { paddingBottom: 80 }]}>
+    <View style={[basicStyles.base, { paddingBottom: 80 }]}>
       <View>
         <Text style={basicStyles.charcoalHeader}>Tallennetut reitit</Text>
       </View>
@@ -57,7 +58,9 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
             finalDestination={item.route.finalDestination}
             setActiveRoute={() => loadActiveRoute(item.key)}
             deleteRoute={() => {
-              useRouteDatabase.deleteRoute(item.key);
+              if (useRouteDatabase !== undefined) {
+                useRouteDatabase.deleteRoute(item.key);
+              }
               setListChangeTracker(listChangeTracker + 1);
             }}
           />

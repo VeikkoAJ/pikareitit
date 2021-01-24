@@ -24,7 +24,7 @@ export default function CreateRouteScreen({
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <View style={basicStyles.background}>
+    <View style={basicStyles.base}>
       <View
         style={{
           flexDirection: 'row',

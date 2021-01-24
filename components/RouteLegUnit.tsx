@@ -24,10 +24,11 @@ export function RouteLegUnit({ legUnit, showAdditional }: RouteLegUnitProps) {
       key={legUnit.startTime + legUnit.name}
       style={{
         alignSelf: 'flex-end',
-        paddingVertical: 2,
+        paddingTop: 3,
+        paddingBottom: 2,
       }}
       name="walk"
-      size={16}
+      size={15}
       color={routeLegColors.charCoalText}
     />
   );
@@ -35,10 +36,7 @@ export function RouteLegUnit({ legUnit, showAdditional }: RouteLegUnitProps) {
   return (
     <View
       key={legUnit.startTime + legUnit.name}
-      style={[
-        currentRouteStyles.legListRow,
-        { borderRadius: 2, backgroundColor: routeLegColors.lightHighlight },
-      ]}
+      style={[currentRouteStyles.legListRow]}
     >
       {legUnit.name === 'WALK' ? (
         walkIcon()
@@ -57,18 +55,21 @@ export function RouteLegUnit({ legUnit, showAdditional }: RouteLegUnitProps) {
             color: routeLegColors.greenText,
             fontWeight: 'normal',
           }}
-        >{` from platform: ${legUnit.platformCode}`}</Text>
+        >{`platform ${legUnit.platformCode}`}</Text>
       )}
 
-      <Text key={`${legUnit.startTime + legUnit.name}text`}>
+      <Text
+        key={`${legUnit.startTime + legUnit.name} text`}
+        style={currentRouteStyles.listText}
+      >
         <Text
-          key={`${legUnit.startTime + legUnit.name}starTime`}
+          key={`${legUnit.startTime + legUnit.name} starTime`}
           style={[currentRouteStyles.listTextPurple]}
         >
           {`${format(legUnit.startTime, 'HH:mm')}`}
         </Text>
         <Text
-          key={`${legUnit.startTime + legUnit.name}end time`}
+          key={`${legUnit.startTime + legUnit.name} end time`}
           style={currentRouteStyles.listTextPurple}
         >
           {`→${format(legUnit.endTime, 'HH:mm')}`}
@@ -76,7 +77,7 @@ export function RouteLegUnit({ legUnit, showAdditional }: RouteLegUnitProps) {
 
         {legUnit.secondaryEndTime && (
           <Text
-            key={`${legUnit.startTime + legUnit.name}secondary time`}
+            key={`${legUnit.startTime + legUnit.name} secondary time`}
             style={[currentRouteStyles.listTextPurple, { fontStyle: 'italic' }]}
           >
             {`→${format(legUnit.secondaryEndTime, 'HH:mm')}`}

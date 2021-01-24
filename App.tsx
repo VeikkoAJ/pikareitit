@@ -8,7 +8,8 @@ import { HomeScreen } from './screens/HomeScreen';
 import { CurrentRouteScreen } from './screens/CurrentRouteScreen';
 import { basicColors, routeLegColors } from './styles/BasicColors';
 import BrowseAndCreateNavigatorScreen from './screens/BrowseAndCreateNavigatorScreen';
-import { UseRouteDatabase, DatabaseContext } from './hooks/UseRouteDatabase';
+import { UseRouteDatabase } from './hooks/UseRouteDatabase';
+import { DatabaseContext } from './contextTypes';
 
 interface tabBarIcon {
   focused: boolean;

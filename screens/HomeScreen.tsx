@@ -4,8 +4,8 @@ import { RouteProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { RouteKeyPair } from '../types';
 import { RootTabParamList } from '../navigationTypes';
-import { DatabaseContext } from '../hooks/UseRouteDatabase';
 import { basicStyles, listStyles } from '../styles/BasicStyles';
+import { DatabaseContext } from '../contextTypes';
 
 // TODO move this to types after async storage is working
 interface HomeScreenScreenProps {
@@ -51,7 +51,7 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
 
   // TODO add top bar
   return (
-    <View style={basicStyles.background}>
+    <View style={basicStyles.base}>
       <View>
         <Text style={basicStyles.charcoalHeader}>Pikareitit</Text>
       </View>

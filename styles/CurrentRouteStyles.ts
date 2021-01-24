@@ -2,15 +2,18 @@ import { StatusBar, StyleSheet } from 'react-native';
 import { basicColors, routeLegColors } from './BasicColors';
 
 export const currentRouteStyles = StyleSheet.create({
-  background: {
+  base: {
     backgroundColor: basicColors.topBarLight,
     marginTop: StatusBar.currentHeight,
+    alignContent: 'stretch',
   },
   topBar: {
-    height: 50,
     flexDirection: 'row-reverse',
     alignSelf: 'flex-start',
     justifyContent: 'flex-end',
+    position: 'absolute',
+    top: 0,
+    left: 0,
     zIndex: 1,
     elevation: 1,
     flexWrap: 'nowrap',
@@ -40,8 +43,7 @@ export const currentRouteStyles = StyleSheet.create({
   },
   scrollView: {
     paddingHorizontal: 10,
-    paddingTop: 75,
-    paddingBottom: 50,
+    paddingVertical: 50,
   },
   row: {
     flexDirection: 'row',
@@ -90,10 +92,8 @@ export const currentRouteStyles = StyleSheet.create({
     justifyContent: 'space-between',
     flexWrap: 'wrap',
     marginBottom: 2,
-    paddingHorizontal: 3,
-    borderBottomWidth: 0.5,
-    borderBottomColor: routeLegColors.normal,
-    borderRadius: 4,
+    paddingHorizontal: 2,
+    borderRadius: 5,
     backgroundColor: routeLegColors.lightHighlight,
     elevation: 1,
   },
@@ -104,7 +104,12 @@ export const currentRouteStyles = StyleSheet.create({
     paddingEnd: 5,
     textAlignVertical: 'bottom',
   },
+  listText: {
+    marginHorizontal: 2,
+    fontSize: 16,
+  },
   listTextCharcoal: {
+    marginHorizontal: 2,
     fontSize: 16,
     color: routeLegColors.charCoalText,
   },
@@ -113,6 +118,7 @@ export const currentRouteStyles = StyleSheet.create({
     color: routeLegColors.charCoalText,
   },
   listTextGreen: {
+    marginHorizontal: 2,
     fontSize: 16,
     color: routeLegColors.greenText,
   },

@@ -46,7 +46,7 @@ export default function SaveRouteModal({
       presentationStyle="fullScreen"
       onRequestClose={() => closeModal(false)}
     >
-      <View style={basicStyles.background}>
+      <View style={basicStyles.base}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={basicStyles.charcoalHeader}>Save The Route</Text>
         </View>

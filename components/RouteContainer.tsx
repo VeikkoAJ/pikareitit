@@ -38,13 +38,21 @@ export function RouteContainer({
 
   return (
     <ScrollView style={currentRouteStyles.scrollView}>
-      <RouteStartEnd headerText={currentRoute.originPlace} iconName="home" />
-      <RouteMiddleSector travelTimes={[currentRoute.startWalkDuration]} />
+      <RouteStartEnd
+        headerText={currentRoute.originPlace}
+        iconName="office-building"
+        isOld={activeIndex >= 1}
+      />
+      <MiddleSectorWrapper
+        middleSector="single"
+        routeLegDurations={[currentRoute.startWalkDuration]}
+        isOld={activeIndex >= 1}
+      />
       {currentRoute.routeTransportLegRows.map((routeLegRow, row) => (
         <>
           <View
-            style={currentRouteStyles.row}
             key={`${routeLegRow.routeLegs[0].from.address} to ${routeLegRow.routeLegs[0].to.address} row`}
+            style={currentRouteStyles.row}
           >
             {routeLegRow.routeLegs.map((routeLeg, column) => (
               <React.Fragment
@@ -95,14 +103,16 @@ export function RouteContainer({
             ))}
           </View>
           <MiddleSectorWrapper
+            key={`${routeLegRow.routeLegs[0].from.address} middleSector`}
             middleSector={routeLegRow.middleSector}
+            isOld={activeIndex > row}
             routeLegDurations={routeLegDurations[row]}
           />
         </>
       ))}
       <RouteStartEnd
         headerText={currentRoute.finalDestination}
-        iconName="office-building"
+        iconName="home"
       />
       <View style={{ height: 100 }} />
     </ScrollView>

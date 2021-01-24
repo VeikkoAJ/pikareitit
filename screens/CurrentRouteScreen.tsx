@@ -7,8 +7,8 @@ import { CurrentRouteTopBar } from '../components/CurrentRouteTopBar';
 import { RouteContainer } from '../components/RouteContainer';
 import { Route } from '../types';
 import { RootTabParamList } from '../navigationTypes';
-import { DatabaseContext } from '../hooks/UseRouteDatabase';
 import { currentRouteStyles } from '../styles/CurrentRouteStyles';
+import { DatabaseContext } from '../contextTypes';
 
 interface CurrentRouteScreenProps {
   navigation: BottomTabNavigationProp<RootTabParamList, 'Current route'>;
@@ -50,7 +50,7 @@ export function CurrentRouteScreen({
   }, [route.params.routeKey]);
 
   return (
-    <SafeAreaProvider style={[currentRouteStyles.background]}>
+    <SafeAreaProvider style={[currentRouteStyles.base]}>
       <View style={{ flex: 1 }}>
         <CurrentRouteTopBar
           timeOffset={timeShift}

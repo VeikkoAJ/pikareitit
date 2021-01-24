@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Route, RouteKeyPair } from '../types';
 
 // Dirty fix for using 2 different database modules for android and web
 // eslint-disable-next-line import/extensions
 import { db } from '../services/ImportPouchDB';
+import { DatabaseContextValues } from '../contextTypes';
 
 const testRoute1: Route = {
   routeName: 'mallireitti',
@@ -105,16 +106,6 @@ const testRoute1: Route = {
     },
   ],
 };
-type DatabaseContextValues =
-  | undefined
-  | {
-      getRoute: (routeId: string) => Promise<RouteKeyPair | undefined>;
-      getLatestRoute: () => Promise<RouteKeyPair | undefined>;
-      getRoutes: () => Promise<RouteKeyPair[] | undefined>;
-      setLatestRoute: (routeId: string) => void;
-      setRoute: (id: string, route: Route) => void;
-      deleteRoute: (id: string) => void;
-    };
 
 export function UseRouteDatabase() {
   const [latestRouteId, setLatestRouteId] = useState<string | undefined>(
@@ -250,7 +241,3 @@ export function UseRouteDatabase() {
     databaseContextValues,
   };
 }
-
-export const DatabaseContext = React.createContext<DatabaseContextValues>(
-  undefined
-);

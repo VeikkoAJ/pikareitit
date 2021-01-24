@@ -59,6 +59,8 @@ export default function RouteLeg({
     }
   }, [secondaryQueryLegs]);
 
+  const key = `${routeLeg.from.address} to ${routeLeg.to.address}`;
+
   const stopName = () => {
     if (mainQueryLegs && mainQueryLegs[0]) {
       return mainQueryLegs[0]?.from.name.split(',')[0];
@@ -87,7 +89,7 @@ export default function RouteLeg({
   };
   return (
     <TouchableOpacity
-      key={`${routeLeg.from.address} to ${routeLeg.to.address} touchableOpacity`}
+      key={`${key} touchableOpacity`}
       style={[currentRouteStyles.legPressable, style()]}
       onPress={() => {
         if (showInfo) {
@@ -100,16 +102,18 @@ export default function RouteLeg({
       }}
       onLongPress={() => setInfo()}
     >
-      <View style={currentRouteStyles.legHeaderRow}>
+      <View key={`${key}headerView`} style={currentRouteStyles.legHeaderRow}>
         <Text
+          key={`${key} header`}
           style={currentRouteStyles.headerText}
           numberOfLines={2}
           ellipsizeMode="tail"
+          textBreakStrategy="balanced"
         >
           {stopName()}
         </Text>
       </View>
-      <View style={{ minHeight: 70 }}>
+      <View key={`${key}contentView`} style={{ minHeight: 70 }}>
         {!isOld && mainQueryLegs
           ? MapSecondaryDestinationTimes(mainQueryLegs, secondaryQueryLegs).map(
               (leg) => {
