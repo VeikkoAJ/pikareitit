@@ -4,24 +4,38 @@
 
 Sovellus pääkaupunkiseudun julkisen liikenteen reittiaikatalujen reaaliaikaiseen seurantaan. Sovelluksella on mahdollista luoda kustomoituja reittiaikatauluja HSL:n pysäkkien välillä. Tarkoituksena on nopeuttaa julkisten käyttöä ennalta tutuilla reiteillä, kuten työmatkoilla.
 
-**Pääominaisuudet**
-* aikataulujen ketjutus
+
+
+## Pääominaisuudet
+
+* **aikataulujen ketjutus**
+<img src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/realtimeRouting.jpg" height="600">
 
 Seuraavan etapin aikataulut lasketaan edellisen etapin nopeimman siirtymän mukaan. Sovellus näyttää lyhyimmätkin vaihtoajat linjojen välillä, jolloin käyttäjän on mahdollista juosta seuraavaan liikennevälineeseen. *Esimerkiksi Pasilan asemalla lähijunien aikataulu mahdollistaa junien vaihtamisen juoksemalla laiturilta toiselle.*
 
-* reitin halkaisu
+
+* **reitin halkaisu**
+
+<img src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/parallel%20routes.jpg" height="600">
 
 Sovellukessa on mahdollista luoda reittejä, jotka jakautuvat kahteen määränpäähän, esimerkiksi perkkäisiin juna-asemiin.
 
-* reittien tallentaminen ja muokkaaminen
 
+* **reittien tallentaminen ja muokkaaminen**
+
+<img src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/route%20creation.jpg" height="600"> 
+                                                                                                       
 Reittejä on mahdollista luoda ja tallentaa paikallisesti omalle laitteelle. 
+
+
 
 ## Usage
 
 The app can be run locally with [Expo Client](https://docs.expo.io/) or by:
 
 * Downloading the App from Google Play [*not yet released*]()
+
+
 
 ## Built with
 
@@ -30,7 +44,11 @@ The app can be run locally with [Expo Client](https://docs.expo.io/) or by:
 * [Apollo client](https://www.apollographql.com/docs/react/) - [GraphQL](https://graphql.org/) - live transit schedules from HSL Routing API
 * [PouchDB](https://pouchdb.com/) local database for storing user created routes
 
+
+
+
 ## Upcoming Features and known bugs
+
 **features**
  * Individual time shifts for each timetable
  * support for 3 or more parallel timetables
@@ -39,10 +57,17 @@ The app can be run locally with [Expo Client](https://docs.expo.io/) or by:
  **bugs**
  * Browse screen not updating when a deleting route
 
+
+
 ## Author
+
 Veikko Jääskeläinen
 
+
+
+
 ## License
+
 
 - Transit data is from HSL Routing API, licensed under cc by 4.0
 - Address data is from HSL Geocoding API, licensed under cc by 4.0
