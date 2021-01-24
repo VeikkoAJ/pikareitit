@@ -35,7 +35,7 @@ export function RouteContainer({
   useEffect(() => {
     updateStartTime(new Date(), timeOffset, { row: 0, column: 0 });
   }, [timeOffset]);
-  console.log('timeoffset', timeOffset);
+
   return (
     <ScrollView style={currentRouteStyles.scrollView}>
       <RouteStartEnd headerText={currentRoute.originPlace} iconName="home" />
@@ -104,6 +104,7 @@ export function RouteContainer({
         headerText={currentRoute.finalDestination}
         iconName="office-building"
       />
+      <View style={{ height: 100 }} />
     </ScrollView>
   );
 }
