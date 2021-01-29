@@ -1,5 +1,8 @@
-# Pikareitit
 
+
+<img src="https://github.com/VeikkoAJ/pikareitit/blob/develop/assets/adaptive-icon.png" width="200">
+
+# Pikareitit
 *Pikareitit is an mobile app for creating and viewing custom local (Helsinki region) transit schedules.*
 
 Sovellus pääkaupunkiseudun julkisen liikenteen reittiaikatalujen reaaliaikaiseen seurantaan. Sovelluksella on mahdollista luoda kustomoituja reittiaikatauluja HSL:n pysäkkien välillä. Tarkoituksena on nopeuttaa julkisten käyttöä ennalta tutuilla reiteillä, kuten työmatkoilla.
