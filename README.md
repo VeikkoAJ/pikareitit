@@ -28,7 +28,7 @@ Sovellukessa on mahdollista luoda reittejä, jotka jakautuvat kahteen määränp
 
 <img src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/route%20creation.jpg" height="600"> 
                                                                                                        
-Reittejä on mahdollista luoda ja tallentaa paikallisesti omalle laitteelle. 
+Reittejä on mahdollista luoda itse, sekä tallentaa niitä omalle laitteelle. 
 
 
 
