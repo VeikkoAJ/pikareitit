@@ -48,7 +48,7 @@ export default function SaveRouteModal({
     >
       <View style={basicStyles.base}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text style={basicStyles.charcoalHeader}>Save The Route</Text>
+          <Text style={basicStyles.charcoalHeader}>Tallenna reitti</Text>
         </View>
         <View style={{ minHeight: 30 }} />
         <View
@@ -64,35 +64,35 @@ export default function SaveRouteModal({
           ]}
         >
           <TextInputBar
-            text="Name of the Route"
+            text="Reitin nimi"
             answer={route.routeName}
             setAnswer={(answer: string) =>
               setRoute({ ...route, routeName: answer })
             }
           />
           <TextInputBar
-            text="description"
+            text="kuvaus"
             answer={route.description}
             setAnswer={(answer: string) =>
               setRoute({ ...route, description: answer })
             }
           />
           <TextInputBar
-            text="Starting place name (eg. home, work)"
+            text="Aloituspaikan nimi"
             answer={route.originPlace}
             setAnswer={(answer: string) =>
               setRoute({ ...route, originPlace: answer })
             }
           />
           <TextInputBar
-            text="Destination name"
+            text="Määränpään nimi"
             answer={route.finalDestination}
             setAnswer={(answer: string) =>
               setRoute({ ...route, finalDestination: answer })
             }
           />
           <TextInputBar
-            text="Start walk time eg. from home door to bus stop"
+            text="aloituspaikan ja ensimmäisen pysäkin välinen aika"
             flexRate={2}
             keyboardType="decimal-pad"
             answer={route.startWalkDuration.toString(10)}
