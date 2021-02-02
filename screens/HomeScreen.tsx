@@ -6,6 +6,7 @@ import { RouteKeyPair } from '../types';
 import { RootTabParamList } from '../navigationTypes';
 import { basicStyles, listStyles } from '../styles/BasicStyles';
 import { DatabaseContext } from '../contextTypes';
+import InstructionsModal from '../components/InstructionsModal';
 
 // TODO move this to types after async storage is working
 interface HomeScreenScreenProps {
@@ -14,6 +15,7 @@ interface HomeScreenScreenProps {
 }
 
 export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
+  const [showInstructions, setShowInstructions] = useState(false);
   const [lastRouteKeyPair, setLastRouteKeyPair] = useState<
     RouteKeyPair | undefined
   >(undefined);
@@ -52,10 +54,14 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
   // TODO add top bar
   return (
     <View style={basicStyles.base}>
+      {showInstructions && (
+        <InstructionsModal closeModal={() => setShowInstructions(false)} />
+      )}
       <View>
-        <Text style={basicStyles.charcoalHeader}>Pikareitit</Text>
+        <Text style={[basicStyles.charcoalHeader, { marginBottom: 30 }]}>
+          Pikareitit
+        </Text>
       </View>
-      <View style={{ minHeight: 30 }} />
       <View style={[listStyles.container, { minHeight: 120 }]}>
         <Text style={listStyles.header}>Viimeisin reitti:</Text>
         <TouchableOpacity style={listStyles.item} onPress={loadActiveRoute}>
@@ -69,7 +75,10 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
           ) : null}
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={[listStyles.container]}>
+      <TouchableOpacity
+        style={[listStyles.container]}
+        onPress={() => setShowInstructions(true)}
+      >
         <View
           style={{
             flexDirection: 'row',
