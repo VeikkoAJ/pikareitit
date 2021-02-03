@@ -48,7 +48,8 @@ export type Route = {
 
 export interface RouteKeyPair {
   route: Route;
-  key: string;
+  _id: string;
+  _rev?: string;
 }
 
 export interface RouteLegKeyPair {

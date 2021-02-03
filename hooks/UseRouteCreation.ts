@@ -1,7 +1,9 @@
-// TODO Add initial route for editing existing routes
-
 import { useState } from 'react';
-import { MapLocation, RouteLegKeyPair, RouteTransportLeg } from '../types';
+import {
+  RouteLegKeyPair,
+  RouteTransportLeg,
+  RouteTransportLegRow,
+} from '../types';
 
 const emptyLeg = (): RouteLegKeyPair => ({
   key: new Date().getTime().toString(),
@@ -19,8 +21,11 @@ const emptyLeg = (): RouteLegKeyPair => ({
     transportModes: [{ mode: 'WALK' }],
   },
 });
-
-const filledEmptyLeg = (address: string): RouteLegKeyPair => ({
+/**
+ * leg with start place prefilled used when adding sequential routeLegs
+ * @param address startPlace name
+ */
+const preFilledEmptyLeg = (address: string): RouteLegKeyPair => ({
   key: new Date().getTime().toString(),
   routeLeg: {
     from: {
@@ -36,20 +41,42 @@ const filledEmptyLeg = (address: string): RouteLegKeyPair => ({
     transportModes: [{ mode: 'WALK' }],
   },
 });
+/**
+ * Adds unique keys to loaded routeLegs
+ * @param routeTransportLegRows
+ */
+const loadRoute = (
+  routeTransportLegRows: RouteTransportLegRow[] | undefined
+): RouteLegKeyPair[][] => {
+  if (routeTransportLegRows !== undefined) {
+    return routeTransportLegRows.map((row) =>
+      row.routeLegs.map((routeLeg) => ({
+        key: new Date().getTime().toString(),
+        routeLeg,
+      }))
+    );
+  }
+  return [[emptyLeg()]];
+};
 
 interface SettingsIndex {
   row: number;
   column: number;
 }
 
-export function UseRouteCreation() {
+/**
+ * Creates and manipulates routeleg rows
+ * @param routeTransportLegRows loaded route
+ */
+export function UseRouteCreation(
+  routeTransportLegRows: RouteTransportLegRow[] | undefined
+) {
   const [routeLegKeyPairRows, setRouteLegKeyPairRows] = useState<
     RouteLegKeyPair[][]
-  >([[emptyLeg()]]);
+  >(loadRoute(routeTransportLegRows));
   const [settingsIndex, setSettingsIndex] = useState<SettingsIndex | undefined>(
     undefined
   );
-
   /** appends empty routeLeg to the array and moves the settingsIndex
    * @param nextTo decides if new leg will be added to the same or the next row
    * @param row appends the routeLeg after it. If undefined adds it to the end of the array. If earlier routeLeg exists uses it's to as the
@@ -64,7 +91,7 @@ export function UseRouteCreation() {
       const lastRow = routeLegKeyPairRows[routeLegKeyPairRows.length - 1];
       setRouteLegKeyPairRows([
         ...routeLegKeyPairRows,
-        [filledEmptyLeg(lastRow[0].routeLeg.to.address)],
+        [preFilledEmptyLeg(lastRow[0].routeLeg.to.address)],
       ]);
       return;
     }
@@ -87,7 +114,7 @@ export function UseRouteCreation() {
       };
       setRouteLegKeyPairRows([
         ...routeLegKeyPairRows.slice(0, row),
-        [...routeLegKeyPairRows[row], filledEmptyLeg(presetFrom())],
+        [...routeLegKeyPairRows[row], preFilledEmptyLeg(presetFrom())],
         ...routeLegKeyPairRows.slice(row + 1),
       ]);
       return;

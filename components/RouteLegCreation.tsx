@@ -4,16 +4,20 @@ import { routeLegColors } from '../styles/BasicColors';
 import { RouteLegForm } from './RouteLegForm';
 import { ListManipulationButton } from './ListManipulationButton';
 import { UseRouteCreation } from '../hooks/UseRouteCreation';
-import { RouteTransportLeg, RouteTransportLegRow } from '../types';
+import { Route, RouteTransportLeg, RouteTransportLegRow } from '../types';
 import { formatRouteLegRows } from '../services/CreateRouteToSave';
 import { listStyles } from '../styles/BasicStyles';
 import UseTransitStopsQuery from '../hooks/UseTransitStopsQuery';
 
 interface RouteLegCreationProps {
+  loadedRoute: Route | undefined;
   saveRoute: (routeTransportLegRows: RouteTransportLegRow[]) => void;
 }
 
-export function RouteLegCreation({ saveRoute }: RouteLegCreationProps) {
+export function RouteLegCreation({
+  loadedRoute,
+  saveRoute,
+}: RouteLegCreationProps) {
   const {
     routeLegKeyPairRows,
     settingsIndex,
@@ -22,7 +26,9 @@ export function RouteLegCreation({ saveRoute }: RouteLegCreationProps) {
     moveRouteLeg,
     setRouteLeg,
     setNewSettingsIndex,
-  } = UseRouteCreation();
+  } = UseRouteCreation(
+    loadedRoute !== undefined ? loadedRoute.routeTransportLegRows : undefined
+  );
 
   const { stops, stations } = UseTransitStopsQuery();
 

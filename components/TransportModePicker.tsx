@@ -1,9 +1,8 @@
 import React from 'react';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { TransportMode } from '../types';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { routeLegColors } from '../styles/BasicColors';
+import { TransportMode } from '../types';
 import TransportModeIcon from './TransportModeIcon';
+import { routeLegColors } from '../styles/BasicColors';
 import { listForm } from '../styles/BasicStyles';
 
 interface TransportModePickerProps {

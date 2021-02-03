@@ -42,13 +42,13 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
   };
 
   return (
-    <View style={[basicStyles.base, { paddingBottom: 80 }]}>
-      <View>
+    <View style={[basicStyles.base, { paddingBottom: 40 }]}>
+      <View style={{ marginBottom: 30 }}>
         <Text style={basicStyles.charcoalHeader}>Tallennetut reitit</Text>
       </View>
-      <View style={{ minHeight: 30 }} />
+
       <FlatList
-        style={[listStyles.container]}
+        style={[listStyles.container, { paddingTop: 5, flex: 1 }]}
         data={routeKeyPairs}
         extraData={listChangeTracker}
         renderItem={({ item }) => (
@@ -57,6 +57,12 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
             originPlace={item.route.originPlace}
             finalDestination={item.route.finalDestination}
             setActiveRoute={() => loadActiveRoute(item.key)}
+            editRoute={() => {
+              navigation.navigate('Create route', {
+                routeKey: item._id,
+                tabNavigationNavigate: route.params.tabNavigationNavigate,
+              });
+            }}
             deleteRoute={() => {
               if (useRouteDatabase !== undefined) {
                 useRouteDatabase.deleteRoute(item.key);
@@ -75,10 +81,10 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
       <TouchableOpacity
         style={[listStyles.container]}
         onPress={() =>
-          navigation.navigate(
-            'Create route',
-            route.params.tabNavigationNavigate
-          )
+          navigation.navigate('Create route', {
+            routeKey: undefined,
+            tabNavigationNavigate: route.params.tabNavigationNavigate,
+          })
         }
       >
         <View

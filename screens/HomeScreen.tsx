@@ -46,7 +46,7 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
     }
     if (lastRouteKeyPair) {
       navigation.navigate('Current route', {
-        routeKey: lastRouteKeyPair.key,
+        routeKey: lastRouteKeyPair._id,
       });
     }
   };
@@ -129,6 +129,30 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
             ]}
           >
             {' + '}
+          </Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[listStyles.container]}
+        onPress={() => navigation.navigate('Browse', { screen: 'Browse' })}
+      >
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingEnd: 5,
+          }}
+        >
+          <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
+            Selaa reittejä
+          </Text>
+          <Text
+            style={[
+              listStyles.header,
+              { borderBottomWidth: 0, textAlign: 'right' },
+            ]}
+          >
+            {' _ '}
           </Text>
         </View>
       </TouchableOpacity>

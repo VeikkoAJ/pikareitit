@@ -3,7 +3,7 @@ import { TouchableOpacity } from 'react-native';
 import React from 'react';
 
 interface listManipulationButtonProps {
-  buttonIcon: 'add' | 'remove' | 'moveUp' | 'moveDown' | 'info';
+  buttonIcon: 'add' | 'remove' | 'moveUp' | 'moveDown' | 'info' | 'edit';
   size: number;
   color: string;
   secondaryColor?: string;
@@ -29,6 +29,8 @@ export function ListManipulationButton({
         return 'arrow-down';
       case 'info':
         return 'information-outline';
+      case 'edit':
+        return 'square-edit-outline';
       default:
         return 'walk';
     }

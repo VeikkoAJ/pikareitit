@@ -13,28 +13,54 @@ import { TextInputBar } from './TextInputBar';
 import { DatabaseContext } from '../contextTypes';
 import { basicStyles, listStyles } from '../styles/BasicStyles';
 
+type RouteInfo =
+  | {
+      routeName: string;
+      description: string;
+      originPlace: string;
+      finalDestination: string;
+      startWalkDuration: number;
+    }
+  | undefined;
+
 interface SaveRouteModalProps {
   routeTransportLegRows: RouteTransportLegRow[];
+  routeInfo: RouteInfo;
+  routeId: string | undefined;
+  routeRev: string | undefined;
   closeModal: (saved: boolean) => void;
 }
 
 export default function SaveRouteModal({
   routeTransportLegRows,
+  routeInfo,
+  routeId,
+  routeRev,
   closeModal,
 }: SaveRouteModalProps) {
-  const [route, setRoute] = useState<Route>({
-    routeName: '',
-    description: '',
-    originPlace: '',
-    finalDestination: '',
-    startWalkDuration: 0,
-    routeTransportLegRows,
-  });
+  const [route, setRoute] = useState<Route>(
+    routeInfo !== undefined
+      ? {
+          ...routeInfo,
+          routeTransportLegRows,
+        }
+      : {
+          routeTransportLegRows,
+          routeName: '',
+          description: '',
+          originPlace: '',
+          finalDestination: '',
+          startWalkDuration: 0,
+        }
+  );
   const useRouteDatabase = useContext(DatabaseContext);
+  console.log(routeInfo);
   const saveRoute = async () => {
     try {
-      const routeId = `user${route.routeName}Route`;
-      useRouteDatabase?.setRoute(routeId, route);
+      const _id =
+        routeId !== undefined ? routeId : `user${route.routeName}Route`;
+      const _rev = routeRev !== undefined ? routeRev : undefined;
+      useRouteDatabase?.setRoute(_id, _rev, route);
     } catch (e) {
       console.log('saving failed', e);
     }
@@ -71,7 +97,7 @@ export default function SaveRouteModal({
             }
           />
           <TextInputBar
-            text="kuvaus"
+            text="Reitin kuvaus"
             answer={route.description}
             setAnswer={(answer: string) =>
               setRoute({ ...route, description: answer })
@@ -92,13 +118,21 @@ export default function SaveRouteModal({
             }
           />
           <TextInputBar
-            text="aloituspaikan ja ensimmäisen pysäkin välinen aika"
+            text="aloituspaikan ja pysäkin välinseen matkaan kuluva aika (min)"
             flexRate={2}
             keyboardType="decimal-pad"
-            answer={route.startWalkDuration.toString(10)}
-            setAnswer={(answer: string) =>
-              setRoute({ ...route, startWalkDuration: parseInt(answer, 10) })
+            answer={
+              route.startWalkDuration !== 0
+                ? route.startWalkDuration.toString(10)
+                : ''
             }
+            setAnswer={(answer: string) => {
+              if (answer.length > 0) {
+                setRoute({ ...route, startWalkDuration: parseInt(answer, 10) });
+                return;
+              }
+              setRoute({ ...route, startWalkDuration: 0 });
+            }}
           />
           <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity
