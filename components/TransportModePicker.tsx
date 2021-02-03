@@ -21,9 +21,11 @@ export function TransportModePicker({
     { mode: 'TRAM' },
     { mode: 'SUBWAY' },
     { mode: 'FERRY' },
+    { mode: 'WALK' },
   ];
 
   const mapTransportModes = (transportMode: TransportMode) => {
+    // if already included remove
     if (transportModes.map((_) => _.mode).includes(transportMode.mode)) {
       return transportModes.filter((_) => _.mode !== transportMode.mode);
     }

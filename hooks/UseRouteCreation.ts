@@ -171,7 +171,6 @@ export function UseRouteCreation() {
     row: number,
     column: number
   ) => {
-    console.log('set routeLeg', routeLeg);
     // test row and column limits
     if (row >= routeLegKeyPairRows.length) {
       return;
