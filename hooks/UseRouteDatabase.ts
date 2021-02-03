@@ -10,8 +10,8 @@ import { DatabaseContextValues } from '../contextTypes';
 const testRoute1: Route = {
   routeName: 'mallireitti',
   description: 'testaa tällä reitillä sovelluksen ominaisuudet',
-  originPlace: 'toimisto',
-  finalDestination: 'koti',
+  originPlace: 'lähtöpaikka',
+  finalDestination: 'maali',
   startWalkDuration: 1.3 * 60,
   routeTransportLegRows: [
     {

@@ -10,7 +10,7 @@ import { Route, RouteTransportLegRow } from '../types';
 import { routeLegColors } from '../styles/BasicColors';
 import { TextInputBar } from './TextInputBar';
 
-import { DatabaseContext } from '../hooks/UseRouteDatabase';
+import { DatabaseContext } from '../contextTypes';
 import { basicStyles, listStyles } from '../styles/BasicStyles';
 
 interface SaveRouteModalProps {

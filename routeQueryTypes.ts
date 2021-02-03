@@ -25,6 +25,7 @@ export type Leg = {
 type Itinerary = {
   legs: Leg[];
 };
+//TODO rename this
 export type QueryData = {
   plan: {
     itineraries: Itinerary[];

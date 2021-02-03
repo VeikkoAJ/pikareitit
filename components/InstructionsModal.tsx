@@ -97,7 +97,13 @@ export default function InstructionsModal({
                   aikataulun reaaliaikaisuuden (ominaisuus tulossa)
                 </Text>
               </Text>
-              <View style={{ height: 15 }} />
+              <View
+                style={{
+                  marginTop: 10,
+                  marginBottom: 4,
+                  borderTopWidth: 1,
+                }}
+              />
               <Text style={textStyle.subHeader}>Yläpalkin kello</Text>
               <View
                 style={{
@@ -120,7 +126,13 @@ export default function InstructionsModal({
                 - Yläpalkin kellosta on mahdollista siirtää reittien hakuaikaa
                 tulevaisuuteen tai menneisyyteen
               </Text>
-              <View style={{ height: 15 }} />
+              <View
+                style={{
+                  marginTop: 10,
+                  marginBottom: 4,
+                  borderTopWidth: 1,
+                }}
+              />
               <Text style={textStyle.subHeader}>Reittipisteet</Text>
               <View
                 style={{
@@ -150,9 +162,19 @@ export default function InstructionsModal({
               </View>
             </>
           )}
-          {page == 1 && (
+          {page === 1 && (
             <>
               <Text style={textStyle.subHeader}>Reitin luominen</Text>
+              <Text style={textStyle.text}>
+                Omien reittien luominen onnistuu kätevästi
+              </Text>
+              <View
+                style={{
+                  marginTop: 10,
+                  marginBottom: 4,
+                  borderTopWidth: 1,
+                }}
+              />
             </>
           )}
           <View

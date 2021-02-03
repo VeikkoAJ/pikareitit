@@ -104,7 +104,7 @@ export default function UseRouteQuery(
   return {
     /** query using routeLeg.from -> routeLeg.to) */
     mainQueryLegs: formatLegData(data1),
-    /** query using routeLeg.from -> routeLeg.secondaryTo) always undefined if secondaryTo is undefined */
+    /** query using routeLeg.from -> routeLeg.secondaryTo) undefined if secondaryTo is undefined */
     secondaryQueryLegs: formatLegData(data2),
   };
 }

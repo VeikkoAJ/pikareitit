@@ -7,6 +7,7 @@ import { UseRouteCreation } from '../hooks/UseRouteCreation';
 import { RouteTransportLeg, RouteTransportLegRow } from '../types';
 import { formatRouteLegRows } from '../services/CreateRouteToSave';
 import { listStyles } from '../styles/BasicStyles';
+import UseTransitStopsQuery from '../hooks/UseTransitStopsQuery';
 
 interface RouteLegCreationProps {
   saveRoute: (routeTransportLegRows: RouteTransportLegRow[]) => void;
@@ -22,6 +23,8 @@ export function RouteLegCreation({ saveRoute }: RouteLegCreationProps) {
     setRouteLeg,
     setNewSettingsIndex,
   } = UseRouteCreation();
+
+  const { stops, stations } = UseTransitStopsQuery();
 
   useEffect(() => {
     saveRoute(formatRouteLegRows(routeLegKeyPairRows));
@@ -56,6 +59,8 @@ export function RouteLegCreation({ saveRoute }: RouteLegCreationProps) {
               <RouteLegForm
                 key={routeLegKeyPair.key}
                 routeLeg={routeLegKeyPair.routeLeg}
+                stops={stops}
+                stations={stations}
                 showSettings={
                   settingsIndex?.row === row && settingsIndex.column === column
                 }
