@@ -79,7 +79,7 @@ export default function TransportModePicker({
     <View
       style={[
         listForm.textInput,
-        { flex: 1, flexWrap: 'wrap', justifyContent: 'space-evenly' },
+        { flex: 1, flexWrap: 'wrap', justifyContent: 'space-between' },
       ]}
     >
       {defaultTransportModes
@@ -89,6 +89,7 @@ export default function TransportModePicker({
             key={transportMode.mode}
             style={{
               minWidth: '14%',
+              marginVertical: 4,
               paddingHorizontal: 4,
               paddingVertical: 2,
               alignItems: 'center',
