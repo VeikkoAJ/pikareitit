@@ -25,7 +25,10 @@ export default function UseRouteQuery(
   const routeQueries = () => {
     const mainResult = useQuery<QueryData>(routeRequest, {
       variables: {
-        fromPlace: mapLocationToString(routeLeg.from),
+        fromLat: routeLeg.from.lat,
+        fromLon: routeLeg.from.lon,
+        toLat: routeLeg.to.lat,
+        toLon: routeLeg.to.lon,
         toPlace: mapLocationToString(routeLeg.to),
         date: format(
           startTime !== undefined ? startTime : new Date(),
@@ -42,11 +45,16 @@ export default function UseRouteQuery(
     });
     const secondaryResult = useQuery<QueryData>(routeRequest, {
       variables: {
-        fromPlace: mapLocationToString(routeLeg.from),
-        toPlace:
+        fromLat: routeLeg.from.lat,
+        fromLon: routeLeg.from.lon,
+        toLat:
           routeLeg.secondaryTo !== undefined
-            ? mapLocationToString(routeLeg.secondaryTo)
-            : '',
+            ? routeLeg.secondaryTo.lat
+            : routeLeg.from.lat,
+        toLon:
+          routeLeg.secondaryTo !== undefined
+            ? routeLeg.secondaryTo.lon
+            : routeLeg.from.lon,
         date: format(
           startTime !== undefined ? startTime : new Date(),
           'yyyy-MM-dd'

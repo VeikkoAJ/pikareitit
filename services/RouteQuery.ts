@@ -3,15 +3,17 @@ import { gql } from '@apollo/client';
 // eslint-disable-next-line import/prefer-default-export
 export const routeRequest = gql`
   query route(
-    $fromPlace: String
-    $toPlace: String
+    $fromLat: Float!
+    $fromLon: Float!
+    $toLat: Float!
+    $toLon: Float!
     $date: String
     $time: String
     $transportModes: [TransportMode]
   ) {
     plan(
-      fromPlace: $fromPlace
-      toPlace: $toPlace
+      from: { lat: $fromLat, lon: $fromLon }
+      to: { lat: $toLat, lon: $toLon }
       date: $date
       time: $time
       numItineraries: 3

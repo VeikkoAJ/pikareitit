@@ -46,7 +46,7 @@ export default function CurrentRouteTopBar({
           flexShrink: 20,
           paddingStart: 20,
           paddingBottom: 5,
-          borderBottomRightRadius: showtimePicker || s ? 0 : 10,
+          borderBottomRightRadius: showtimePicker || timeOffset !== 0 ? 0 : 10,
           paddingEnd: timeOffset === 0 ? 15 : 5,
           elevation: 3,
         }}
