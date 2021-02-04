@@ -91,7 +91,8 @@ export default function RouteLeg({
     <TouchableOpacity
       key={`${key} touchableOpacity`}
       style={[currentRouteStyles.legPressable, style()]}
-      onPress={() => {
+      onPress={() => setInfo()}
+      onLongPress={() => {
         if (showInfo) {
           hideInfo();
         }
@@ -100,7 +101,6 @@ export default function RouteLeg({
           setActive();
         }
       }}
-      onLongPress={() => setInfo()}
     >
       <View key={`${key}headerView`} style={currentRouteStyles.legHeaderRow}>
         <Text

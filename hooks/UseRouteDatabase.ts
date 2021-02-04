@@ -158,7 +158,7 @@ export function UseRouteDatabase() {
       const response = await db.get(routeId);
       return {
         route: JSON.parse(response.route),
-        _id: response._id,
+        id: response._id,
       };
     } catch (e) {
       console.log('getting latest route failed', e);
@@ -174,7 +174,7 @@ export function UseRouteDatabase() {
       const { _id, route } = await db.get(latestRouteId);
       return {
         route: JSON.parse(route),
-        _id,
+        id: _id,
       };
     } catch (e) {
       console.log('getting latest route failed', e);
@@ -192,8 +192,8 @@ export function UseRouteDatabase() {
       if (response.rows.length > 0) {
         return response.rows.map(({ doc: { _id, route, _rev } }) => ({
           route: JSON.parse(route),
-          _id,
-          _rev,
+          id: _id,
+          rev: _rev,
         }));
       }
       return undefined;
@@ -207,7 +207,11 @@ export function UseRouteDatabase() {
     setLatestRouteId(routeId);
   };
 
-  const setRoute = async (_id: string, _rev: string, route: Route) => {
+  const setRoute = async (
+    _id: string,
+    _rev: string | undefined,
+    route: Route
+  ) => {
     db.put({
       _id,
       _rev,

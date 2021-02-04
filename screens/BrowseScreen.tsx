@@ -15,7 +15,7 @@ interface BrowseScreenProps {
   route: RouteProp<StackParamList, 'Browse'>;
 }
 
-export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
+export default function BrowseScreen({ navigation, route }: BrowseScreenProps) {
   const [routeKeyPairs, setRouteKeyPairs] = useState<RouteKeyPair[]>([]);
   const [listChangeTracker, setListChangeTracker] = useState<number>(0);
   const useRouteDatabase = useContext(DatabaseContext);
@@ -56,16 +56,16 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
             name={item.route.routeName}
             originPlace={item.route.originPlace}
             finalDestination={item.route.finalDestination}
-            setActiveRoute={() => loadActiveRoute(item.key)}
+            setActiveRoute={() => loadActiveRoute(item.id)}
             editRoute={() => {
               navigation.navigate('Create route', {
-                routeKey: item._id,
+                routeKey: item.id,
                 tabNavigationNavigate: route.params.tabNavigationNavigate,
               });
             }}
             deleteRoute={() => {
               if (useRouteDatabase !== undefined) {
-                useRouteDatabase.deleteRoute(item.key);
+                useRouteDatabase.deleteRoute(item.id);
               }
               setListChangeTracker(listChangeTracker + 1);
             }}

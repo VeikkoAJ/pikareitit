@@ -7,6 +7,8 @@ import { RootTabParamList } from '../navigationTypes';
 import { basicStyles, listStyles } from '../styles/BasicStyles';
 import { DatabaseContext } from '../contextTypes';
 import InstructionsModal from '../components/InstructionsModal';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { basicColors, routeLegColors } from '../styles/BasicColors';
 
 // TODO move this to types after async storage is working
 interface HomeScreenScreenProps {
@@ -46,7 +48,7 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
     }
     if (lastRouteKeyPair) {
       navigation.navigate('Current route', {
-        routeKey: lastRouteKeyPair._id,
+        routeKey: lastRouteKeyPair.id,
       });
     }
   };
@@ -122,14 +124,11 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
           <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
             Luo uusi reitti
           </Text>
-          <Text
-            style={[
-              listStyles.header,
-              { borderBottomWidth: 0, textAlign: 'right' },
-            ]}
-          >
-            {' + '}
-          </Text>
+          <MaterialCommunityIcons
+            name="layers-plus"
+            size={28}
+            color={routeLegColors.charCoalText}
+          />
         </View>
       </TouchableOpacity>
       <TouchableOpacity
@@ -146,14 +145,11 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
           <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
             Selaa reittejä
           </Text>
-          <Text
-            style={[
-              listStyles.header,
-              { borderBottomWidth: 0, textAlign: 'right' },
-            ]}
-          >
-            {' _ '}
-          </Text>
+          <MaterialCommunityIcons
+            name="menu"
+            size={28}
+            color={routeLegColors.charCoalText}
+          />
         </View>
       </TouchableOpacity>
     </View>

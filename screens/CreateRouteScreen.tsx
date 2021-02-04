@@ -67,7 +67,12 @@ export default function CreateRouteScreen({
           alignItems: 'center',
         }}
       >
-        <Text style={basicStyles.charcoalHeader}>Tee uusi Reitti</Text>
+        <Text style={basicStyles.charcoalHeader}>
+          {routeKeyPair !== undefined
+            ? routeKeyPair.route.routeName
+            : 'Tee uusi reitti'}
+        </Text>
+
         <TouchableOpacity
           style={{
             paddingHorizontal: 10,
@@ -92,8 +97,8 @@ export default function CreateRouteScreen({
         <SaveRouteModal
           routeTransportLegRows={editedRouteTransportLegRows}
           routeInfo={getRouteInfo()}
-          routeId={routeKeyPair?._id}
-          routeRev={routeKeyPair?._rev}
+          routeId={routeKeyPair?.id}
+          routeRev={routeKeyPair?.rev}
           closeModal={(saved: boolean) => {
             setShowModal(false);
             if (saved) {

@@ -169,14 +169,16 @@ export default function AddressSearch({
                     <Text>{stop.name}</Text>
                   </Pressable>
                 ))}
-              <Text
-                style={[
-                  listForm.fieldAnswer,
-                  { fontWeight: 'bold', marginLeft: 0, borderBottomWidth: 0 },
-                ]}
-              >
-                Osoitteet
-              </Text>
+              {searchResult.length > 0 && (
+                <Text
+                  style={[
+                    listForm.fieldAnswer,
+                    { fontWeight: 'bold', marginLeft: 0, borderBottomWidth: 0 },
+                  ]}
+                >
+                  Osoitteet
+                </Text>
+              )}
               {searchResult.slice(0, 5).map((result) => (
                 <Pressable
                   key={result.properties.id}

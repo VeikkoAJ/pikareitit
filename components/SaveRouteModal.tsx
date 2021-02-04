@@ -57,10 +57,9 @@ export default function SaveRouteModal({
   console.log(routeInfo);
   const saveRoute = async () => {
     try {
-      const _id =
+      const id =
         routeId !== undefined ? routeId : `user${route.routeName}Route`;
-      const _rev = routeRev !== undefined ? routeRev : undefined;
-      useRouteDatabase?.setRoute(_id, _rev, route);
+      useRouteDatabase?.setRoute(id, routeRev, route);
     } catch (e) {
       console.log('saving failed', e);
     }
@@ -118,7 +117,7 @@ export default function SaveRouteModal({
             }
           />
           <TextInputBar
-            text="aloituspaikan ja pysäkin välinseen matkaan kuluva aika (min)"
+            text="aloituspaikan ja pysäkin välinseen matkaan kuluva aika (min), valinnainen"
             flexRate={2}
             keyboardType="decimal-pad"
             answer={

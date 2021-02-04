@@ -8,7 +8,7 @@ export type DatabaseContextValues =
       getLatestRoute: () => Promise<RouteKeyPair | undefined>;
       getRoutes: () => Promise<RouteKeyPair[] | undefined>;
       setLatestRoute: (routeId: string) => void;
-      setRoute: (id: string, _rev: string, route: Route) => void;
+      setRoute: (id: string, _rev: string | undefined, route: Route) => void;
       deleteRoute: (id: string) => void;
     };
 
