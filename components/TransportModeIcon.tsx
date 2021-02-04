@@ -29,6 +29,5 @@ export default function TransportModeIcon({
         return 'walk';
     }
   };
-
   return <MaterialCommunityIcons name={iconName()} size={size} color={color} />;
 }

@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
+// eslint-disable-next-line import/prefer-default-export
 export const routeRequest = gql`
   query route(
     $fromPlace: String

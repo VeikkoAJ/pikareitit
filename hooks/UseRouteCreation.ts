@@ -68,7 +68,7 @@ interface SettingsIndex {
  * Creates and manipulates routeleg rows
  * @param routeTransportLegRows loaded route
  */
-export function UseRouteCreation(
+export default function UseRouteCreation(
   routeTransportLegRows: RouteTransportLegRow[] | undefined
 ) {
   const [routeLegKeyPairRows, setRouteLegKeyPairRows] = useState<

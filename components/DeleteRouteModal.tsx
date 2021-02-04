@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { routeLegColors } from '../styles/BasicColors';
 import { createRouteStyles } from '../styles/CreateRouteStyles';
-import { listForm, listStyles } from '../styles/BasicStyles';
+import { listStyles } from '../styles/BasicStyles';
 
 interface DeleteRouteModalProps {
   routeName: string;

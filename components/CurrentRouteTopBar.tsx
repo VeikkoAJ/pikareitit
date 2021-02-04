@@ -1,7 +1,5 @@
 import { Pressable, Text, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
-
-import { format } from 'date-fns';
 import BasicClock from './BasicClock';
 import { currentRouteStyles } from '../styles/CurrentRouteStyles';
 import TimeShiftPicker from './TimeShiftPicker';
@@ -15,7 +13,7 @@ interface RouteScreenTopBarProps {
 /**
  * @param setTimeOffset sets how much earlier or later itineraries should be queued in millis seconds
  */
-export function CurrentRouteTopBar({
+export default function CurrentRouteTopBar({
   timeOffset,
   setTimeOffset,
 }: RouteScreenTopBarProps) {

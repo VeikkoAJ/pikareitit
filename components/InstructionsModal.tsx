@@ -8,8 +8,28 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { basicStyles, listStyles } from '../styles/BasicStyles';
-import { ListManipulationButton } from './ListManipulationButton';
+import ListManipulationButton from './ListManipulationButton';
 import { basicColors, routeLegColors } from '../styles/BasicColors';
+
+// TODO move styles to BasicStyles
+const textStyle = StyleSheet.create({
+  header: {
+    flexShrink: 1,
+    fontSize: 24,
+    color: routeLegColors.charCoalText,
+  },
+  subHeader: {
+    flexShrink: 1,
+    fontSize: 20,
+    color: 'black',
+  },
+  text: {
+    flexShrink: 1,
+    flexWrap: 'wrap',
+    fontSize: 16,
+    color: 'black',
+  },
+});
 
 interface InstructionsModalProps {
   closeModal: () => void;
@@ -68,8 +88,8 @@ export default function InstructionsModal({
                   <Image
                     style={{
                       flex: 1,
-                      width: null,
-                      height: null,
+                      width: undefined,
+                      height: undefined,
                       resizeMode: 'contain',
                       borderRadius: 5,
                     }}
@@ -114,8 +134,8 @@ export default function InstructionsModal({
                 <Image
                   style={{
                     flex: 1,
-                    width: null,
-                    height: null,
+                    width: undefined,
+                    height: undefined,
                     resizeMode: 'contain',
                     borderRadius: 5,
                   }}
@@ -145,8 +165,8 @@ export default function InstructionsModal({
                   <Image
                     style={{
                       flex: 1,
-                      width: null,
-                      height: null,
+                      width: undefined,
+                      height: undefined,
                       resizeMode: 'contain',
                       borderRadius: 5,
                     }}
@@ -223,22 +243,3 @@ export default function InstructionsModal({
     </Modal>
   );
 }
-
-const textStyle = StyleSheet.create({
-  header: {
-    flexShrink: 1,
-    fontSize: 24,
-    color: routeLegColors.charCoalText,
-  },
-  subHeader: {
-    flexShrink: 1,
-    fontSize: 20,
-    color: 'black',
-  },
-  text: {
-    flexShrink: 1,
-    flexWrap: 'wrap',
-    fontSize: 16,
-    color: 'black',
-  },
-});

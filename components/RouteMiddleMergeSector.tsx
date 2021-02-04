@@ -1,10 +1,10 @@
 import { View } from 'react-native';
 import React from 'react';
 import { RouteMiddleSectorProps } from '../types';
-import { SmallDot } from './SmallDot';
-import { MinuteDot } from './MinuteDot';
+import SmallDot from './SmallDot';
+import MinuteDot from './MinuteDot';
 
-export function RouteMiddleMergeSector({
+export default function RouteMiddleMergeSector({
   travelTimes,
 }: RouteMiddleSectorProps) {
   return (

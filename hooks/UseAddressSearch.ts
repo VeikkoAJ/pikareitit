@@ -9,7 +9,7 @@ const layers = '&layers=locality,neighbourhood,street,address,venue';
 const searchDelayMS = 1500;
 const allowedCities = ['Helsinki', 'Espoo', 'Vantaa', 'Sipoo', 'Kauniainen'];
 
-export function UseAddressSearch() {
+export default function UseAddressSearch() {
   const [searchResult, setSearchResult] = useState<Feature[]>([]);
   const [searchText, setSearchText] = useState<string | undefined>(undefined);
 

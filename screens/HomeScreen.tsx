@@ -8,7 +8,7 @@ import { basicStyles, listStyles } from '../styles/BasicStyles';
 import { DatabaseContext } from '../contextTypes';
 import InstructionsModal from '../components/InstructionsModal';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { basicColors, routeLegColors } from '../styles/BasicColors';
+import { routeLegColors } from '../styles/BasicColors';
 
 // TODO move this to types after async storage is working
 interface HomeScreenScreenProps {
@@ -16,7 +16,10 @@ interface HomeScreenScreenProps {
   route: RouteProp<RootTabParamList, 'Current route'>;
 }
 
-export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
+export default function HomeScreen({
+  navigation,
+  route,
+}: HomeScreenScreenProps) {
   const [showInstructions, setShowInstructions] = useState(false);
   const [lastRouteKeyPair, setLastRouteKeyPair] = useState<
     RouteKeyPair | undefined

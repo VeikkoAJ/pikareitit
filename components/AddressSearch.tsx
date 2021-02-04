@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import { routeLegColors } from '../styles/BasicColors';
 import { createRouteStyles } from '../styles/CreateRouteStyles';
-import { UseAddressSearch } from '../hooks/UseAddressSearch';
+import UseAddressSearch from '../hooks/UseAddressSearch';
 import { MapLocation } from '../types';
-import { ListManipulationButton } from './ListManipulationButton';
+import ListManipulationButton from './ListManipulationButton';
 import { listForm } from '../styles/BasicStyles';
 import {
   Station,

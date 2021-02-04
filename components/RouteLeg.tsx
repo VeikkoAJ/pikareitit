@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { RouteLegUnit } from './RouteLegUnit';
+import RouteLegUnit from './RouteLegUnit';
 import { RouteTransportLeg } from '../types';
-
-import TransportModeIcon from './TransportModeIcon';
 import UseRouteQuery from '../hooks/UseRouteQuery';
 import { currentRouteStyles } from '../styles/CurrentRouteStyles';
 import { MapSecondaryDestinationTimes } from '../services/MapSecondayDestinationTimes';

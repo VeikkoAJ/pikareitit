@@ -17,8 +17,11 @@ interface RouteLegUnitProps {
   showAdditional: boolean;
 }
 
-export function RouteLegUnit({ legUnit, showAdditional }: RouteLegUnitProps) {
-  /** Walking icon for when no route is available */
+export default function RouteLegUnit({
+  legUnit,
+  showAdditional,
+}: RouteLegUnitProps) {
+  /** Render walking icon for when no route is available */
   const walkIcon = () => (
     <MaterialCommunityIcons
       key={legUnit.startTime + legUnit.name}

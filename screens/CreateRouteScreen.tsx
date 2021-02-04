@@ -3,10 +3,10 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { RouteProp, CommonActions } from '@react-navigation/native';
 import { StackParamList } from '../navigationTypes';
-import { routeLegColors } from '../styles/BasicColors';
-import { RouteLegCreation } from '../components/RouteLegCreation';
-import { Route, RouteKeyPair, RouteTransportLegRow } from '../types';
+import RouteLegCreation from '../components/RouteLegCreation';
 import SaveRouteModal from '../components/SaveRouteModal';
+import { RouteKeyPair, RouteTransportLegRow } from '../types';
+import { routeLegColors } from '../styles/BasicColors';
 import { basicStyles } from '../styles/BasicStyles';
 import { DatabaseContext } from '../contextTypes';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { MiddleSector } from '../types';
 import RouteMiddleSector from './RouteMiddleSector';
-import { RouteMiddleSplitSector } from './RouteMiddleSplitSector';
-import { RouteMiddleMergeSector } from './RouteMiddleMergeSector';
+import RouteMiddleSplitSector from './RouteMiddleSplitSector';
+import RouteMiddleMergeSector from './RouteMiddleMergeSector';
 import { isOldContext } from '../contextTypes';
 
 type MiddleSectorWrapperProps = {

@@ -1,9 +1,9 @@
-import { basicColors, routeLegColors } from '../styles/BasicColors';
 import { View } from 'react-native';
 import React, { useContext } from 'react';
+import { routeLegColors } from '../styles/BasicColors';
 import { isOldContext, IsOldContextValues } from '../contextTypes';
 
-export function SmallDot() {
+export default function SmallDot() {
   const isOld = useContext<IsOldContextValues>(isOldContext);
 
   return (

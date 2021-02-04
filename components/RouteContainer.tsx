@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import RouteLeg from './RouteLeg';
 import RouteStartEnd from './RouteStartEndLeg';
-import RouteMiddleSector from './RouteMiddleSector';
 import { Route } from '../types';
-import { UseRouteLegDurations } from '../hooks/UseRouteLegDurations';
+import UseRouteLegDurations from '../hooks/UseRouteLegDurations';
 import UseRouteLegStartTimes from '../hooks/UseRouteLegStartTimes';
 import MiddleSectorWrapper from './MiddleSectorWrapper';
 import { currentRouteStyles } from '../styles/CurrentRouteStyles';
@@ -14,7 +13,7 @@ export type RouteContainerProps = {
   timeOffset: number;
 };
 
-export function RouteContainer({
+export default function RouteContainer({
   currentRoute,
   timeOffset,
 }: RouteContainerProps) {

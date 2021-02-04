@@ -1,6 +1,6 @@
-import { basicColors, routeLegColors } from '../styles/BasicColors';
-import { Text, View } from 'react-native';
 import React, { useContext } from 'react';
+import { Text, View } from 'react-native';
+import { routeLegColors } from '../styles/BasicColors';
 import { isOldContext, IsOldContextValues } from '../contextTypes';
 
 interface IconDotProps {
@@ -8,7 +8,7 @@ interface IconDotProps {
   showSign?: string;
 }
 
-export function MinuteDot({ travelTime, showSign = '' }: IconDotProps) {
+export default function MinuteDot({ travelTime, showSign = '' }: IconDotProps) {
   const isOld = useContext<IsOldContextValues>(isOldContext);
   return (
     <View

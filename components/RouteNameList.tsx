@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { routeLegColors } from '../styles/BasicColors';
 import DeleteRouteModal from './DeleteRouteModal';
-import { ListManipulationButton } from './ListManipulationButton';
+import ListManipulationButton from './ListManipulationButton';
 import { listStyles } from '../styles/BasicStyles';
 
 interface RouteNameListProps {
@@ -14,7 +14,7 @@ interface RouteNameListProps {
   deleteRoute: () => void;
 }
 
-export function RouteNameList({
+export default function RouteNameList({
   name,
   originPlace,
   finalDestination,

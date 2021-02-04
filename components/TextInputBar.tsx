@@ -12,23 +12,17 @@ interface TextInputBarProps {
 }
 
 export function TextInputBar({
-  defaultValue,
+  defaultValue = undefined,
   text,
   answer,
-  flexRate,
-  keyboardType,
+  flexRate = 1,
+  keyboardType = undefined,
   setAnswer,
 }: TextInputBarProps) {
   const flexValues = () => {
-    if (flexRate !== undefined) {
-      return {
-        left: flexRate,
-        right: 1 / flexRate,
-      };
-    }
     return {
-      left: 1,
-      right: 1,
+      left: flexRate,
+      right: 1 / flexRate,
     };
   };
 

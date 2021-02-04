@@ -10,7 +10,7 @@ interface TransportModePickerProps {
   setTransportModes: (transportModes: TransportMode[]) => void;
 }
 
-export function TransportModePicker({
+export default function TransportModePicker({
   transportModes,
   setTransportModes,
 }: TransportModePickerProps) {

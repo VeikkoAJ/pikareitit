@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { routeLegColors } from '../styles/BasicColors';
-import { TransportModePicker } from './TransportModePicker';
-import { ListManipulationButton } from './ListManipulationButton';
+import TransportModePicker from './TransportModePicker';
+import ListManipulationButton from './ListManipulationButton';
 import { RouteTransportLeg, TransportMode, MapLocation } from '../types';
 import AddressSearch from './AddressSearch';
 import { StationsQueryData, StopsQueryData } from '../transitStopsQueryTypes';
@@ -19,7 +19,7 @@ interface RouteLegFormProps {
   setRouteLeg: (routeLeg: RouteTransportLeg) => void;
 }
 
-export function RouteLegForm({
+export default function RouteLegForm({
   routeLeg,
   stops,
   stations,

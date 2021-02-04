@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, StatusBar } from 'react-native';
+import { View, Text } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { RouteProp } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { CurrentRouteTopBar } from '../components/CurrentRouteTopBar';
-import { RouteContainer } from '../components/RouteContainer';
+import CurrentRouteTopBar from '../components/CurrentRouteTopBar';
+import RouteContainer from '../components/RouteContainer';
 import { Route } from '../types';
 import { RootTabParamList } from '../navigationTypes';
 import { currentRouteStyles } from '../styles/CurrentRouteStyles';
@@ -15,7 +15,7 @@ interface CurrentRouteScreenProps {
   route: RouteProp<RootTabParamList, 'Current route'>;
 }
 
-export function CurrentRouteScreen({
+export default function CurrentRouteScreen({
   navigation,
   route,
 }: CurrentRouteScreenProps) {

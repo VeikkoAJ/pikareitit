@@ -4,7 +4,7 @@ import { RouteProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 import { RouteKeyPair } from '../types';
-import { RouteNameList } from '../components/RouteNameList';
+import RouteNameList from '../components/RouteNameList';
 import { StackParamList } from '../navigationTypes';
 
 import { basicStyles, listStyles } from '../styles/BasicStyles';
