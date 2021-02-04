@@ -2,10 +2,10 @@
 
 <img src="https://github.com/VeikkoAJ/pikareitit/blob/develop/assets/adaptive-icon.png" width="200">
 
-# Pikareitit
+# Pikareitit 1.5.0
 *Pikareitit is an mobile app for creating and viewing custom local (Helsinki region) transit schedules.*
 
-Sovellus pääkaupunkiseudun julkisen liikenteen reittiaikatalujen reaaliaikaiseen seurantaan. Sovelluksella on mahdollista luoda kustomoituja reittiaikatauluja HSL:n pysäkkien välillä. Tarkoituksena on nopeuttaa julkisten käyttöä ennalta tutuilla reiteillä, kuten työmatkoilla.
+Sovellus pääkaupunkiseudun julkisen liikenteen reittiaikatalujen reaaliaikaiseen seurantaan. Sovelluksella on mahdollista luoda kustomoituja reittiaikatauluja HSL:n pysäkkien välillä. Aikataulut ketjuttuvat automaattisesti, jolloin on mahdollista nähdä jo seuraavan pysäkin aikataulut, ennen sinne pääsyä. Sovelluksen tarkoituksena on nopeuttaa julkisten käyttöä ennalta tutuilla reiteillä, kuten työmatkoilla. Sovellusta ei kannata käyttää ennalta tuntemattomilla reiteillä, koska aikataulujen asettamiseen menisi liian kauan.
 
 
 
@@ -53,13 +53,13 @@ The app can be run locally with [Expo Client](https://docs.expo.io/) or by:
 ## Upcoming Features and known bugs
 
 **features**
- * Individual time shifts for each timetable
- * support for 3 or more parallel timetables
- * searching routes by stop name instead of street name
- * settings tab and dark theme
- **bugs**
- * Browse screen not updating when a deleting route
-
+* Individual time shifts for each timetable
+* support for 3 or more parallel timetables
+* ~~searching routes by stop name instead of street name~~
+* settings tab and dark theme
+**bugs**
+* list of saved routes not updating after deleting a route
+* use lower resolution image files on instructions page 
 
 
 ## Author
