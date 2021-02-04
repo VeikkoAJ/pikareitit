@@ -64,6 +64,7 @@ The app can be run locally with [Expo Client](https://docs.expo.io/) or by:
 * settings tab and dark theme
 * support for unusual transport modes, such as funiculars and cable cars, just in case
 * support for traversing parts of a route with bicycles
+
 **bugs**
 * list of saved routes not updating after deleting a route
 * too high resolution image files on instructions page, raising the apk size
