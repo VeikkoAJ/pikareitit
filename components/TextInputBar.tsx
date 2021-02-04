@@ -34,8 +34,11 @@ export function TextInputBar({
         style={[listForm.fieldAnswer, { flex: flexValues().right }]}
         keyboardType={keyboardType === undefined ? 'default' : keyboardType}
         defaultValue={defaultValue}
-        value={!isEdited ? defaultValue : answer}
-        onChangeText={(newAnswer) => setAnswer(newAnswer)}
+        value={isEdited || defaultValue === undefined ? answer : defaultValue}
+        onChangeText={(newAnswer) => {
+          setAnswer(newAnswer);
+          setEdited(true);
+        }}
       />
     </View>
   );

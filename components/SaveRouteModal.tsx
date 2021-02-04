@@ -73,7 +73,7 @@ export default function SaveRouteModal({
       presentationStyle="fullScreen"
       onRequestClose={() => closeModal(false)}
     >
-      <View style={basicStyles.base}>
+      <View style={[basicStyles.base, { marginTop: 0 }]}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={basicStyles.charcoalHeader}>Tallenna reitti</Text>
         </View>
