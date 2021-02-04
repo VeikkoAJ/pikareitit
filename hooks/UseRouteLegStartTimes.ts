@@ -1,5 +1,13 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { addMilliseconds } from 'date-fns';
+
+// TODO move this to the user configurable settings panel
+/**
+ * Sets the query searchTime overlap.
+ * Allows transits that leave less than minute later
+ * than the predicted arrival of the earlier transit
+ */
+const staticTimeOffset = -1000 * 60;
 
 /**
  * Custom hook that allows chaining querying route itineraries ny keeping track of the start times
@@ -71,7 +79,7 @@ export default function UseRouteLegStartTimes(
         routeLegStartDates.map((row, i) =>
           row.map((startTime, j) => {
             if (location.row === i && location.column === j) {
-              return newStartTime;
+              return new Date(newStartTime.getTime() + staticTimeOffset);
             }
             return startTime;
           })

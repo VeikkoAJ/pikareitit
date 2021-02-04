@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import RouteLegUnit from './RouteLegUnit';
 import { RouteTransportLeg } from '../types';
 import UseRouteQuery from '../hooks/UseRouteQuery';
 import { currentRouteStyles } from '../styles/CurrentRouteStyles';
 import { MapSecondaryDestinationTimes } from '../services/MapSecondayDestinationTimes';
 import { Leg } from '../routeQueryTypes';
+
+const _ = require('lodash');
 
 interface RouteLegProps {
   routeLeg: RouteTransportLeg;
@@ -38,6 +40,7 @@ export default function RouteLeg({
   isActive,
   showInfo,
 }: RouteLegProps) {
+  const [changeStartTime, setChangeStartTime] = useState(false);
   const { mainQueryLegs, secondaryQueryLegs } = UseRouteQuery(
     routeLeg,
     startTime,
@@ -56,6 +59,24 @@ export default function RouteLeg({
       setSecRouteLegDuration(secondaryQueryLegs[0]?.duration);
     }
   }, [secondaryQueryLegs]);
+
+  const change = () => {
+    setRouteStartTime();
+    setActive();
+  };
+
+  const debounced = useRef(
+    _.debounce(() => {
+      setChangeStartTime(false);
+    }, 3000)
+  );
+
+  useEffect(() => {
+    if (changeStartTime) {
+      change();
+      debounced.current();
+    }
+  }, [changeStartTime]);
 
   const key = `${routeLeg.from.address} to ${routeLeg.to.address}`;
 
@@ -89,14 +110,16 @@ export default function RouteLeg({
     <TouchableOpacity
       key={`${key} touchableOpacity`}
       style={[currentRouteStyles.legPressable, style()]}
-      onPress={() => setInfo()}
+      onPress={() => (showInfo ? hideInfo() : setInfo())}
       onLongPress={() => {
-        if (showInfo) {
-          hideInfo();
+        if (changeStartTime) {
+          ToastAndroid.show(
+            'you must wait some time before updating',
+            ToastAndroid.LONG
+          );
         }
-        if (!showInfo) {
-          setRouteStartTime();
-          setActive();
+        if (!changeStartTime) {
+          setChangeStartTime(true);
         }
       }}
     >

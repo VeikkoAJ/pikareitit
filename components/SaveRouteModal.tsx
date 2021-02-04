@@ -48,8 +48,11 @@ export default function SaveRouteModal({
           routeTransportLegRows,
           routeName: '',
           description: '',
-          originPlace: '',
-          finalDestination: '',
+          originPlace: routeTransportLegRows[0].routeLegs[0].from.address,
+          finalDestination:
+            routeTransportLegRows[0].routeLegs[
+              routeTransportLegRows[0].routeLegs.length - 1
+            ].to.address,
           startWalkDuration: 0,
         }
   );

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { AddressSearchResponse, Feature } from '../addressSearchTypes';
 
-let _ = require('lodash');
+const _ = require('lodash');
 
 const url = 'http://api.digitransit.fi/geocoding/v1/autocomplete';
 const focusPoint = '&focus.point.lat=60.17&focus.point.lon=24.93';
