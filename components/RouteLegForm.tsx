@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Pressable, Text, TextInput, View } from 'react-native';
-import { listForm, routeLegColors } from '../styles/BasicColors';
-import { TransportModePicker } from './TransportModePicker';
-import { ListManipulationButton } from './ListManipulationButton';
+import { Pressable, View } from 'react-native';
+import { routeLegColors } from '../styles/BasicColors';
+import TransportModePicker from './TransportModePicker';
+import ListManipulationButton from './ListManipulationButton';
 import { RouteTransportLeg, TransportMode, MapLocation } from '../types';
 import AddressSearch from './AddressSearch';
+import { StationsQueryData, StopsQueryData } from '../transitStopsQueryTypes';
 
 interface RouteLegFormProps {
   routeLeg: RouteTransportLeg;
+  stops: StopsQueryData | undefined;
+  stations: StationsQueryData | undefined;
   showSettings: boolean;
   setShowSettings: (toggle: boolean) => void;
   addRouteLeg: () => void;
@@ -16,8 +19,10 @@ interface RouteLegFormProps {
   setRouteLeg: (routeLeg: RouteTransportLeg) => void;
 }
 
-export function RouteLegForm({
+export default function RouteLegForm({
   routeLeg,
+  stops,
+  stations,
   showSettings,
   setShowSettings,
   addRouteLeg,
@@ -84,11 +89,15 @@ export function RouteLegForm({
         <AddressSearch
           name="lähtöpysäkki:"
           defaultValue={from.address}
+          stops={stops}
+          stations={stations}
           changeLocation={(location) => setFrom(location)}
         />
         <AddressSearch
           name="määränpään pysäkki:"
           defaultValue={to.address}
+          stops={stops}
+          stations={stations}
           changeLocation={(location) => setTo(location)}
         />
         <AddressSearch
@@ -96,6 +105,8 @@ export function RouteLegForm({
           defaultValue={
             secondaryTo?.address === undefined ? '' : secondaryTo.address
           }
+          stops={stops}
+          stations={stations}
           changeLocation={(location) => setSecondaryTo(location)}
         />
       </View>

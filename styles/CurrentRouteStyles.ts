@@ -2,15 +2,18 @@ import { StatusBar, StyleSheet } from 'react-native';
 import { basicColors, routeLegColors } from './BasicColors';
 
 export const currentRouteStyles = StyleSheet.create({
-  background: {
+  base: {
     backgroundColor: basicColors.topBarLight,
     marginTop: StatusBar.currentHeight,
+    alignContent: 'stretch',
   },
   topBar: {
-    height: 50,
     flexDirection: 'row-reverse',
     alignSelf: 'flex-start',
     justifyContent: 'flex-end',
+    position: 'absolute',
+    top: 0,
+    left: 0,
     zIndex: 1,
     elevation: 1,
     flexWrap: 'nowrap',
@@ -40,11 +43,9 @@ export const currentRouteStyles = StyleSheet.create({
   },
   scrollView: {
     paddingHorizontal: 10,
-    paddingTop: 75,
-    paddingBottom: 50,
+    paddingVertical: 50,
   },
   row: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     width: '100%',
@@ -60,7 +61,7 @@ export const currentRouteStyles = StyleSheet.create({
   },
   legPressable: {
     flex: 1,
-    flexShrink: 1,
+    justifyContent: 'space-between',
     paddingHorizontal: 10,
     paddingTop: 5,
     paddingBottom: 15,
@@ -81,7 +82,6 @@ export const currentRouteStyles = StyleSheet.create({
     elevation: 0,
   },
   legHeaderRow: {
-    flexShrink: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -90,16 +90,36 @@ export const currentRouteStyles = StyleSheet.create({
   legListRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomWidth: 1,
+    flexWrap: 'wrap',
+    marginBottom: 2,
+    paddingHorizontal: 2,
+    borderRadius: 5,
+    backgroundColor: routeLegColors.lightHighlight,
+    elevation: 1,
   },
   headerText: {
-    fontSize: 24,
+    flexShrink: 1,
+    fontSize: 22,
     color: 'white',
     paddingEnd: 5,
     textAlignVertical: 'bottom',
   },
   listText: {
+    marginHorizontal: 2,
+    fontSize: 16,
+  },
+  listTextCharcoal: {
+    marginHorizontal: 2,
     fontSize: 16,
     color: routeLegColors.charCoalText,
+  },
+  listTextPurple: {
+    fontSize: 16,
+    color: routeLegColors.charCoalText,
+  },
+  listTextGreen: {
+    marginHorizontal: 2,
+    fontSize: 16,
+    color: routeLegColors.greenText,
   },
 });

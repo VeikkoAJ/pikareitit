@@ -1,13 +1,15 @@
-import { basicColors, routeLegColors } from '../styles/BasicColors';
+import React, { useContext } from 'react';
 import { Text, View } from 'react-native';
-import React from 'react';
+import { routeLegColors } from '../styles/BasicColors';
+import { isOldContext, IsOldContextValues } from '../contextTypes';
 
 interface IconDotProps {
   travelTime: number;
   showSign?: string;
 }
 
-export function MinuteDot({ travelTime, showSign = '' }: IconDotProps) {
+export default function MinuteDot({ travelTime, showSign = '' }: IconDotProps) {
+  const isOld = useContext<IsOldContextValues>(isOldContext);
   return (
     <View
       style={{
@@ -15,24 +17,28 @@ export function MinuteDot({ travelTime, showSign = '' }: IconDotProps) {
         marginHorizontal: 5,
         alignContent: 'center',
         justifyContent: 'center',
-        backgroundColor: routeLegColors.normal,
+        backgroundColor: isOld
+          ? routeLegColors.normalVisited
+          : routeLegColors.normal,
         borderRadius: 20,
         width: 40,
         height: 40,
         elevation: 1,
       }}
     >
-      <Text
-        style={{
-          paddingTop: 2,
-          fontSize: 16,
-          color: 'white',
-          fontWeight: 'bold',
-          textAlign: 'center',
-        }}
-      >
-        {showSign + (travelTime / 60).toPrecision(2)}
-      </Text>
+      {!isOld && (
+        <Text
+          style={{
+            paddingTop: 2,
+            fontSize: 16,
+            color: 'white',
+            fontWeight: 'bold',
+            textAlign: 'center',
+          }}
+        >
+          {showSign + (travelTime / 60).toPrecision(2)}
+        </Text>
+      )}
     </View>
   );
 }

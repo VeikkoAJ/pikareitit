@@ -1,6 +1,6 @@
-import { listForm } from '../styles/BasicColors';
 import { Text, TextInput, View } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
+import { listForm } from '../styles/BasicStyles';
 
 interface TextInputBarProps {
   defaultValue?: string;
@@ -12,25 +12,18 @@ interface TextInputBarProps {
 }
 
 export function TextInputBar({
-  defaultValue,
+  defaultValue = undefined,
   text,
   answer,
-  flexRate,
-  keyboardType,
+  flexRate = 1,
+  keyboardType = undefined,
   setAnswer,
 }: TextInputBarProps) {
-  const flexValues = () => {
-    if (flexRate !== undefined) {
-      return {
-        left: flexRate,
-        right: 1 / flexRate,
-      };
-    }
-    return {
-      left: 1,
-      right: 1,
-    };
-  };
+  const [isEdited, setEdited] = useState(false);
+  const flexValues = () => ({
+    left: flexRate,
+    right: 1 / flexRate,
+  });
 
   return (
     <View style={listForm.textInput}>
@@ -41,8 +34,11 @@ export function TextInputBar({
         style={[listForm.fieldAnswer, { flex: flexValues().right }]}
         keyboardType={keyboardType === undefined ? 'default' : keyboardType}
         defaultValue={defaultValue}
-        value={answer}
-        onChangeText={(newAnswer) => setAnswer(newAnswer)}
+        value={isEdited || defaultValue === undefined ? answer : defaultValue}
+        onChangeText={(newAnswer) => {
+          setAnswer(newAnswer);
+          setEdited(true);
+        }}
       />
     </View>
   );

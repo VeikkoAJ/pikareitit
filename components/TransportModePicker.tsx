@@ -1,16 +1,16 @@
 import React from 'react';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { TransportMode } from '../types';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { listForm, routeLegColors } from '../styles/BasicColors';
+import { TransportMode } from '../types';
 import TransportModeIcon from './TransportModeIcon';
+import { routeLegColors } from '../styles/BasicColors';
+import { listForm } from '../styles/BasicStyles';
 
 interface TransportModePickerProps {
   transportModes: TransportMode[];
   setTransportModes: (transportModes: TransportMode[]) => void;
 }
 
-export function TransportModePicker({
+export default function TransportModePicker({
   transportModes,
   setTransportModes,
 }: TransportModePickerProps) {
@@ -20,9 +20,11 @@ export function TransportModePicker({
     { mode: 'TRAM' },
     { mode: 'SUBWAY' },
     { mode: 'FERRY' },
+    { mode: 'WALK' },
   ];
 
   const mapTransportModes = (transportMode: TransportMode) => {
+    // if already included remove
     if (transportModes.map((_) => _.mode).includes(transportMode.mode)) {
       return transportModes.filter((_) => _.mode !== transportMode.mode);
     }
@@ -33,11 +35,25 @@ export function TransportModePicker({
     );
   };
 
-  const activeColor = (transportMode: TransportMode) => {
+  const activeColor = (transportMode: TransportMode, background: boolean) => {
     if (transportModes.map((_) => _.mode).includes(transportMode.mode)) {
-      return 'white';
+      return !background ? routeLegColors.light : 'white';
     }
-    return routeLegColors.lightVisited;
+    return !background
+      ? routeLegColors.lightVisited
+      : routeLegColors.lightHighlight;
+  };
+  const elevation = (transportMode: TransportMode) => {
+    if (transportModes.map((_) => _.mode).includes(transportMode.mode)) {
+      return 1;
+    }
+    return 4;
+  };
+  const bold = (transportMode: TransportMode) => {
+    if (transportModes.map((_) => _.mode).includes(transportMode.mode)) {
+      return 'bold';
+    }
+    return 'normal';
   };
 
   const underText = (mode: TransportMode) => {
@@ -57,29 +73,48 @@ export function TransportModePicker({
     }
   };
 
+  // WALK mode is never rendered but always included in the final route
+
   return (
-    <View style={[listForm.textInput, { flex: 1, flexWrap: 'wrap' }]}>
-      {defaultTransportModes.map((transportMode) => (
-        <TouchableOpacity
-          key={transportMode.mode}
-          style={{ alignItems: 'center' }}
-          onPress={() => setTransportModes(mapTransportModes(transportMode))}
-        >
-          <TransportModeIcon
-            transportMode={transportMode}
-            size={26}
-            color={activeColor(transportMode)}
-          />
-          <Text
+    <View
+      style={[
+        listForm.textInput,
+        { flex: 1, flexWrap: 'wrap', justifyContent: 'space-between' },
+      ]}
+    >
+      {defaultTransportModes
+        .filter((transportMode) => transportMode.mode !== 'WALK')
+        .map((transportMode) => (
+          <TouchableOpacity
+            key={transportMode.mode}
             style={{
-              color: activeColor(transportMode),
-              fontSize: 12,
+              minWidth: '14%',
+              marginVertical: 4,
+              paddingHorizontal: 4,
+              paddingVertical: 2,
+              alignItems: 'center',
+              borderRadius: 8,
+              elevation: elevation(transportMode),
+              backgroundColor: activeColor(transportMode, true),
             }}
+            onPress={() => setTransportModes(mapTransportModes(transportMode))}
           >
-            {underText(transportMode)}
-          </Text>
-        </TouchableOpacity>
-      ))}
+            <TransportModeIcon
+              transportMode={transportMode}
+              size={26}
+              color={activeColor(transportMode, false)}
+            />
+            <Text
+              style={{
+                color: activeColor(transportMode, false),
+                fontSize: 12,
+                fontWeight: bold(transportMode),
+              }}
+            >
+              {underText(transportMode)}
+            </Text>
+          </TouchableOpacity>
+        ))}
     </View>
   );
 }

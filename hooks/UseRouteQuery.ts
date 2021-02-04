@@ -25,7 +25,10 @@ export default function UseRouteQuery(
   const routeQueries = () => {
     const mainResult = useQuery<QueryData>(routeRequest, {
       variables: {
-        fromPlace: mapLocationToString(routeLeg.from),
+        fromLat: routeLeg.from.lat,
+        fromLon: routeLeg.from.lon,
+        toLat: routeLeg.to.lat,
+        toLon: routeLeg.to.lon,
         toPlace: mapLocationToString(routeLeg.to),
         date: format(
           startTime !== undefined ? startTime : new Date(),
@@ -42,11 +45,16 @@ export default function UseRouteQuery(
     });
     const secondaryResult = useQuery<QueryData>(routeRequest, {
       variables: {
-        fromPlace: mapLocationToString(routeLeg.from),
-        toPlace:
+        fromLat: routeLeg.from.lat,
+        fromLon: routeLeg.from.lon,
+        toLat:
           routeLeg.secondaryTo !== undefined
-            ? mapLocationToString(routeLeg.secondaryTo)
-            : '',
+            ? routeLeg.secondaryTo.lat
+            : routeLeg.from.lat,
+        toLon:
+          routeLeg.secondaryTo !== undefined
+            ? routeLeg.secondaryTo.lon
+            : routeLeg.from.lon,
         date: format(
           startTime !== undefined ? startTime : new Date(),
           'yyyy-MM-dd'
@@ -78,11 +86,11 @@ export default function UseRouteQuery(
     if (queryData && queryData.plan.itineraries.length > 0) {
       const formattedLegs = queryData.plan.itineraries
         .map((itinerary) => {
-          // 3 legs = walk->vehicle->walk
+          /** 3 legs = walk->vehicle->walk */
           if (itinerary.legs.length === 3) {
             return itinerary.legs[1];
           }
-          // single leg = only walking
+          /** single leg = only walking */
           if (itinerary.legs.length === 1) {
             return {
               ...itinerary.legs[0],
@@ -104,7 +112,7 @@ export default function UseRouteQuery(
   return {
     /** query using routeLeg.from -> routeLeg.to) */
     mainQueryLegs: formatLegData(data1),
-    /** query using routeLeg.from -> routeLeg.secondaryTo) always undefined if secondaryTo is undefined */
+    /** query using routeLeg.from -> routeLeg.secondaryTo) undefined if secondaryTo is undefined */
     secondaryQueryLegs: formatLegData(data2),
   };
 }

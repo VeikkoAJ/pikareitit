@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { listStyles, routeLegColors } from '../styles/BasicColors';
+import { routeLegColors } from '../styles/BasicColors';
 import DeleteRouteModal from './DeleteRouteModal';
-import { ListManipulationButton } from './ListManipulationButton';
+import ListManipulationButton from './ListManipulationButton';
+import { listStyles } from '../styles/BasicStyles';
 
 interface RouteNameListProps {
   name: string;
   originPlace: string;
   finalDestination: string;
   setActiveRoute: () => void;
+  editRoute: () => void;
   deleteRoute: () => void;
 }
 
-export function RouteNameList({
+export default function RouteNameList({
   name,
   originPlace,
   finalDestination,
   setActiveRoute,
+  editRoute,
   deleteRoute,
 }: RouteNameListProps) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -46,12 +49,20 @@ export function RouteNameList({
         </Text>
         <Text style={{}}>{`${originPlace} -> ${finalDestination}`}</Text>
       </View>
-      <ListManipulationButton
-        buttonIcon="remove"
-        size={24}
-        color={routeLegColors.light}
-        onButtonPress={() => setShowDeleteModal(true)}
-      />
+      <View style={{ flexDirection: 'row' }}>
+        <ListManipulationButton
+          buttonIcon="edit"
+          size={20}
+          color={routeLegColors.light}
+          onButtonPress={() => editRoute()}
+        />
+        <ListManipulationButton
+          buttonIcon="remove"
+          size={20}
+          color={routeLegColors.light}
+          onButtonPress={() => setShowDeleteModal(true)}
+        />
+      </View>
     </TouchableOpacity>
   );
 }

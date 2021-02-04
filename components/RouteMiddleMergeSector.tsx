@@ -1,11 +1,10 @@
 import { View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 import { RouteMiddleSectorProps } from '../types';
-import { SmallDot } from './SmallDot';
-import { MinuteDot } from './MinuteDot';
+import SmallDot from './SmallDot';
+import MinuteDot from './MinuteDot';
 
-export function RouteMiddleMergeSector({
+export default function RouteMiddleMergeSector({
   travelTimes,
 }: RouteMiddleSectorProps) {
   return (
@@ -38,6 +37,7 @@ export function RouteMiddleMergeSector({
         <MinuteDot travelTime={travelTimes[0]} />
         <SmallDot />
         <SmallDot />
+
         <SmallDot />
         <SmallDot />
         <MinuteDot travelTime={travelTimes[1]} />

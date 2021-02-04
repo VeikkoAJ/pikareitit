@@ -8,6 +8,7 @@ import { currentRouteStyles } from '../styles/CurrentRouteStyles';
 interface RouteLegUnitProps {
   legUnit: {
     name: string;
+    platformCode?: string;
     startTime: number;
     endTime: number;
     secondaryEndTime?: number;
@@ -16,20 +17,21 @@ interface RouteLegUnitProps {
   showAdditional: boolean;
 }
 
-export function RouteLegUnit({
+export default function RouteLegUnit({
   legUnit,
-  showAdditional = true,
+  showAdditional,
 }: RouteLegUnitProps) {
-  /** Walking icon for when no route is available */
+  /** Render walking icon for when no route is available */
   const walkIcon = () => (
     <MaterialCommunityIcons
       key={legUnit.startTime + legUnit.name}
       style={{
         alignSelf: 'flex-end',
-        paddingBottom: 3,
+        paddingTop: 3,
+        paddingBottom: 2,
       }}
       name="walk"
-      size={18}
+      size={15}
       color={routeLegColors.charCoalText}
     />
   );
@@ -37,37 +39,49 @@ export function RouteLegUnit({
   return (
     <View
       key={legUnit.startTime + legUnit.name}
-      style={currentRouteStyles.legListRow}
+      style={[currentRouteStyles.legListRow]}
     >
       {legUnit.name === 'WALK' ? (
         walkIcon()
       ) : (
         <Text
           key={legUnit.startTime + legUnit.name}
-          style={[currentRouteStyles.listText, { fontWeight: 'bold' }]}
+          style={[currentRouteStyles.listTextCharcoal, { fontWeight: 'bold' }]}
+          numberOfLines={1}
         >
           {legUnit.name}
         </Text>
       )}
-      <Text key={`${legUnit.startTime + legUnit.name}text`}>
+      {legUnit.platformCode !== undefined && showAdditional && (
         <Text
-          key={`${legUnit.startTime + legUnit.name}starTime`}
-          style={[currentRouteStyles.listText, { fontWeight: 'bold' }]}
+          style={{
+            color: routeLegColors.greenText,
+            fontWeight: 'normal',
+          }}
+        >{`platform ${legUnit.platformCode}`}</Text>
+      )}
+
+      <Text
+        key={`${legUnit.startTime + legUnit.name} text`}
+        style={currentRouteStyles.listText}
+      >
+        <Text
+          key={`${legUnit.startTime + legUnit.name} starTime`}
+          style={[currentRouteStyles.listTextPurple]}
         >
           {`${format(legUnit.startTime, 'HH:mm')}`}
         </Text>
-        {showAdditional && (
+        <Text
+          key={`${legUnit.startTime + legUnit.name} end time`}
+          style={currentRouteStyles.listTextPurple}
+        >
+          {`→${format(legUnit.endTime, 'HH:mm')}`}
+        </Text>
+
+        {legUnit.secondaryEndTime && (
           <Text
-            key={`${legUnit.startTime + legUnit.name}end time`}
-            style={currentRouteStyles.listText}
-          >
-            {`→${format(legUnit.endTime, 'HH:mm')}`}
-          </Text>
-        )}
-        {showAdditional && legUnit.secondaryEndTime && (
-          <Text
-            key={`${legUnit.startTime + legUnit.name}secondary time`}
-            style={[currentRouteStyles.listText, { fontStyle: 'italic' }]}
+            key={`${legUnit.startTime + legUnit.name} secondary time`}
+            style={[currentRouteStyles.listTextPurple, { fontStyle: 'italic' }]}
           >
             {`→${format(legUnit.secondaryEndTime, 'HH:mm')}`}
           </Text>

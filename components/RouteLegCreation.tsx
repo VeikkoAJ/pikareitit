@@ -1,17 +1,23 @@
 import React, { useEffect } from 'react';
 import { ScrollView, View } from 'react-native';
-import { listStyles, routeLegColors } from '../styles/BasicColors';
-import { RouteLegForm } from './RouteLegForm';
-import { ListManipulationButton } from './ListManipulationButton';
-import { UseRouteCreation } from '../hooks/UseRouteCreation';
-import { RouteTransportLeg, RouteTransportLegRow } from '../types';
-import { formatRouteLegRows } from '../services/CreateRouteToSave';
+import { routeLegColors } from '../styles/BasicColors';
+import RouteLegForm from './RouteLegForm';
+import ListManipulationButton from './ListManipulationButton';
+import UseRouteCreation from '../hooks/UseRouteCreation';
+import { Route, RouteTransportLeg, RouteTransportLegRow } from '../types';
+import formatRouteLegRows from '../services/CreateRouteToSave';
+import { listStyles } from '../styles/BasicStyles';
+import UseTransitStopsQuery from '../hooks/UseTransitStopsQuery';
 
 interface RouteLegCreationProps {
+  loadedRoute: Route | undefined;
   saveRoute: (routeTransportLegRows: RouteTransportLegRow[]) => void;
 }
 
-export function RouteLegCreation({ saveRoute }: RouteLegCreationProps) {
+export default function RouteLegCreation({
+  loadedRoute,
+  saveRoute,
+}: RouteLegCreationProps) {
   const {
     routeLegKeyPairRows,
     settingsIndex,
@@ -20,7 +26,11 @@ export function RouteLegCreation({ saveRoute }: RouteLegCreationProps) {
     moveRouteLeg,
     setRouteLeg,
     setNewSettingsIndex,
-  } = UseRouteCreation();
+  } = UseRouteCreation(
+    loadedRoute !== undefined ? loadedRoute.routeTransportLegRows : undefined
+  );
+
+  const { stops, stations } = UseTransitStopsQuery();
 
   useEffect(() => {
     saveRoute(formatRouteLegRows(routeLegKeyPairRows));
@@ -55,6 +65,8 @@ export function RouteLegCreation({ saveRoute }: RouteLegCreationProps) {
               <RouteLegForm
                 key={routeLegKeyPair.key}
                 routeLeg={routeLegKeyPair.routeLeg}
+                stops={stops}
+                stations={stations}
                 showSettings={
                   settingsIndex?.row === row && settingsIndex.column === column
                 }

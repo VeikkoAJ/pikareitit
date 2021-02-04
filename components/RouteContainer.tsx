@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import RouteLeg from './RouteLeg';
 import RouteStartEnd from './RouteStartEndLeg';
-import RouteMiddleSector from './RouteMiddleSector';
 import { Route } from '../types';
-import { UseRouteLegDurations } from '../hooks/UseRouteLegDurations';
+import UseRouteLegDurations from '../hooks/UseRouteLegDurations';
 import UseRouteLegStartTimes from '../hooks/UseRouteLegStartTimes';
 import MiddleSectorWrapper from './MiddleSectorWrapper';
 import { currentRouteStyles } from '../styles/CurrentRouteStyles';
@@ -14,11 +13,12 @@ export type RouteContainerProps = {
   timeOffset: number;
 };
 
-export function RouteContainer({
+export default function RouteContainer({
   currentRoute,
   timeOffset,
 }: RouteContainerProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [infoIndex, setInfoIndex] = useState<undefined | number>(undefined);
   const {
     routeLegStartDates,
     updateNextRouteLegStartTime,
@@ -34,16 +34,24 @@ export function RouteContainer({
   useEffect(() => {
     updateStartTime(new Date(), timeOffset, { row: 0, column: 0 });
   }, [timeOffset]);
-  console.log('timeoffset', timeOffset);
+
   return (
     <ScrollView style={currentRouteStyles.scrollView}>
-      <RouteStartEnd headerText={currentRoute.originPlace} iconName="home" />
-      <RouteMiddleSector travelTimes={[currentRoute.startWalkDuration]} />
+      <RouteStartEnd
+        headerText={currentRoute.originPlace}
+        iconName="office-building"
+        isOld={activeIndex >= 1}
+      />
+      <MiddleSectorWrapper
+        middleSector="single"
+        routeLegDurations={[currentRoute.startWalkDuration]}
+        isOld={activeIndex >= 1}
+      />
       {currentRoute.routeTransportLegRows.map((routeLegRow, row) => (
         <>
           <View
-            style={currentRouteStyles.row}
             key={`${routeLegRow.routeLegs[0].from.address} to ${routeLegRow.routeLegs[0].to.address} row`}
+            style={currentRouteStyles.row}
           >
             {routeLegRow.routeLegs.map((routeLeg, column) => (
               <React.Fragment
@@ -74,9 +82,17 @@ export function RouteContainer({
                   setSecRouteLegDuration={(time: number) =>
                     updateRouteLegDurations(time, [row, column + 1])
                   }
-                  setActive={() => setActiveIndex(row)}
+                  setActive={() => {
+                    if (infoIndex !== row) {
+                      setInfoIndex(undefined);
+                    }
+                    setActiveIndex(row);
+                  }}
+                  setInfo={() => setInfoIndex(row)}
+                  hideInfo={() => setInfoIndex(undefined)}
+                  showInfo={infoIndex === row}
                   isOld={activeIndex > row}
-                  isActive={activeIndex === row}
+                  isActive={activeIndex <= row}
                 />
                 <View
                   key={`${routeLeg.from.address} to ${routeLeg.to.address} splitter`}
@@ -86,15 +102,18 @@ export function RouteContainer({
             ))}
           </View>
           <MiddleSectorWrapper
+            key={`${routeLegRow.routeLegs[0].from.address} middleSector`}
             middleSector={routeLegRow.middleSector}
+            isOld={activeIndex > row}
             routeLegDurations={routeLegDurations[row]}
           />
         </>
       ))}
       <RouteStartEnd
         headerText={currentRoute.finalDestination}
-        iconName="office-building"
+        iconName="home"
       />
+      <View style={{ height: 100 }} />
     </ScrollView>
   );
 }

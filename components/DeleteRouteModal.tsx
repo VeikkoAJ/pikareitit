@@ -6,8 +6,9 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { listForm, listStyles, routeLegColors } from '../styles/BasicColors';
+import { routeLegColors } from '../styles/BasicColors';
 import { createRouteStyles } from '../styles/CreateRouteStyles';
+import { listStyles } from '../styles/BasicStyles';
 
 interface DeleteRouteModalProps {
   routeName: string;

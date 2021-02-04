@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-export function UseRouteLegDurations(routeLegRowCount: number) {
+export default function UseRouteLegDurations(routeLegRowCount: number) {
   const zeroArray: number[][] = new Array(routeLegRowCount).fill(
     new Array(2).fill(0)
   );

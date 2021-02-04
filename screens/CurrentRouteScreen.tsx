@@ -1,21 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, StatusBar } from 'react-native';
+import { View, Text } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { RouteProp } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { CurrentRouteTopBar } from '../components/CurrentRouteTopBar';
-import { RouteContainer } from '../components/RouteContainer';
+import CurrentRouteTopBar from '../components/CurrentRouteTopBar';
+import RouteContainer from '../components/RouteContainer';
 import { Route } from '../types';
 import { RootTabParamList } from '../navigationTypes';
-import { DatabaseContext } from '../hooks/UseRouteDatabase';
 import { currentRouteStyles } from '../styles/CurrentRouteStyles';
+import { DatabaseContext } from '../contextTypes';
 
 interface CurrentRouteScreenProps {
   navigation: BottomTabNavigationProp<RootTabParamList, 'Current route'>;
   route: RouteProp<RootTabParamList, 'Current route'>;
 }
 
-export function CurrentRouteScreen({
+export default function CurrentRouteScreen({
   navigation,
   route,
 }: CurrentRouteScreenProps) {
@@ -50,7 +50,7 @@ export function CurrentRouteScreen({
   }, [route.params.routeKey]);
 
   return (
-    <View style={[currentRouteStyles.background]}>
+    <SafeAreaProvider style={[currentRouteStyles.base]}>
       <View style={{ flex: 1 }}>
         <CurrentRouteTopBar
           timeOffset={timeShift}
@@ -87,6 +87,6 @@ export function CurrentRouteScreen({
           </View>
         )}
       </View>
-    </View>
+    </SafeAreaProvider>
   );
 }

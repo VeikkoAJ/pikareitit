@@ -2,19 +2,19 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import React from 'react';
 
-interface listManipulationButtonProps {
-  buttonIcon: 'add' | 'remove' | 'moveUp' | 'moveDown' | 'info';
+type listManipulationButtonProps = {
+  buttonIcon: 'add' | 'remove' | 'moveUp' | 'moveDown' | 'info' | 'edit';
   size: number;
   color: string;
-  secondaryColor?: string;
+  secondaryColor?: string | undefined;
   onButtonPress: () => void;
-}
+};
 
-export function ListManipulationButton({
+export default function ListManipulationButton({
   buttonIcon,
   size,
   color,
-  secondaryColor,
+  secondaryColor = undefined,
   onButtonPress,
 }: listManipulationButtonProps) {
   const iconName = () => {
@@ -29,6 +29,8 @@ export function ListManipulationButton({
         return 'arrow-down';
       case 'info':
         return 'information-outline';
+      case 'edit':
+        return 'square-edit-outline';
       default:
         return 'walk';
     }

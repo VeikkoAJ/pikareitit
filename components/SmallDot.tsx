@@ -1,18 +1,24 @@
-import {basicColors, routeLegColors} from "../styles/BasicColors";
-import {View} from "react-native";
-import React from "react";
+import { View } from 'react-native';
+import React, { useContext } from 'react';
+import { routeLegColors } from '../styles/BasicColors';
+import { isOldContext, IsOldContextValues } from '../contextTypes';
 
+export default function SmallDot() {
+  const isOld = useContext<IsOldContextValues>(isOldContext);
 
-export function SmallDot() {
-    return (
-        <View style={{
-            marginVertical: 5,
-            marginHorizontal: 5,
-            backgroundColor: routeLegColors.light,
-            borderRadius: 10,
-            width: 20,
-            height: 20,
-            elevation: 1
-        }}/>
-    )
+  return (
+    <View
+      style={{
+        marginVertical: 5,
+        marginHorizontal: 5,
+        backgroundColor: isOld
+          ? routeLegColors.lightVisited
+          : routeLegColors.light,
+        borderRadius: 10,
+        width: 20,
+        height: 20,
+        elevation: 1,
+      }}
+    />
+  );
 }

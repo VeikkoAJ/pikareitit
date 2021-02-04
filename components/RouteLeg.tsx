@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { RouteLegUnit } from './RouteLegUnit';
+import React, { useEffect, useRef, useState } from 'react';
+import { Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import RouteLegUnit from './RouteLegUnit';
 import { RouteTransportLeg } from '../types';
-
-import TransportModeIcon from './TransportModeIcon';
 import UseRouteQuery from '../hooks/UseRouteQuery';
 import { currentRouteStyles } from '../styles/CurrentRouteStyles';
 import { MapSecondaryDestinationTimes } from '../services/MapSecondayDestinationTimes';
+import { Leg } from '../routeQueryTypes';
+
+const _ = require('lodash');
 
 interface RouteLegProps {
   routeLeg: RouteTransportLeg;
@@ -17,8 +18,11 @@ interface RouteLegProps {
   setRouteLegDuration: (time: number) => void;
   setSecRouteLegDuration: (time: number) => void;
   setActive: () => void;
+  setInfo: () => void;
+  hideInfo: () => void;
   isOld: boolean;
   isActive: boolean;
+  showInfo: boolean;
 }
 
 export default function RouteLeg({
@@ -30,9 +34,13 @@ export default function RouteLeg({
   setRouteLegDuration,
   setSecRouteLegDuration,
   setActive,
+  setInfo,
+  hideInfo,
   isOld,
   isActive,
+  showInfo,
 }: RouteLegProps) {
+  const [changeStartTime, setChangeStartTime] = useState(false);
   const { mainQueryLegs, secondaryQueryLegs } = UseRouteQuery(
     routeLeg,
     startTime,
@@ -52,11 +60,41 @@ export default function RouteLeg({
     }
   }, [secondaryQueryLegs]);
 
+  const change = () => {
+    setRouteStartTime();
+    setActive();
+  };
+
+  const debounced = useRef(
+    _.debounce(() => {
+      setChangeStartTime(false);
+    }, 3000)
+  );
+
+  useEffect(() => {
+    if (changeStartTime) {
+      change();
+      debounced.current();
+    }
+  }, [changeStartTime]);
+
+  const key = `${routeLeg.from.address} to ${routeLeg.to.address}`;
+
   const stopName = () => {
     if (mainQueryLegs && mainQueryLegs[0]) {
-      return mainQueryLegs[0]?.from.name;
+      return mainQueryLegs[0]?.from.name.split(',')[0];
     }
     return routeLeg.from.address.split(',')[0];
+  };
+
+  const platFormCode = (leg: Leg) => {
+    if (leg.mode !== 'RAIL') {
+      return undefined;
+    }
+    if (leg.from.stop === null || leg.from.stop.platformCode === null) {
+      return undefined;
+    }
+    return leg.from.stop.platformCode;
   };
 
   const style = () => {
@@ -68,33 +106,35 @@ export default function RouteLeg({
     }
     return undefined;
   };
-
   return (
     <TouchableOpacity
-      key={`${routeLeg.from.address} to ${routeLeg.to.address} touchableOpacity`}
+      key={`${key} touchableOpacity`}
       style={[currentRouteStyles.legPressable, style()]}
-      onPress={() => {
-        setRouteStartTime();
-        setActive();
+      onPress={() => (showInfo ? hideInfo() : setInfo())}
+      onLongPress={() => {
+        if (changeStartTime) {
+          ToastAndroid.show(
+            'you must wait some time before updating',
+            ToastAndroid.LONG
+          );
+        }
+        if (!changeStartTime) {
+          setChangeStartTime(true);
+        }
       }}
     >
-      <View style={currentRouteStyles.legHeaderRow}>
+      <View key={`${key}headerView`} style={currentRouteStyles.legHeaderRow}>
         <Text
-          style={[currentRouteStyles.headerText]}
+          key={`${key} header`}
+          style={currentRouteStyles.headerText}
           numberOfLines={2}
           ellipsizeMode="tail"
+          textBreakStrategy="balanced"
         >
           {stopName()}
         </Text>
-        <View>
-          <TransportModeIcon
-            transportMode={routeLeg?.transportModes[0]}
-            size={30}
-            color="white"
-          />
-        </View>
       </View>
-      <View style={{ minHeight: 70 }}>
+      <View key={`${key}contentView`} style={{ minHeight: 70 }}>
         {!isOld && mainQueryLegs
           ? MapSecondaryDestinationTimes(mainQueryLegs, secondaryQueryLegs).map(
               (leg) => {
@@ -104,12 +144,13 @@ export default function RouteLeg({
                       key={`${leg.mainQueryLeg.route.shortName}from${leg.mainQueryLeg.from.name}@${leg.mainQueryLeg.startTime}`}
                       legUnit={{
                         name: leg.mainQueryLeg.route.shortName,
+                        platformCode: platFormCode(leg.mainQueryLeg),
                         startTime: leg.mainQueryLeg.startTime,
                         endTime: leg.mainQueryLeg.endTime,
                         realTime: leg.mainQueryLeg.realTime,
                         secondaryEndTime: leg.secondaryLegEndTime,
                       }}
-                      showAdditional
+                      showAdditional={showInfo}
                     />
                   );
                 }

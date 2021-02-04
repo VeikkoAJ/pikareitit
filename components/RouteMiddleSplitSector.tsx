@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 import { RouteMiddleSectorProps } from '../types';
-import { SmallDot } from './SmallDot';
-import { MinuteDot } from './MinuteDot';
+import SmallDot from './SmallDot';
+import MinuteDot from './MinuteDot';
 
-export function RouteMiddleSplitSector({
+export default function RouteMiddleSplitSector({
   travelTimes,
 }: RouteMiddleSectorProps) {
   return (
@@ -37,10 +37,7 @@ export function RouteMiddleSplitSector({
         <SmallDot />
         <SmallDot />
         <SmallDot />
-        <MinuteDot
-          travelTime={travelTimes[1] - travelTimes[0]}
-          showSign={'+'}
-        />
+        <MinuteDot travelTime={travelTimes[1] - travelTimes[0]} showSign="+" />
       </View>
       <View
         key="thirdRow"

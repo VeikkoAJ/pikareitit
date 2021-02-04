@@ -3,9 +3,12 @@ import { Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { RouteKeyPair } from '../types';
-import { basicStyles, listStyles } from '../styles/BasicColors';
 import { RootTabParamList } from '../navigationTypes';
-import { DatabaseContext } from '../hooks/UseRouteDatabase';
+import { basicStyles, listStyles } from '../styles/BasicStyles';
+import { DatabaseContext } from '../contextTypes';
+import InstructionsModal from '../components/InstructionsModal';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { routeLegColors } from '../styles/BasicColors';
 
 // TODO move this to types after async storage is working
 interface HomeScreenScreenProps {
@@ -13,7 +16,11 @@ interface HomeScreenScreenProps {
   route: RouteProp<RootTabParamList, 'Current route'>;
 }
 
-export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
+export default function HomeScreen({
+  navigation,
+  route,
+}: HomeScreenScreenProps) {
+  const [showInstructions, setShowInstructions] = useState(false);
   const [lastRouteKeyPair, setLastRouteKeyPair] = useState<
     RouteKeyPair | undefined
   >(undefined);
@@ -44,18 +51,22 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
     }
     if (lastRouteKeyPair) {
       navigation.navigate('Current route', {
-        routeKey: lastRouteKeyPair.key,
+        routeKey: lastRouteKeyPair.id,
       });
     }
   };
 
   // TODO add top bar
   return (
-    <View style={basicStyles.background}>
+    <View style={basicStyles.base}>
+      {showInstructions && (
+        <InstructionsModal closeModal={() => setShowInstructions(false)} />
+      )}
       <View>
-        <Text style={basicStyles.charcoalHeader}>Pikareitit</Text>
+        <Text style={[basicStyles.charcoalHeader, { marginBottom: 30 }]}>
+          Pikareitit
+        </Text>
       </View>
-      <View style={{ minHeight: 30 }} />
       <View style={[listStyles.container, { minHeight: 120 }]}>
         <Text style={listStyles.header}>Viimeisin reitti:</Text>
         <TouchableOpacity style={listStyles.item} onPress={loadActiveRoute}>
@@ -69,7 +80,10 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
           ) : null}
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={[listStyles.container]}>
+      <TouchableOpacity
+        style={[listStyles.container]}
+        onPress={() => navigation.navigate('Browse', { screen: 'Browse' })}
+      >
         <View
           style={{
             flexDirection: 'row',
@@ -78,23 +92,13 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
           }}
         >
           <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
-            Ohjeet
+            Selaa reittejä
           </Text>
-          <Text style={{ fontSize: 23, textAlign: 'right' }}> 💡</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity style={[listStyles.container]}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingEnd: 5,
-          }}
-        >
-          <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
-            Asetukset
-          </Text>
-          <Text style={{ fontSize: 23, textAlign: 'right' }}> 🔧</Text>
+          <MaterialCommunityIcons
+            name="menu"
+            size={28}
+            color={routeLegColors.charCoalText}
+          />
         </View>
       </TouchableOpacity>
       <TouchableOpacity
@@ -113,14 +117,47 @@ export function HomeScreen({ navigation, route }: HomeScreenScreenProps) {
           <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
             Luo uusi reitti
           </Text>
-          <Text
-            style={[
-              listStyles.header,
-              { borderBottomWidth: 0, textAlign: 'right' },
-            ]}
-          >
-            {' + '}
+          <MaterialCommunityIcons
+            name="layers-plus"
+            size={28}
+            color={routeLegColors.charCoalText}
+          />
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[listStyles.container]}
+        onPress={() => setShowInstructions(true)}
+      >
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingEnd: 5,
+          }}
+        >
+          <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
+            Ohjeet
           </Text>
+          <Text style={{ fontSize: 23, textAlign: 'right' }}> 💡</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[listStyles.container]}
+        onPress={() =>
+          ToastAndroid.show('Ominaisuus tulossa', ToastAndroid.LONG)
+        }
+      >
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingEnd: 5,
+          }}
+        >
+          <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
+            Asetukset
+          </Text>
+          <Text style={{ fontSize: 23, textAlign: 'right' }}> 🔧</Text>
         </View>
       </TouchableOpacity>
     </View>

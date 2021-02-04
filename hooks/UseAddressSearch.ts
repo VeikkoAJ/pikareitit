@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { AddressSearchResponse, Feature } from '../addressSearchTypes';
 
-let _ = require('lodash');
+const _ = require('lodash');
 
 const url = 'http://api.digitransit.fi/geocoding/v1/autocomplete';
 const focusPoint = '&focus.point.lat=60.17&focus.point.lon=24.93';
@@ -9,7 +9,7 @@ const layers = '&layers=locality,neighbourhood,street,address,venue';
 const searchDelayMS = 1500;
 const allowedCities = ['Helsinki', 'Espoo', 'Vantaa', 'Sipoo', 'Kauniainen'];
 
-export function UseAddressSearch() {
+export default function UseAddressSearch() {
   const [searchResult, setSearchResult] = useState<Feature[]>([]);
   const [searchText, setSearchText] = useState<string | undefined>(undefined);
 
@@ -21,7 +21,8 @@ export function UseAddressSearch() {
 
   const getAddresses = async (search: string) => {
     try {
-      if (search.length > 2) {
+      // poor fix to a problem caused by loading routes
+      if (search !== undefined && search.length > 2) {
         const response = await fetch(
           `${url}?text=${search}${layers}${focusPoint}`
         );

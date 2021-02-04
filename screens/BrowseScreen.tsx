@@ -2,19 +2,20 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Route, RouteKeyPair } from '../types';
-import { basicStyles, listStyles } from '../styles/BasicColors';
-import { RouteNameList } from '../components/RouteNameList';
+
+import { RouteKeyPair } from '../types';
+import RouteNameList from '../components/RouteNameList';
 import { StackParamList } from '../navigationTypes';
-import { DatabaseContext } from '../hooks/UseRouteDatabase';
+
+import { basicStyles, listStyles } from '../styles/BasicStyles';
+import { DatabaseContext } from '../contextTypes';
 
 interface BrowseScreenProps {
   navigation: BottomTabNavigationProp<StackParamList, 'Browse'>;
   route: RouteProp<StackParamList, 'Browse'>;
 }
 
-export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
+export default function BrowseScreen({ navigation, route }: BrowseScreenProps) {
   const [routeKeyPairs, setRouteKeyPairs] = useState<RouteKeyPair[]>([]);
   const [listChangeTracker, setListChangeTracker] = useState<number>(0);
   const useRouteDatabase = useContext(DatabaseContext);
@@ -41,13 +42,13 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
   };
 
   return (
-    <View style={[basicStyles.background, { paddingBottom: 80 }]}>
-      <View>
+    <View style={[basicStyles.base, { paddingBottom: 40 }]}>
+      <View style={{ marginBottom: 30 }}>
         <Text style={basicStyles.charcoalHeader}>Tallennetut reitit</Text>
       </View>
-      <View style={{ minHeight: 30 }} />
+
       <FlatList
-        style={[listStyles.container]}
+        style={[listStyles.container, { paddingTop: 5, flex: 1 }]}
         data={routeKeyPairs}
         extraData={listChangeTracker}
         renderItem={({ item }) => (
@@ -55,9 +56,17 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
             name={item.route.routeName}
             originPlace={item.route.originPlace}
             finalDestination={item.route.finalDestination}
-            setActiveRoute={() => loadActiveRoute(item.key)}
+            setActiveRoute={() => loadActiveRoute(item.id)}
+            editRoute={() => {
+              navigation.navigate('Create route', {
+                routeKey: item.id,
+                tabNavigationNavigate: route.params.tabNavigationNavigate,
+              });
+            }}
             deleteRoute={() => {
-              useRouteDatabase.deleteRoute(item.key);
+              if (useRouteDatabase !== undefined) {
+                useRouteDatabase.deleteRoute(item.id);
+              }
               setListChangeTracker(listChangeTracker + 1);
             }}
           />
@@ -72,10 +81,10 @@ export function BrowseScreen({ navigation, route }: BrowseScreenProps) {
       <TouchableOpacity
         style={[listStyles.container]}
         onPress={() =>
-          navigation.navigate(
-            'Create route',
-            route.params.tabNavigationNavigate
-          )
+          navigation.navigate('Create route', {
+            routeKey: undefined,
+            tabNavigationNavigate: route.params.tabNavigationNavigate,
+          })
         }
       >
         <View

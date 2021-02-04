@@ -22,13 +22,14 @@ const mapMiddleSector = (
   return 'single';
 };
 
-export const formatRouteLegRows = (
+export default function formatRouteLegRows(
   routeLegKeyPairRows: RouteLegKeyPair[][]
-): RouteTransportLegRow[] =>
-  routeLegKeyPairRows.map((routeLegKeyPairRow, row) => ({
+): RouteTransportLegRow[] {
+  return routeLegKeyPairRows.map((routeLegKeyPairRow, row) => ({
     routeLegs: routeLegKeyPairRow.map((_) => _.routeLeg),
     middleSector: mapMiddleSector(
       routeLegKeyPairRow.length,
       routeLegKeyPairRows[row].length
     ),
   }));
+}
