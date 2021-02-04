@@ -49,6 +49,11 @@ export default function CreateRouteScreen({
           if (fetchedRoute !== undefined) {
             setRouteKeyPair(fetchedRoute);
             setLoading(false);
+            console.log(
+              '\n\n\n\nROUTE LOADED',
+              fetchedRoute.id,
+              fetchedRoute.rev
+            );
           }
         }
       } catch (e) {

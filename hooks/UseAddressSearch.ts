@@ -21,7 +21,8 @@ export default function UseAddressSearch() {
 
   const getAddresses = async (search: string) => {
     try {
-      if (search.length > 2) {
+      // poor fix to a problem caused by loading routes
+      if (search !== undefined && search.length > 2) {
         const response = await fetch(
           `${url}?text=${search}${layers}${focusPoint}`
         );

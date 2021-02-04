@@ -82,7 +82,7 @@ export default function HomeScreen({
       </View>
       <TouchableOpacity
         style={[listStyles.container]}
-        onPress={() => setShowInstructions(true)}
+        onPress={() => navigation.navigate('Browse', { screen: 'Browse' })}
       >
         <View
           style={{
@@ -92,23 +92,13 @@ export default function HomeScreen({
           }}
         >
           <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
-            Ohjeet
+            Selaa reittejä
           </Text>
-          <Text style={{ fontSize: 23, textAlign: 'right' }}> 💡</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity style={[listStyles.container]}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingEnd: 5,
-          }}
-        >
-          <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
-            Asetukset
-          </Text>
-          <Text style={{ fontSize: 23, textAlign: 'right' }}> 🔧</Text>
+          <MaterialCommunityIcons
+            name="menu"
+            size={28}
+            color={routeLegColors.charCoalText}
+          />
         </View>
       </TouchableOpacity>
       <TouchableOpacity
@@ -136,7 +126,7 @@ export default function HomeScreen({
       </TouchableOpacity>
       <TouchableOpacity
         style={[listStyles.container]}
-        onPress={() => navigation.navigate('Browse', { screen: 'Browse' })}
+        onPress={() => setShowInstructions(true)}
       >
         <View
           style={{
@@ -146,13 +136,28 @@ export default function HomeScreen({
           }}
         >
           <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
-            Selaa reittejä
+            Ohjeet
           </Text>
-          <MaterialCommunityIcons
-            name="menu"
-            size={28}
-            color={routeLegColors.charCoalText}
-          />
+          <Text style={{ fontSize: 23, textAlign: 'right' }}> 💡</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[listStyles.container]}
+        onPress={() =>
+          ToastAndroid.show('Ominaisuus tulossa', ToastAndroid.LONG)
+        }
+      >
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingEnd: 5,
+          }}
+        >
+          <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
+            Asetukset
+          </Text>
+          <Text style={{ fontSize: 23, textAlign: 'right' }}> 🔧</Text>
         </View>
       </TouchableOpacity>
     </View>

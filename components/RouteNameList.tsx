@@ -52,13 +52,13 @@ export default function RouteNameList({
       <View style={{ flexDirection: 'row' }}>
         <ListManipulationButton
           buttonIcon="edit"
-          size={18}
+          size={20}
           color={routeLegColors.light}
           onButtonPress={() => editRoute()}
         />
         <ListManipulationButton
           buttonIcon="remove"
-          size={18}
+          size={20}
           color={routeLegColors.light}
           onButtonPress={() => setShowDeleteModal(true)}
         />

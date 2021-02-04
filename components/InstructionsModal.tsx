@@ -195,6 +195,23 @@ export default function InstructionsModal({
                   borderTopWidth: 1,
                 }}
               />
+              <View
+                style={{
+                  marginVertical: 4,
+                  minHeight: '5%',
+                }}
+              >
+                <Image
+                  style={{
+                    flex: 1,
+                    width: undefined,
+                    height: undefined,
+                    resizeMode: 'contain',
+                    borderRadius: 5,
+                  }}
+                  source={require('../assets/routeLegCreation.jpg')}
+                />
+              </View>
             </>
           )}
           <View

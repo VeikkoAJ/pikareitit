@@ -42,7 +42,7 @@ export default function AddressSearch({
   const [filteredStops, setFilteredStops] = useState<Station[]>([]);
 
   useEffect(() => {
-    if (searchWord.length < 3) {
+    if (searchWord === undefined || searchWord.length < 3) {
       return;
     }
     search(searchWord);

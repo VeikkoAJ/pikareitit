@@ -54,7 +54,6 @@ export default function SaveRouteModal({
         }
   );
   const useRouteDatabase = useContext(DatabaseContext);
-  console.log(routeInfo);
   const saveRoute = async () => {
     try {
       const id =
@@ -133,7 +132,7 @@ export default function SaveRouteModal({
               setRoute({ ...route, startWalkDuration: 0 });
             }}
           />
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{ flexDirection: 'row', paddingBottom: 5 }}>
             <TouchableOpacity
               style={{
                 flex: 3,

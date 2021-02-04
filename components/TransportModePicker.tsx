@@ -39,13 +39,15 @@ export default function TransportModePicker({
     if (transportModes.map((_) => _.mode).includes(transportMode.mode)) {
       return !background ? routeLegColors.light : 'white';
     }
-    return !background ? routeLegColors.lightVisited : routeLegColors.light;
+    return !background
+      ? routeLegColors.lightVisited
+      : routeLegColors.lightHighlight;
   };
   const elevation = (transportMode: TransportMode) => {
     if (transportModes.map((_) => _.mode).includes(transportMode.mode)) {
-      return 2;
+      return 1;
     }
-    return 0;
+    return 4;
   };
   const bold = (transportMode: TransportMode) => {
     if (transportModes.map((_) => _.mode).includes(transportMode.mode)) {

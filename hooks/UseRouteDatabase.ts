@@ -60,6 +60,7 @@ export default function UseRouteDatabase() {
       return {
         route: JSON.parse(response.route),
         id: response._id,
+        rev: response._rev,
       };
     } catch (e) {
       console.log('getting latest route failed', e);
@@ -118,7 +119,7 @@ export default function UseRouteDatabase() {
       _rev,
       route: JSON.stringify(route),
     }).catch((err) => {
-      console.log(err);
+      console.log(err, 'id:', _id, 'rev:', _rev, 'route', route);
     });
   };
 
@@ -132,7 +133,7 @@ export default function UseRouteDatabase() {
     }
   };
 
-  /** Pass database hooks down with context.provider from root */
+  /** Pass database hook down with context.provider from root */
   const databaseContextValues: DatabaseContextValues = {
     getLatestRoute,
     getRoute,

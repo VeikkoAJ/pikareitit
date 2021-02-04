@@ -51,7 +51,7 @@ const loadRoute = (
   if (routeTransportLegRows !== undefined) {
     return routeTransportLegRows.map((row) =>
       row.routeLegs.map((routeLeg) => ({
-        key: new Date().getTime().toString(),
+        key: `${routeLeg.from.address}_${new Date().getTime().toString()}`,
         routeLeg,
       }))
     );
