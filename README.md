@@ -50,7 +50,7 @@ The app can be run locally with [Expo Client](https://docs.expo.io/) or by:
 
 * [React Native](https://reactnative.dev/)
 * [React Navigation](https://reactnavigation.org/)
-* [Apollo client](https://www.apollographql.com/docs/react/) - [GraphQL](https://graphql.org/) - live transit schedules from HSL Routing API
+* [Apollo client](https://www.apollographql.com/docs/react/) - [GraphQL](https://graphql.org/) - live transit schedules from [HSL Routing API](https://digitransit.fi/en/developers/)
 * [PouchDB](https://pouchdb.com/) local database for storing user created routes
 
 
@@ -69,7 +69,8 @@ The app can be run locally with [Expo Client](https://docs.expo.io/) or by:
 
 **bugs**
 * List of saved routes not updating after deleting a route
-* Too high resolution image files on instructions page, raising the apk size
+* RouteLeg shows Origin, when walking is the first transit mode
+* Very high resolution image files on instructions page, raising the apk size
 
 
 ## Author
