@@ -48,7 +48,7 @@ export const listStyles = StyleSheet.create({
     paddingTop: 5,
     paddingBottom: 5,
     borderBottomWidth: 1,
-    borderColor: routeLegColors.normal,
+    borderColor: 'black',
   },
   itemHeader: {
     fontSize: 18,
@@ -77,5 +77,24 @@ export const listForm = StyleSheet.create({
     flex: 2,
     marginLeft: 6,
     borderBottomWidth: 1,
+  },
+});
+
+export const Instructions = StyleSheet.create({
+  header: {
+    flexShrink: 1,
+    fontSize: 24,
+    color: routeLegColors.charCoalText,
+  },
+  subHeader: {
+    flexShrink: 1,
+    fontSize: 20,
+    color: 'black',
+  },
+  text: {
+    flexShrink: 1,
+    flexWrap: 'wrap',
+    fontSize: 16,
+    color: 'black',
   },
 });

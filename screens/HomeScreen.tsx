@@ -68,7 +68,9 @@ export default function HomeScreen({
         </Text>
       </View>
       <View style={[listStyles.container, { minHeight: 120 }]}>
-        <Text style={listStyles.header}>Viimeisin reitti:</Text>
+        <Text style={[listStyles.header, { borderBottomWidth: 0 }]}>
+          Viimeisin reitti:
+        </Text>
         <TouchableOpacity style={listStyles.item} onPress={loadActiveRoute}>
           <Text style={listStyles.itemHeader}>
             {lastRouteKeyPair !== undefined

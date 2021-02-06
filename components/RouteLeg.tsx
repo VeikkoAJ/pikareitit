@@ -114,7 +114,7 @@ export default function RouteLeg({
       onLongPress={() => {
         if (changeStartTime) {
           ToastAndroid.show(
-            'you must wait some time before updating',
+            'Odota hetki ennen reitin päivittämistä uudelleen',
             ToastAndroid.LONG
           );
         }
