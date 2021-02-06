@@ -41,8 +41,9 @@ Reittejä on mahdollista luoda itse, sekä tallentaa niitä omalle laitteelle. P
 
 The app can be run locally with [Expo Client](https://docs.expo.io/) or by:
 
-* Downloading the App from Google Play [*not yet released*]()
-
+* ~~Downloading the App from  [Google Play]()~~ *(Full release not public yet)*
+* Running it on your web browser on [Appetize.io](https://appetize.io/app/86jbrzyyg4gd4dfz9qxgd639r8)
+* Downloading and installing the apk-file directly from [Expo](https://exp-shell-app-assets.s3.us-west-1.amazonaws.com/android/%40mr_brainlet/pikareitit-8289d041b29844979bdc678657465a22-signed.apk)
 
 
 ## Built with
@@ -59,15 +60,16 @@ The app can be run locally with [Expo Client](https://docs.expo.io/) or by:
 
 **features**
 * Individual time shifts for each timetable, to allow more customation
-* support for 3 or more parallel timetables (currently only 2 supported)
+* Support for 3 or more parallel timetables (currently only 2 supported)
 * ~~searching routes by stop name instead of street name~~
-* settings tab and dark theme
-* support for unusual transport modes, such as funiculars and cable cars, just in case
-* support for traversing parts of a route with bicycles
+* Settings tab
+* Dark theme
+* Support for unusual transport modes, such as funiculars and cable cars
+* Support for traversing parts of a route with bicycles
 
 **bugs**
-* list of saved routes not updating after deleting a route
-* too high resolution image files on instructions page, raising the apk size
+* List of saved routes not updating after deleting a route
+* Too high resolution image files on instructions page, raising the apk size
 
 
 ## Author
