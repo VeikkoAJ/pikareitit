@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { RootTabParamList } from './navigationTypes';
 import HomeScreen from './screens/HomeScreen';
 import CurrentRouteScreen from './screens/CurrentRouteScreen';
@@ -49,14 +50,37 @@ export default function App() {
                   }
                   return 'alert';
                 };
-
-                // You can return any component that you like here!
+                const iconText = () => {
+                  switch (route.name) {
+                    case 'Browse':
+                      return 'Selaa';
+                    case 'Home':
+                      return 'Koti';
+                    case 'Current route':
+                      return 'Reitti';
+                    default:
+                      return 'Missing text';
+                  }
+                };
                 return (
-                  <MaterialCommunityIcons
-                    name={iconName()}
-                    size={size}
-                    color={color}
-                  />
+                  <View>
+                    <MaterialCommunityIcons
+                      style={{ alignSelf: 'center' }}
+                      name={iconName()}
+                      size={size}
+                      color={color}
+                    />
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                        color: focused ? routeLegColors.normal : 'white',
+                        textAlign: 'center',
+                      }}
+                    >
+                      {iconText()}
+                    </Text>
+                  </View>
                 );
               },
             })}
@@ -66,6 +90,7 @@ export default function App() {
               },
               activeTintColor: routeLegColors.normal,
               inactiveTintColor: 'white',
+              showLabel: false,
             }}
           >
             <MainTab.Screen

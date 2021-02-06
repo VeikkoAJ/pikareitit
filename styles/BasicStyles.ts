@@ -92,6 +92,7 @@ export const Instructions = StyleSheet.create({
     color: 'black',
   },
   text: {
+    marginBottom: 5,
     flexShrink: 1,
     flexWrap: 'wrap',
     fontSize: 16,

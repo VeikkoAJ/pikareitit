@@ -43,7 +43,7 @@ export default function HomeScreen({
   const loadActiveRoute = () => {
     if (!lastRouteKeyPair) {
       ToastAndroid.showWithGravity(
-        'no recently used routes',
+        'Ei viimeaikaisia reittejä',
         200,
         ToastAndroid.SHORT
       );

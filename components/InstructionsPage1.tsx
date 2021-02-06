@@ -9,7 +9,6 @@ export default function InstructionsPage1() {
       style={[
         listStyles.container,
         {
-          height: '50%',
           backgroundColor: basicColors.topBarLight,
           elevation: 1,
         },
@@ -38,23 +37,21 @@ export default function InstructionsPage1() {
         </View>
         <View style={{ flex: 1, paddingLeft: 8 }}>
           <Text style={Instructions.text}>
-            - Yhdessä taulussa on pysäkin seuraavat kolme lähtevää linjaa ja
+            Yhdessä taulussa on pysäkin seuraavat kolme lähtevää linjaa ja
             niiden saapumisajat seuraavalle pysäkille.
           </Text>
         </View>
       </View>
       <Text style={Instructions.text}>
-        - Pitkä painallus vaihtaa nykyisen pysäkin reitin alkupisteeksi ja hakee
+        Pitkä painallus vaihtaa nykyisen pysäkin reitin alkupisteeksi ja hakee
         uudet aikataulut nykyisen ajan mukaan.
       </Text>
       <Text style={Instructions.text}>
         <Text>
-          {
-            '- Lyhyt painallus näyttää lisätietoja linjoista, kuten laiturin ja '
-          }
+          {'Lyhyt painallus näyttää lisätietoja linjoista, kuten laiturin ja '}
         </Text>
-        <Text style={{ color: 'grey' }}>
-          aikataulun reaaliaikaisuuden (ominaisuus tulossa)
+        <Text style={{ color: 'gray' }}>
+          aikataulun reaaliaikaisuuden (ominaisuus tulossa).
         </Text>
       </Text>
       <View
@@ -85,8 +82,8 @@ export default function InstructionsPage1() {
         />
       </View>
       <Text style={Instructions.text}>
-        - Yläpalkin kellosta on mahdollista siirtää reittien hakuaikaa
-        tulevaisuuteen tai menneisyyteen
+        Yläpalkin kellosta on mahdollista siirtää reittien hakuaikaa
+        tulevaisuuteen tai menneisyyteen.
       </Text>
       <View
         style={{
@@ -117,10 +114,15 @@ export default function InstructionsPage1() {
         </View>
         <View style={{ flex: 1, paddingLeft: 8 }}>
           <Text style={Instructions.text}>
-            - Reittipisteet näyttävät matkustusajan seuraavaalle pysäkille
+            Reittipisteet näyttävät matkustusajan seuraavaalle pysäkille.
           </Text>
         </View>
       </View>
+      <View
+        style={{
+          height: 30,
+        }}
+      />
     </ScrollView>
   );
 }

@@ -17,12 +17,10 @@ export default function InstructionsPage2() {
     >
       <Text style={Instructions.subHeader}>Reitin luominen</Text>
       <Text style={Instructions.text}>
-        - Reittejä voi luoda itse lisää reitti napista.
+        Reitit-välilehdessä voi selata tallennettuja reittejä, sekä luoda niitä
+        lisää.
       </Text>
-      <Text style={Instructions.text}>
-        -Tallentttuja reittejä on myös mahdollista muokata selaa reittejä
-        -välilehdellä
-      </Text>
+
       <View
         style={{
           flexDirection: 'row',
@@ -45,17 +43,17 @@ export default function InstructionsPage2() {
         </View>
         <View style={{ flex: 1, paddingLeft: 8 }}>
           <Text style={Instructions.text}>
-            {
-              '- Aseta alku- ja loppupisteiksi yhden etapin pysäkit\n - toinen määränpää on saman linjan toinen pysäkki\n'
-            }
+            Aseta alku- ja loppupisteiksi yhden etapin pysäkit.
+          </Text>
+          <Text style={Instructions.text}>
+            toinen määränpää on saman linjan toinen pysäkki.
           </Text>
         </View>
       </View>
 
       <Text style={Instructions.text}>
-        {
-          '- Kuljetusvälinenapeista on mahdollista valita etapissa haettavat liikennevälineet'
-        }
+        Kuljetusvälinenapeista on mahdollista valita etapissa haettavat
+        liikennevälineet.
       </Text>
       <View
         style={{
@@ -76,9 +74,8 @@ export default function InstructionsPage2() {
 
         <View style={{ flex: 1, paddingLeft: 8 }}>
           <Text style={Instructions.text}>
-            {
-              '- Samanaikaisia etappeja voi luoda painamalla etappia pohjaan pitkään, joka avaa lisävalikon'
-            }
+            Samanaikaisia etappeja voi luoda painamalla etappia pohjaan pitkään,
+            joka avaa lisävalikon.
           </Text>
         </View>
       </View>
@@ -91,11 +88,11 @@ export default function InstructionsPage2() {
       />
       <Text style={Instructions.subHeader}>Reitin lisätiedot</Text>
       <Text style={Instructions.text}>
-        {'- Reitin alku- ja loppupisteet kertovat mistä, mihin reitti menee'}
+        Reitin alku- ja loppupisteet kertovat mistä mihin reitti menee.
       </Text>
       <Text style={Instructions.text}>
-        {'- Alkumatkan pituuden asettamalla voi myöhäistää reitin alkua ottamalla huomioon esimerkiksi kävelymatkan ensimmäiselle' +
-          ' pysäkille. '}
+        Alkumatkan pituuden asettamalla voi myöhäistää reitin alkua ottamalla
+        huomioon esimerkiksi kävelymatkan ensimmäiselle pysäkille.
       </Text>
       <View
         style={{
