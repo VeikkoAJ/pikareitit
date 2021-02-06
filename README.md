@@ -43,7 +43,7 @@ The app can be run locally with [Expo Client](https://docs.expo.io/) or by:
 
 * ~~Downloading the App from  [Google Play]()~~ *(Full release not public yet)*
 * Running it on your web browser on [Appetize.io](https://appetize.io/app/86jbrzyyg4gd4dfz9qxgd639r8)
-* Downloading and installing the apk-file directly from [Expo](https://exp-shell-app-assets.s3.us-west-1.amazonaws.com/android/%40mr_brainlet/pikareitit-ce81c69a5af148bba0a6dd88e1a3e79c-signed.apk)
+* Downloading and installing the apk-file directly from [Expo](https://exp-shell-app-assets.s3.us-west-1.amazonaws.com/android/%40mr_brainlet/pikareitit-5abc8017372c401a90acee59c6ade6ed-signed.apk)
 
 
 ## Built with
