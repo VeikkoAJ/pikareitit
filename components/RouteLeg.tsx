@@ -81,7 +81,11 @@ export default function RouteLeg({
   const key = `${routeLeg.from.address} to ${routeLeg.to.address}`;
 
   const stopName = () => {
-    if (mainQueryLegs && mainQueryLegs[0]) {
+    if (
+      mainQueryLegs &&
+      mainQueryLegs[0] &&
+      !mainQueryLegs[0]?.from.name.includes('origin')
+    ) {
       return mainQueryLegs[0]?.from.name.split(',')[0];
     }
     return routeLeg.from.address.split(',')[0];

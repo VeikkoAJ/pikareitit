@@ -9,6 +9,8 @@ export default function InstructionsPage1() {
       style={[
         listStyles.container,
         {
+          paddingTop: 10,
+          paddingBottom: 10,
           backgroundColor: basicColors.topBarLight,
           elevation: 1,
         },
@@ -23,18 +25,15 @@ export default function InstructionsPage1() {
           paddingVertical: 4,
         }}
       >
-        <View style={{ flex: 1.5 }}>
-          <Image
-            style={{
-              flex: 1,
-              width: undefined,
-              height: undefined,
-              resizeMode: 'contain',
-              borderRadius: 5,
-            }}
-            source={require('../assets/routeLeg.jpg')}
-          />
-        </View>
+        <Image
+          style={{
+            flex: 1.5,
+            height: 156,
+            resizeMode: 'center',
+            borderRadius: 15,
+          }}
+          source={require('../assets/routeLeg.jpg')}
+        />
         <View style={{ flex: 1, paddingLeft: 8 }}>
           <Text style={Instructions.text}>
             Yhdessä taulussa on pysäkin seuraavat kolme lähtevää linjaa ja
@@ -59,24 +58,23 @@ export default function InstructionsPage1() {
           marginTop: 10,
           marginBottom: 4,
           borderTopWidth: 1,
+          height: 1,
         }}
       />
       <Text style={Instructions.subHeader}>Yläpalkin kello</Text>
       <View
         style={{
-          marginVertical: 4,
-          alignSelf: 'flex-start',
-          minWidth: '80%',
-          minHeight: '5%',
+          flexDirection: 'row',
+          alignItems: 'flex-start',
+          paddingVertical: 4,
         }}
       >
         <Image
           style={{
-            flex: 1,
-            width: undefined,
-            height: undefined,
-            resizeMode: 'contain',
-            borderRadius: 5,
+            flex: 1.5,
+            height: 36,
+            resizeMode: 'center',
+            borderRadius: 15,
           }}
           source={require('../assets/topBar.jpg')}
         />
@@ -90,6 +88,7 @@ export default function InstructionsPage1() {
           marginTop: 10,
           marginBottom: 4,
           borderTopWidth: 1,
+          height: 1,
         }}
       />
       <Text style={Instructions.subHeader}>Reittipisteet</Text>
@@ -100,18 +99,16 @@ export default function InstructionsPage1() {
           paddingVertical: 4,
         }}
       >
-        <View style={{ flex: 1.5 }}>
-          <Image
-            style={{
-              flex: 1,
-              width: undefined,
-              height: undefined,
-              resizeMode: 'contain',
-              borderRadius: 5,
-            }}
-            source={require('../assets/middleSector.jpg')}
-          />
-        </View>
+        <Image
+          style={{
+            flex: 1.5,
+            height: 90,
+            resizeMode: 'center',
+            borderRadius: 15,
+          }}
+          source={require('../assets/middleSector.jpg')}
+        />
+
         <View style={{ flex: 1, paddingLeft: 8 }}>
           <Text style={Instructions.text}>
             Reittipisteet näyttävät matkustusajan seuraavaalle pysäkille.

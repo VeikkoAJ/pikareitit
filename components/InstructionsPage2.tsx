@@ -9,6 +9,8 @@ export default function InstructionsPage2() {
       style={[
         listStyles.container,
         {
+          paddingTop: 10,
+          paddingBottom: 10,
           backgroundColor: basicColors.topBarLight,
           elevation: 1,
         },
@@ -26,21 +28,18 @@ export default function InstructionsPage2() {
           flexDirection: 'row',
           alignItems: 'flex-start',
           paddingVertical: 4,
-          minHeight: '5%',
         }}
       >
-        <View style={{ flex: 1.5 }}>
-          <Image
-            style={{
-              flex: 1,
-              width: undefined,
-              height: undefined,
-              resizeMode: 'contain',
-              borderRadius: 15,
-            }}
-            source={require('../assets/routeLegCreation.jpg')}
-          />
-        </View>
+        <Image
+          style={{
+            flex: 1.5,
+            height: 180,
+            resizeMode: 'center',
+            borderRadius: 15,
+          }}
+          source={require('../assets/routeLegCreation.jpg')}
+        />
+
         <View style={{ flex: 1, paddingLeft: 8 }}>
           <Text style={Instructions.text}>
             Aseta alku- ja loppupisteiksi yhden etapin pysäkit.
@@ -84,6 +83,7 @@ export default function InstructionsPage2() {
           marginTop: 10,
           marginBottom: 4,
           borderTopWidth: 1,
+          height: 1,
         }}
       />
       <Text style={Instructions.subHeader}>Reitin lisätiedot</Text>
