@@ -12,11 +12,10 @@ Sovellus pääkaupunkiseudun julkisen liikenteen reittiaikatalujen reaaliaikaise
 ## Pääominaisuudet
 
 * **Aikataulujen ketjutus**
-
-  <img align="right" src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/chainedDepartures.jpg" height="600">
-
-    Seuraavan etapin aikataulut lasketaan edellisen etapin nopeimman siirtymän mukaan. Sovellus näyttää lyhyimmätkin vaihtoajat linjojen välillä, jolloin käyttäjän tietää mahdollisuudesta ehtiä juosten seuraavaan liikennevälineeseen. *Esimerkiksi Pasilan asemalla lähijunien pysähtymisaikataulu mahdollistaa junien vaihtamisen juoksemalla laiturilta toiselle.*
-
+<p align="center" width="100%">
+<img align="right" src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/chainedDepartures.jpg" height="600">
+Seuraavan etapin aikataulut lasketaan edellisen etapin nopeimman siirtymän mukaan. Sovellus näyttää lyhyimmätkin vaihtoajat linjojen välillä, jolloin käyttäjän tietää mahdollisuudesta ehtiä juosten seuraavaan liikennevälineeseen. *Esimerkiksi Pasilan asemalla lähijunien pysähtymisaikataulu mahdollistaa junien vaihtamisen juoksemalla laiturilta toiselle.*
+</p>
   
 
 * **Aikataulujen reaaliaikainen seuranta**
