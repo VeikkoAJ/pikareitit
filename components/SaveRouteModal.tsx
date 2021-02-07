@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react';
 import {
+  KeyboardAvoidingView,
   Modal,
+  ScrollView,
   Text,
   ToastAndroid,
   TouchableOpacity,
@@ -12,6 +14,7 @@ import { TextInputBar } from './TextInputBar';
 
 import { DatabaseContext } from '../contextTypes';
 import { basicStyles, listStyles } from '../styles/BasicStyles';
+import { createRouteStyles } from '../styles/CreateRouteStyles';
 
 type RouteInfo =
   | {
@@ -73,115 +76,121 @@ export default function SaveRouteModal({
       presentationStyle="fullScreen"
       onRequestClose={() => closeModal(false)}
     >
-      <View style={[basicStyles.base, { marginTop: 0 }]}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text style={basicStyles.charcoalHeader}>Tallenna reitti</Text>
-        </View>
-        <View style={{ minHeight: 30 }} />
-        <View
-          style={[
-            listStyles.container,
-            {
-              flex: 1,
-              justifyContent: 'space-between',
-              paddingVertical: 0,
-              paddingBottom: 0,
-              marginBottom: 50,
-            },
-          ]}
-        >
-          <TextInputBar
-            text="Reitin nimi"
-            answer={route.routeName}
-            setAnswer={(answer: string) =>
-              setRoute({ ...route, routeName: answer })
-            }
-          />
-          <TextInputBar
-            text="Reitin kuvaus"
-            answer={route.description}
-            setAnswer={(answer: string) =>
-              setRoute({ ...route, description: answer })
-            }
-          />
-          <TextInputBar
-            text="Aloituspaikan nimi"
-            answer={route.originPlace}
-            setAnswer={(answer: string) =>
-              setRoute({ ...route, originPlace: answer })
-            }
-          />
-          <TextInputBar
-            text="Määränpään nimi"
-            answer={route.finalDestination}
-            setAnswer={(answer: string) =>
-              setRoute({ ...route, finalDestination: answer })
-            }
-          />
-          <TextInputBar
-            text="aloituspaikan ja pysäkin välinseen matkaan kuluva aika (min), valinnainen"
-            flexRate={2}
-            keyboardType="decimal-pad"
-            answer={
-              route.startWalkDuration !== 0
-                ? route.startWalkDuration.toString(10)
-                : ''
-            }
-            setAnswer={(answer: string) => {
-              if (answer.length > 0) {
-                setRoute({ ...route, startWalkDuration: parseInt(answer, 10) });
-                return;
+      <View
+        style={{
+          height: '100%',
+          backgroundColor: 'rgba(68, 98, 76, 0.9)',
+        }}
+      >
+        <KeyboardAvoidingView style={[createRouteStyles.fullScreeModal]}>
+          <ScrollView
+            style={[
+              {
+                paddingVertical: 0,
+                paddingBottom: 0,
+                marginBottom: 10,
+              },
+            ]}
+          >
+            <Text style={[basicStyles.charcoalHeader, { marginBottom: 10 }]}>
+              Tallenna reitti
+            </Text>
+            <TextInputBar
+              text="Reitin nimi"
+              answer={route.routeName}
+              setAnswer={(answer: string) =>
+                setRoute({ ...route, routeName: answer })
               }
-              setRoute({ ...route, startWalkDuration: 0 });
-            }}
-          />
-          <View style={{ flexDirection: 'row', paddingBottom: 5 }}>
-            <TouchableOpacity
-              style={{
-                flex: 3,
-                alignItems: 'center',
-                padding: 10,
-                borderRadius: 10,
-                backgroundColor: routeLegColors.light,
-              }}
-              onPress={() => closeModal(false)}
-            >
-              <Text>Close</Text>
-            </TouchableOpacity>
-            <View style={{ width: 5 }} />
-            <TouchableOpacity
-              style={{
-                flex: 3,
-                alignItems: 'center',
-                padding: 10,
-                borderRadius: 10,
-                backgroundColor: routeLegColors.light,
-              }}
-              onPress={() => {
-                if (route.routeTransportLegRows.length === 0) {
-                  ToastAndroid.show(
-                    'Reitti ei voi olla tyhjä!',
-                    ToastAndroid.LONG
-                  );
-                  closeModal(false);
+            />
+            <TextInputBar
+              text="Reitin kuvaus"
+              answer={route.description}
+              setAnswer={(answer: string) =>
+                setRoute({ ...route, description: answer })
+              }
+            />
+            <TextInputBar
+              text="Aloituspaikan nimi"
+              answer={route.originPlace}
+              setAnswer={(answer: string) =>
+                setRoute({ ...route, originPlace: answer })
+              }
+            />
+            <TextInputBar
+              text="Määränpään nimi"
+              answer={route.finalDestination}
+              setAnswer={(answer: string) =>
+                setRoute({ ...route, finalDestination: answer })
+              }
+            />
+            <TextInputBar
+              text="aloituspaikan ja pysäkin väliseen matkaan kuluva aika (min), vapaaehtoinen"
+              flexRate={2}
+              keyboardType="decimal-pad"
+              answer={
+                route.startWalkDuration !== 0
+                  ? route.startWalkDuration.toString(10)
+                  : ''
+              }
+              setAnswer={(answer: string) => {
+                if (answer.length > 0) {
+                  setRoute({
+                    ...route,
+                    startWalkDuration: parseInt(answer, 10),
+                  });
                   return;
                 }
-                if (route.routeName.length < 2) {
-                  ToastAndroid.show(
-                    'Reitiltä puuttuu nimi tai sen nimi on liian lyhyt!',
-                    ToastAndroid.SHORT
-                  );
-                  return;
-                }
+                setRoute({ ...route, startWalkDuration: 0 });
+              }}
+            />
+            <View style={{ marginVertical: 10, flexDirection: 'row' }}>
+              <TouchableOpacity
+                style={{
+                  flex: 3,
+                  alignItems: 'center',
+                  padding: 10,
+                  borderRadius: 10,
+                  backgroundColor: routeLegColors.light,
+                }}
+                onPress={() => closeModal(false)}
+              >
+                <Text>Close</Text>
+              </TouchableOpacity>
+              <View style={{ width: 5 }} />
+              <TouchableOpacity
+                style={{
+                  flex: 3,
+                  alignItems: 'center',
+                  padding: 10,
+                  borderRadius: 10,
+                  backgroundColor: routeLegColors.light,
+                }}
+                onPress={() => {
+                  if (route.routeTransportLegRows.length === 0) {
+                    ToastAndroid.show(
+                      'Reitti ei voi olla tyhjä!',
+                      ToastAndroid.LONG
+                    );
+                    closeModal(false);
+                    return;
+                  }
+                  if (route.routeName.length < 2) {
+                    ToastAndroid.show(
+                      'Reitiltä puuttuu nimi tai sen nimi on liian lyhyt!',
+                      ToastAndroid.SHORT
+                    );
+                    return;
+                  }
 
-                saveRoute();
-                closeModal(true);
-              }}
-            >
-              <Text>Save</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+                  saveRoute();
+                  closeModal(true);
+                }}
+              >
+                <Text>Save</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
       </View>
     </Modal>
   );

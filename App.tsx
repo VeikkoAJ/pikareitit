@@ -91,6 +91,7 @@ export default function App() {
               activeTintColor: routeLegColors.normal,
               inactiveTintColor: 'white',
               showLabel: false,
+              keyboardHidesTabBar: true,
             }}
           >
             <MainTab.Screen

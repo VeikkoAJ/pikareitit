@@ -17,12 +17,17 @@ interface BrowseScreenProps {
 
 export default function BrowseScreen({ navigation, route }: BrowseScreenProps) {
   const [routeKeyPairs, setRouteKeyPairs] = useState<RouteKeyPair[]>([]);
-  const [listChangeTracker, setListChangeTracker] = useState<number>(0);
+  const [deleteRouteId, setDeleteRouteId] = useState<string | undefined>(
+    undefined
+  );
   const useRouteDatabase = useContext(DatabaseContext);
 
   useEffect(() => {
     const getRouteKeyPairs = async () => {
       try {
+        if (useRouteDatabase !== undefined && deleteRouteId !== undefined) {
+          await useRouteDatabase.deleteRoute(deleteRouteId);
+        }
         const fetchedRouteKeyPairs = await useRouteDatabase?.getRoutes();
         if (fetchedRouteKeyPairs !== undefined) {
           setRouteKeyPairs(fetchedRouteKeyPairs);
@@ -32,7 +37,7 @@ export default function BrowseScreen({ navigation, route }: BrowseScreenProps) {
       }
     };
     getRouteKeyPairs();
-  }, [listChangeTracker]);
+  }, [deleteRouteId]);
 
   const loadActiveRoute = (routeKey: string) => {
     // Markup caused by not properly defining tabNavigationNavigate as a route prop
@@ -50,7 +55,7 @@ export default function BrowseScreen({ navigation, route }: BrowseScreenProps) {
       <FlatList
         style={[listStyles.container, { paddingTop: 5, flex: 1 }]}
         data={routeKeyPairs}
-        extraData={listChangeTracker}
+        extraData={routeKeyPairs}
         renderItem={({ item }) => (
           <RouteNameList
             name={item.route.routeName}
@@ -63,12 +68,7 @@ export default function BrowseScreen({ navigation, route }: BrowseScreenProps) {
                 tabNavigationNavigate: route.params.tabNavigationNavigate,
               });
             }}
-            deleteRoute={() => {
-              if (useRouteDatabase !== undefined) {
-                useRouteDatabase.deleteRoute(item.id);
-              }
-              setListChangeTracker(listChangeTracker + 1);
-            }}
+            deleteRoute={() => setDeleteRouteId(item.id)}
           />
         )}
         ItemSeparatorComponent={() => (
@@ -76,7 +76,7 @@ export default function BrowseScreen({ navigation, route }: BrowseScreenProps) {
             style={{ borderBottomWidth: 1, borderColor: 'black', minHeight: 1 }}
           />
         )}
-        keyExtractor={(_) => _.key}
+        keyExtractor={(_) => _.id}
       />
       <TouchableOpacity
         style={[listStyles.container]}
