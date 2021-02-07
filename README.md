@@ -5,7 +5,7 @@
 # Pikareitit 1.5.0
 *Pikareitit is an mobile app for creating and viewing custom local (Helsinki region) transit schedules.*
 
-Sovellus pääkaupunkiseudun julkisen liikenteen reittiaikatalujen reaaliaikaiseen seurantaan. Sovelluksella on mahdollista luoda kustomoituja reittiaikatauluja HSL:n pysäkkien välillä. Aikataulut ketjuttuvat automaattisesti, jolloin on mahdollista nähdä jo seuraavan pysäkin aikataulut, ennen sinne pääsyä. Sovelluksen tarkoituksena on nopeuttaa julkisten käyttöä ennalta tutuilla reiteillä, kuten työmatkoilla. Sovellusta ei kannata käyttää ennalta tuntemattomilla reiteillä, koska aikataulujen asettamiseen menisi liian kauan.
+Sovellus pääkaupunkiseudun julkisen liikenteen reittiaikatalujen reaaliaikaiseen seurantaan. Sovelluksella on mahdollista luoda kustomoituja reittiaikatauluja HSL:n pysäkkien välillä. Aikataulut ketjuttuvat automaattisesti, jolloin on mahdollista nähdä jo seuraavan pysäkin aikataulut, siitä ajanhetkestä, kun matka edellisessä ajoneuvossa päättyy. Sovelluksen tarkoituksena on nopeuttaa julkisten käyttöä ennalta tutuilla reiteillä, kuten työmatkoilla. Sovellusta ei kannata käyttää kertaluontoisilla reiteillä, koska aikataulujen asettamiseen menisi liian kauan.
 
 
 
@@ -14,26 +14,26 @@ Sovellus pääkaupunkiseudun julkisen liikenteen reittiaikatalujen reaaliaikaise
 * **Aikataulujen ketjutus**
 <img src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/route%20chaining.jpg" width="400">
 
-Seuraavan etapin aikataulut lasketaan edellisen etapin nopeimman siirtymän mukaan. Sovellus näyttää lyhyimmätkin vaihtoajat linjojen välillä, jolloin käyttäjän on mahdollista juosta seuraavaan liikennevälineeseen. *Esimerkiksi Pasilan asemalla lähijunien aikataulu mahdollistaa junien vaihtamisen juoksemalla laiturilta toiselle.*
+Seuraavan etapin aikataulut lasketaan edellisen etapin nopeimman siirtymän mukaan. Sovellus näyttää lyhyimmätkin vaihtoajat linjojen välillä, jolloin käyttäjän tietää mahdollisuudesta ehtiä juosten seuraavaan liikennevälineeseen. *Esimerkiksi Pasilan asemalla lähijunien pysähtymisaikataulu mahdollistaa junien vaihtamisen juoksemalla laiturilta toiselle.*
 
-* **Aikataulujen live seuranta**
+* **Aikataulujen reaaliaikainen seuranta**
 <img src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/realtimeRouting.jpg" width="400">
 
-Aikataulun hakuaikaa pystyy muuttamaan lennosta joko tulevaisuuten tai menneisyyteen. Aikatauluja on myös mahdollista hakea matkan välistä, matkan edetessä. Yläreunassa näkyvästä kellosta on mahdollista säätää lähtöaikaa. Painamalla aikataulua pitkään, päivittyy se reitin lähtöpisteeksi.
+Aikataulut haetaan suoraan HSL:n Reititys API:sta jolloin ne päivittyvät ruuhkan ja sään mukaisesti. Aikataulun hakuaikaa pystyy muuttamaan lennosta joko tulevaisuuten tai menneisyyteen. Aikatauluja on myös mahdollista seurata keskeltä reittiä, matkan edetessä. Yläreunassa näkyvästä kellosta on mahdollista säätää lähtöaikaa. Painamalla aikataulua pitkään, päivittyy se reitin lähtöpisteeksi.
 
 
 * **Reitin halkaisu**
 
 <img src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/parallel%20routes.jpg" width="400">
 
-Sovellukessa on mahdollista luoda reittejä, jotka jakautuvat kahteen määränpäähän, esimerkiksi perkkäisiin juna-asemiin.
+Sovellukessa on mahdollista luoda reittejä, jotka jakautuvat kahteen määränpäähän, esimerkiksi perkkäisiin juna-asemiin. Reitin halkaisu on hyödyllistä kun määränpää sijaitsee kahden aseman välissä, joista molemmista menee busseja määränpäähän.
 
 
 * **Reittien tallentaminen ja muokkaaminen**
 
 <img src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/route%20creation.jpg" width="400"> 
                                                                                                        
-Reittejä on mahdollista luoda itse, sekä tallentaa niitä omalle laitteelle. Pääkaupunkiseudun pysäkkejä ja asemia voi hakea osoiteen tai suoraan nimen mukaan. Jokaiselle etapille on mahdollista säätää sallitut kulkuvälineet. 
+Reittejä on mahdollista luoda itse, sekä tallentaa niitä omalle laitteelle. Julkisen liikenteen pysäkkejä ja asemia voi hakea osoiteen tai nimen mukaan. Pysäkkien tiedot tulevat Reititys API:Sta ja osoitetiedot taas Geokoodaus API:sta. Jokaiselle etapille on myös mahdollista säätää sallitut kulkuvälineet. 
 
 
 
@@ -52,8 +52,6 @@ The app can be run locally with [Expo Client](https://docs.expo.io/) or by:
 * [React Navigation](https://reactnavigation.org/)
 * [Apollo client](https://www.apollographql.com/docs/react/) - [GraphQL](https://graphql.org/) - live transit schedules from [HSL Routing API](https://digitransit.fi/en/developers/)
 * [PouchDB](https://pouchdb.com/) local database for storing user created routes
-
-
 
 
 ## Upcoming Features and known bugs
@@ -78,10 +76,7 @@ The app can be run locally with [Expo Client](https://docs.expo.io/) or by:
 Veikko Jääskeläinen
 
 
-
-
 ## License
-
 
 - Transit data is from HSL Routing API, licensed under cc by 4.0
 - Address data is from HSL Geocoding API, licensed under cc by 4.0
