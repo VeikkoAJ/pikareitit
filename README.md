@@ -1,6 +1,6 @@
 
 
-<img src="https://github.com/VeikkoAJ/pikareitit/blob/develop/assets/adaptive-icon.png" width="200">
+<img align="left" src="https://github.com/VeikkoAJ/pikareitit/blob/develop/assets/adaptive-icon.png" width="200">
 
 # Pikareitit 1.5.0
 *Pikareitit is an mobile app for creating and viewing custom Helsinki region transit schedules.*
@@ -12,19 +12,24 @@ Sovellus pääkaupunkiseudun julkisen liikenteen reittiaikatalujen reaaliaikaise
 ## Pääominaisuudet
 
 * **Aikataulujen ketjutus**
-<p align="center" width="100%">
-<img align="right" src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/chainedDepartures.jpg" height="600">
+
+<img src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/chainedDepartures.jpg" width="30%">
+
+  
+ <p width="100%>
 Seuraavan etapin aikataulut lasketaan edellisen etapin nopeimman siirtymän mukaan. Sovellus näyttää lyhyimmätkin vaihtoajat linjojen välillä, jolloin käyttäjän tietää mahdollisuudesta ehtiä juosten seuraavaan liikennevälineeseen. *Esimerkiksi Pasilan asemalla lähijunien pysähtymisaikataulu mahdollistaa junien vaihtamisen juoksemalla laiturilta toiselle.*
 </p>
-  
+<br>
 
 * **Aikataulujen reaaliaikainen seuranta**
 
   
-<img align="right" src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/mainPicture.jpg" height="600">
+
 
 Aikataulut haetaan suoraan HSL:n Reititys API:sta jolloin ne päivittyvät ruuhkan ja sään mukaisesti. Aikataulujen hakuaikaa pystyy muuttamaan lennosta joko tulevaisuuten tai menneisyyteen. Aikatauluja on myös mahdollista seurata keskeltä reittiä, matkan edetessä. Yläreunassa näkyvästä kellosta on mahdollista säätää lähtöaikaa. Painamalla aikataulua pitkään, päivittyy se reitin lähtöpisteeksi.
-
+<p>
+<img align="right" src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/mainPicture.jpg" height="600">
+</p>
 <h3>Reitin halkaisu</h3>
 
 <img align="right" src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/parallel%20routes.jpg" width="400">
