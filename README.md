@@ -10,31 +10,31 @@ Sovellus pääkaupunkiseudun julkisen liikenteen reittiaikatalujen reaaliaikaise
 
 
 ## Pääominaisuudet
-
+<p align="center">
 * **Aikataulujen ketjutus**
-<img src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/chainedDepartures.jpg" width="400">
-
+<img align="right" src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/chainedDepartures.jpg" width="400">
+</p>
 Seuraavan etapin aikataulut lasketaan edellisen etapin nopeimman siirtymän mukaan. Sovellus näyttää lyhyimmätkin vaihtoajat linjojen välillä, jolloin käyttäjän tietää mahdollisuudesta ehtiä juosten seuraavaan liikennevälineeseen. *Esimerkiksi Pasilan asemalla lähijunien pysähtymisaikataulu mahdollistaa junien vaihtamisen juoksemalla laiturilta toiselle.*
-
+<p align="center">
 * **Aikataulujen reaaliaikainen seuranta**
-<img src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/mainPicture.jpg" width="400">
-
+<img align="right" src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/mainPicture.jpg" width="400">
+</p>
 Aikataulut haetaan suoraan HSL:n Reititys API:sta jolloin ne päivittyvät ruuhkan ja sään mukaisesti. Aikataulujen hakuaikaa pystyy muuttamaan lennosta joko tulevaisuuten tai menneisyyteen. Aikatauluja on myös mahdollista seurata keskeltä reittiä, matkan edetessä. Yläreunassa näkyvästä kellosta on mahdollista säätää lähtöaikaa. Painamalla aikataulua pitkään, päivittyy se reitin lähtöpisteeksi.
 
+<p align="center">
+<h3>Reitin halkaisu</h3>
 
-* **Reitin halkaisu**
-
-<img src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/parallel%20routes.jpg" width="400">
+<img align="right" src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/parallel%20routes.jpg" width="400">
 
 Sovellukessa on mahdollista luoda reittejä, jotka jakautuvat kahteen määränpäähän, esimerkiksi perkkäisiin juna-asemiin. Reitin halkaisu on hyödyllistä kun määränpää sijaitsee kahden aseman välissä, joista molemmista menee busseja määränpäähän.
-
-
+</p>
+<p align="center">
 * **Reittien tallentaminen ja muokkaaminen**
 
-<img src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/route%20creation.jpg" width="400"> 
+<img align="right" src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/route%20creation.jpg" width="400"> 
                                                                                                        
 Reittejä on mahdollista luoda itse, sekä tallentaa niitä omalle laitteelle. Julkisen liikenteen pysäkkejä ja asemia voi hakea osoiteen tai nimen mukaan. Pysäkkien tiedot tulevat Reititys API:Sta ja osoitetiedot taas Geokoodaus API:sta. Jokaiselle etapille on myös mahdollista säätää sallitut kulkuvälineet. 
-
+</p>
 
 
 ## Usage
