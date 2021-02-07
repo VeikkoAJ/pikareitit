@@ -19,7 +19,7 @@ Seuraavan etapin aikataulut lasketaan edellisen etapin nopeimman siirtymän muka
 * **Aikataulujen reaaliaikainen seuranta**
 <img src="https://github.com/VeikkoAJ/pikareitit/blob/master/examplePics/realtimeRouting.jpg" width="400">
 
-Aikataulut haetaan suoraan HSL:n Reititys API:sta jolloin ne päivittyvät ruuhkan ja sään mukaisesti. Aikataulun hakuaikaa pystyy muuttamaan lennosta joko tulevaisuuten tai menneisyyteen. Aikatauluja on myös mahdollista seurata keskeltä reittiä, matkan edetessä. Yläreunassa näkyvästä kellosta on mahdollista säätää lähtöaikaa. Painamalla aikataulua pitkään, päivittyy se reitin lähtöpisteeksi.
+Aikataulut haetaan suoraan HSL:n Reititys API:sta jolloin ne päivittyvät ruuhkan ja sään mukaisesti. Aikataulujen hakuaikaa pystyy muuttamaan lennosta joko tulevaisuuten tai menneisyyteen. Aikatauluja on myös mahdollista seurata keskeltä reittiä, matkan edetessä. Yläreunassa näkyvästä kellosta on mahdollista säätää lähtöaikaa. Painamalla aikataulua pitkään, päivittyy se reitin lähtöpisteeksi.
 
 
 * **Reitin halkaisu**
