@@ -4,8 +4,8 @@ export default function exampleRoute(): Route {
   return {
     routeName: 'mallireitti',
     description: 'testaa tällä reitillä sovelluksen ominaisuudet',
-    originPlace: 'lähtöpaikka',
-    finalDestination: 'maali',
+    originPlace: 'Tarvaspääntie',
+    finalDestination: 'Syystie 19',
     startWalkDuration: 1.3 * 60,
     routeTransportLegRows: [
       {

@@ -22,6 +22,10 @@ const mapMiddleSector = (
   return 'single';
 };
 
+/**
+ * Formats the routeCreation RouteLegKeyPairs to RouteTransportLegRow format. Adds corresponding middleSectors between each route
+ * @param routeLegKeyPairRows
+ */
 export default function formatRouteLegRows(
   routeLegKeyPairRows: RouteLegKeyPair[][]
 ): RouteTransportLegRow[] {

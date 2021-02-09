@@ -4,11 +4,16 @@ import { AddressSearchResponse, Feature } from '../addressSearchTypes';
 const _ = require('lodash');
 
 const url = 'http://api.digitransit.fi/geocoding/v1/autocomplete';
+/** focusPoint aids geocoding api to return result only close to Helsinki */
 const focusPoint = '&focus.point.lat=60.17&focus.point.lon=24.93';
 const layers = '&layers=locality,neighbourhood,street,address,venue';
-const searchDelayMS = 1500;
 const allowedCities = ['Helsinki', 'Espoo', 'Vantaa', 'Sipoo', 'Kauniainen'];
+const searchDelayMS = 1500;
 
+/**
+ * Custom hook used to search Addresses using HSL GeoCoding API
+ *
+ */
 export default function UseAddressSearch() {
   const [searchResult, setSearchResult] = useState<Feature[]>([]);
   const [searchText, setSearchText] = useState<string | undefined>(undefined);

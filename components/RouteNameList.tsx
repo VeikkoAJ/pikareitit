@@ -43,13 +43,15 @@ export default function RouteNameList({
           closeModal={() => setShowDeleteModal(false)}
         />
       )}
-      <View>
+      <View style={{ flex: 4 }}>
         <Text style={[listStyles.itemHeader, { borderBottomWidth: 0 }]}>
           {name}
         </Text>
-        <Text style={{}}>{`${originPlace} -> ${finalDestination}`}</Text>
+        <Text
+          style={{ flexWrap: 'wrap' }}
+        >{`${originPlace} -> ${finalDestination}`}</Text>
       </View>
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flex: 2, flexDirection: 'row-reverse', flexWrap: 'wrap' }}>
         <ListManipulationButton
           buttonIcon="edit"
           size={20}

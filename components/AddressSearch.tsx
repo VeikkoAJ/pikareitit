@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
+  KeyboardAvoidingView,
   Modal,
   Pressable,
   ScrollView,
@@ -7,7 +8,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { routeLegColors } from '../styles/BasicColors';
+import { basicColors, routeLegColors } from '../styles/BasicColors';
 import { createRouteStyles } from '../styles/CreateRouteStyles';
 import UseAddressSearch from '../hooks/UseAddressSearch';
 import { MapLocation } from '../types';
@@ -40,6 +41,7 @@ export default function AddressSearch({
   const { searchResult, search } = UseAddressSearch();
   const [filteredStations, setFilteredStations] = useState<Station[]>([]);
   const [filteredStops, setFilteredStops] = useState<Station[]>([]);
+  const [bottomMargin, setBottomMargin] = useState(0);
 
   useEffect(() => {
     if (searchWord === undefined || searchWord.length < 3) {
@@ -47,7 +49,9 @@ export default function AddressSearch({
     }
     search(searchWord);
     if (stations !== undefined) {
-      setFilteredStations(FindStation(stations.stations, searchWord));
+      setFilteredStations(
+        FindStation(stations.stations, searchWord.toLowerCase())
+      );
     }
   }, [searchWord]);
 
@@ -86,27 +90,41 @@ export default function AddressSearch({
           presentationStyle="overFullScreen"
           onRequestClose={() => setShowModal(false)}
         >
-          <View style={[createRouteStyles.largeModal, {}]}>
-            <View style={{ flexDirection: 'row' }}>
-              <Text style={[listForm.fieldName, { paddingTop: 16 / 6 + 8 }]}>
-                kirjoita osoite tai paikan nimi
-              </Text>
-              <ListManipulationButton
-                buttonIcon="remove"
-                size={16}
-                color={routeLegColors.lightVisited}
-                onButtonPress={() => setShowModal(false)}
-              />
-            </View>
-
-            <ScrollView
-              style={{ alignSelf: 'stretch' }}
-              keyboardShouldPersistTaps="always"
+          <View
+            style={{
+              height: '100%',
+              backgroundColor: 'rgba(0,0,0,0.5)',
+            }}
+          >
+            <KeyboardAvoidingView
+              behavior="height"
+              style={[createRouteStyles.fullScreeModal]}
             >
+              <View style={{ flexDirection: 'row' }}>
+                <Text
+                  style={[
+                    listForm.fieldName,
+                    { paddingTop: 16 / 6 + 8, paddingBottom: 5 },
+                  ]}
+                >
+                  kirjoita pysäkin osoite tai aseman nimi
+                </Text>
+                <ListManipulationButton
+                  buttonIcon="remove"
+                  size={16}
+                  color={routeLegColors.lightVisited}
+                  onButtonPress={() => setShowModal(false)}
+                />
+              </View>
               <TextInput
                 style={[
                   listForm.fieldAnswer,
-                  { alignSelf: 'stretch', marginLeft: 0 },
+                  {
+                    marginLeft: 0,
+                    marginBottom: 10,
+                    minHeight: 20,
+                    fontSize: 18,
+                  },
                 ]}
                 placeholder=" esim. Rautatientori 2 "
                 defaultValue={defaultValue}
@@ -115,87 +133,105 @@ export default function AddressSearch({
                   setSearchWord(text);
                 }}
               />
-              {filteredStations.length > 0 && (
-                <Text
-                  style={[
-                    listForm.fieldAnswer,
-                    { fontWeight: 'bold', marginLeft: 0, borderBottomWidth: 0 },
-                  ]}
-                >
-                  Asemat
-                </Text>
-              )}
-              {filteredStations.length > 0 &&
-                filteredStations.map((station) => (
+              <ScrollView keyboardShouldPersistTaps="never">
+                {filteredStations.length > 0 && (
+                  <Text
+                    style={[
+                      listForm.fieldAnswer,
+                      {
+                        fontWeight: 'bold',
+                        marginLeft: 0,
+                        borderBottomWidth: 0,
+                        marginVertical: 5,
+                      },
+                    ]}
+                  >
+                    Asemat
+                  </Text>
+                )}
+                {filteredStations.length > 0 &&
+                  filteredStations.map((station) => (
+                    <Pressable
+                      key={station.gtfsId}
+                      style={{ borderBottomWidth: 1, paddingTop: 5 }}
+                      onPress={() => {
+                        changeLocation({
+                          address: station.name,
+                          lon: station.lon,
+                          lat: station.lat,
+                        });
+                        setShowModal(false);
+                      }}
+                    >
+                      <Text>{station.name}</Text>
+                    </Pressable>
+                  ))}
+                {filteredStops.length > 0 && (
+                  <Text
+                    style={[
+                      listForm.fieldAnswer,
+                      {
+                        fontWeight: 'bold',
+                        marginLeft: 0,
+                        borderBottomWidth: 0,
+                        marginTop: 5,
+                      },
+                    ]}
+                  >
+                    Pysäkit
+                  </Text>
+                )}
+                {filteredStops.length > 0 &&
+                  filteredStops.map((stop) => (
+                    <Pressable
+                      key={stop.gtfsId}
+                      style={{ borderBottomWidth: 1, paddingTop: 5 }}
+                      onPress={() => {
+                        changeLocation({
+                          address: stop.name,
+                          lon: stop.lon,
+                          lat: stop.lat,
+                        });
+                        setShowModal(false);
+                      }}
+                    >
+                      <Text>{stop.name}</Text>
+                    </Pressable>
+                  ))}
+                {searchResult.length > 0 && (
+                  <Text
+                    style={[
+                      listForm.fieldAnswer,
+                      {
+                        fontWeight: 'bold',
+                        marginLeft: 0,
+                        borderBottomWidth: 0,
+                        marginTop: 5,
+                      },
+                    ]}
+                  >
+                    Osoitteet
+                  </Text>
+                )}
+                {searchResult.slice(0, 100).map((result) => (
                   <Pressable
-                    key={station.gtfsId}
+                    key={result.properties.id}
                     style={{ borderBottomWidth: 1, paddingTop: 5 }}
                     onPress={() => {
                       changeLocation({
-                        address: station.name,
-                        lon: station.lon,
-                        lat: station.lat,
+                        address: result.properties.label,
+                        lon: result.geometry.coordinates[0],
+                        lat: result.geometry.coordinates[1],
                       });
                       setShowModal(false);
                     }}
                   >
-                    <Text>{station.name}</Text>
+                    <Text>{result.properties.label}</Text>
                   </Pressable>
                 ))}
-              {filteredStops.length > 0 && (
-                <Text
-                  style={[
-                    listForm.fieldAnswer,
-                    { fontWeight: 'bold', marginLeft: 0, borderBottomWidth: 0 },
-                  ]}
-                >
-                  Pysäkit
-                </Text>
-              )}
-              {filteredStops.length > 0 &&
-                filteredStops.map((stop) => (
-                  <Pressable
-                    key={stop.gtfsId}
-                    style={{ borderBottomWidth: 1, paddingTop: 5 }}
-                    onPress={() => {
-                      changeLocation({
-                        address: stop.name,
-                        lon: stop.lon,
-                        lat: stop.lat,
-                      });
-                      setShowModal(false);
-                    }}
-                  >
-                    <Text>{stop.name}</Text>
-                  </Pressable>
-                ))}
-              {searchResult.length > 0 && (
-                <Text
-                  style={[
-                    listForm.fieldAnswer,
-                    { fontWeight: 'bold', marginLeft: 0, borderBottomWidth: 0 },
-                  ]}
-                >
-                  Osoitteet
-                </Text>
-              )}
-              {searchResult.slice(0, 5).map((result) => (
-                <Pressable
-                  key={result.properties.id}
-                  style={{ borderBottomWidth: 1, paddingTop: 5 }}
-                  onPress={() => {
-                    changeLocation({
-                      address: result.properties.label,
-                      lon: result.geometry.coordinates[0],
-                      lat: result.geometry.coordinates[1],
-                    });
-                    setShowModal(false);
-                  }}
-                >
-                  <Text>{result.properties.label}</Text>
-                </Pressable>
-              ))}
-            </ScrollView>
+                <View style={{ height: 20 }} />
+              </ScrollView>
+            </KeyboardAvoidingView>
           </View>
         </Modal>
       )}

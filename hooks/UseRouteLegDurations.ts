@@ -1,5 +1,11 @@
 import { useState } from 'react';
 
+/**
+ * Custom hook that keeps track of transit times between routes
+ * @param routeLegRowCount
+ * @constructor
+ */
+
 export default function UseRouteLegDurations(routeLegRowCount: number) {
   const zeroArray: number[][] = new Array(routeLegRowCount).fill(
     new Array(2).fill(0)
@@ -10,7 +16,6 @@ export default function UseRouteLegDurations(routeLegRowCount: number) {
     newDuration: number,
     index: [number, number]
   ) => {
-    // console.log('index', index, 'newDuration', newDuration);
     if (routeLegDurations[index[0]][index[1]] === 0) {
       setRouteLegDurations(
         routeLegDurations.map((row, i) =>
