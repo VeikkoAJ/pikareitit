@@ -5,6 +5,10 @@ import {
   transitStopsRequest,
 } from '../services/TransitStopsQuery';
 
+/**
+ * Custom hook used to query all stops and stations in HSL public transport network
+ * Uses the HSL Routing API
+ */
 export default function UseTransitStopsQuery() {
   const stopsQueries = () => {
     const stopsResult = useQuery<StopsQueryData>(transitStopsRequest, {
@@ -23,9 +27,9 @@ export default function UseTransitStopsQuery() {
     { loading: stationsLoading, data: stationsData, error: stationsError },
   ] = stopsQueries();
   return {
-    /** Returns all stops */
+    /** all HSL stops */
     stops: stopsData,
-    /** Returns all stations */
+    /** all HSL stations */
     stations: stationsData,
   };
 }

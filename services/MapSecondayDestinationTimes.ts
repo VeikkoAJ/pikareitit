@@ -4,7 +4,7 @@ export type MappedItineraryLeg =
   | { mainQueryLeg: Leg; secondaryLegEndTime: number | undefined }
   | undefined;
 /**
- * Includes the secondary destination from the secondary query if defined
+ * Combines the routeQuery results to a single array for displaying both arrival times in routeLeg
  * @param mainItineraryLegs
  * @param secondaryItineraryLegs
  */
