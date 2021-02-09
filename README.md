@@ -27,7 +27,7 @@ The app can be run locally with [Expo Client](https://docs.expo.io/) or by:
 
 * ~~Downloading the App from  [Google Play]()~~ *(Full release not public yet)*
 * Running it on your web browser on [Appetize.io](https://appetize.io/app/86jbrzyyg4gd4dfz9qxgd639r8)
-* Downloading and installing the apk-file directly from [Expo](https://exp-shell-app-assets.s3.us-west-1.amazonaws.com/android/%40mr_brainlet/pikareitit-34b4014564f840059440203c2d921d9f-signed.apk)
+* Downloading and installing the apk-file directly from [Expo](https://exp-shell-app-assets.s3.us-west-1.amazonaws.com/android/%40mr_brainlet/pikareitit-510c0f37c83f4a6fbd6906ccb846f30a-signed.apk)
 
 
 ## Built with
@@ -43,7 +43,7 @@ The app can be run locally with [Expo Client](https://docs.expo.io/) or by:
 **features**
 * Individual time shifts for each timetable, to allow more customation
 * Support for 3 or more parallel timetables (currently only 2 supported)
-* ~~searching routes by stop name instead of street name~~
+* ~~searching routes by stop name instead of street name~~, *added*
 * Settings tab
 * Dark theme
 * Support for unusual transport modes, such as funiculars and cable cars
