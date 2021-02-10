@@ -83,11 +83,16 @@ export default function UseRouteQuery(
    * @param queryData
    */
   const formatLegData = (queryData: QueryData | undefined) => {
+    console.log('guerydata', queryData);
     if (queryData && queryData.plan.itineraries.length > 0) {
       const formattedLegs = queryData.plan.itineraries
         .map((itinerary) => {
           /** 3 legs = walk->vehicle->walk */
           if (itinerary.legs.length === 3) {
+            return itinerary.legs[1];
+          }
+          /** 2 legs = walk->vehicle->station */
+          if (itinerary.legs.length === 2) {
             return itinerary.legs[1];
           }
           /** single leg = only walking */

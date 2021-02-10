@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  MapLocation,
   RouteLegKeyPair,
   RouteTransportLeg,
   RouteTransportLegRow,
@@ -25,14 +26,10 @@ const emptyLeg = (): RouteLegKeyPair => ({
  * leg with start place prefilled used when adding sequential routeLegs
  * @param address startPlace name
  */
-const preFilledEmptyLeg = (address: string): RouteLegKeyPair => ({
+const preFilledEmptyLeg = (address: MapLocation): RouteLegKeyPair => ({
   key: new Date().getTime().toString(),
   routeLeg: {
-    from: {
-      address,
-      lat: 0,
-      lon: 0,
-    },
+    from: address,
     to: {
       address: '',
       lat: 0,
@@ -91,7 +88,7 @@ export default function UseRouteCreation(
       const lastRow = routeLegKeyPairRows[routeLegKeyPairRows.length - 1];
       setRouteLegKeyPairRows([
         ...routeLegKeyPairRows,
-        [preFilledEmptyLeg(lastRow[0].routeLeg.to.address)],
+        [preFilledEmptyLeg(lastRow[0].routeLeg.to)],
       ]);
       return;
     }
@@ -103,14 +100,18 @@ export default function UseRouteCreation(
     }
     if (nextTo) {
       const lastRow = routeLegKeyPairRows[routeLegKeyPairRows.length - 1];
-      const presetFrom = () => {
+      const presetFrom = (): MapLocation => {
         if (lastRow[0].routeLeg.secondaryTo !== undefined) {
-          return lastRow[0].routeLeg.secondaryTo.address;
+          return lastRow[0].routeLeg.secondaryTo;
         }
         if (lastRow.length > 1) {
-          return lastRow[1].routeLeg.to.address;
+          return lastRow[1].routeLeg.to;
         }
-        return '';
+        return {
+          address: '',
+          lat: undefined,
+          lon: undefined,
+        };
       };
       setRouteLegKeyPairRows([
         ...routeLegKeyPairRows.slice(0, row),

@@ -46,6 +46,7 @@ export default function RouteLegForm({
       secondaryTo,
       transportModes,
     });
+    console.log('form', from, 'to', to);
   }, [transportModes, from, to, secondaryTo]);
 
   return (
