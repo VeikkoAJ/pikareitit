@@ -4,7 +4,7 @@ import { RouteProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 import { RouteKeyPair } from '../types';
-import RouteNameList from '../components/RouteNameList';
+import RouteListItem from '../components/RouteListItem';
 import { StackParamList } from '../navigationTypes';
 
 import { basicStyles, listStyles } from '../styles/BasicStyles';
@@ -57,7 +57,7 @@ export default function BrowseScreen({ navigation, route }: BrowseScreenProps) {
         data={routeKeyPairs}
         extraData={routeKeyPairs}
         renderItem={({ item }) => (
-          <RouteNameList
+          <RouteListItem
             name={item.route.routeName}
             originPlace={item.route.originPlace}
             finalDestination={item.route.finalDestination}

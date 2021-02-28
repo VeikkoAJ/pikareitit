@@ -1,5 +1,5 @@
 export type RouteMiddleSectorProps = {
-  /** In seconds*/
+  /** In seconds */
   travelTimes: number[];
   sign?: string;
 };

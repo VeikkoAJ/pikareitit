@@ -14,7 +14,7 @@ interface RouteNameListProps {
   deleteRoute: () => void;
 }
 
-export default function RouteNameList({
+export default function RouteListItem({
   name,
   originPlace,
   finalDestination,

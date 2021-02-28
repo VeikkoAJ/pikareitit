@@ -4,7 +4,7 @@ import { routeLegColors } from '../styles/BasicColors';
 import TransportModePicker from './TransportModePicker';
 import ListManipulationButton from './ListManipulationButton';
 import { RouteTransportLeg, TransportMode, MapLocation } from '../types';
-import AddressSearch from './AddressSearch';
+import StopAddressSearch from './StopAddressSearch';
 import { StationsQueryData, StopsQueryData } from '../transitStopsQueryTypes';
 
 interface RouteLegFormProps {
@@ -87,21 +87,21 @@ export default function RouteLegForm({
           alignItems: 'stretch',
         }}
       >
-        <AddressSearch
+        <StopAddressSearch
           name="lähtöpysäkki:"
           defaultValue={from.address}
           stops={stops}
           stations={stations}
           changeLocation={(location) => setFrom(location)}
         />
-        <AddressSearch
+        <StopAddressSearch
           name="määränpään pysäkki:"
           defaultValue={to.address}
           stops={stops}
           stations={stations}
           changeLocation={(location) => setTo(location)}
         />
-        <AddressSearch
+        <StopAddressSearch
           name="toinen määränpää"
           defaultValue={
             secondaryTo?.address === undefined ? '' : secondaryTo.address

@@ -8,7 +8,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { basicColors, routeLegColors } from '../styles/BasicColors';
+import { routeLegColors } from '../styles/BasicColors';
 import { createRouteStyles } from '../styles/CreateRouteStyles';
 import UseAddressSearch from '../hooks/UseAddressSearch';
 import { MapLocation } from '../types';
@@ -20,6 +20,7 @@ import {
   StopsQueryData,
 } from '../transitStopsQueryTypes';
 import { FindNearestStops, FindStation } from '../services/FindStation';
+import StopAndStationOSM from './StopAndStationOSM';
 
 interface AddressSearchProps {
   name: string;
@@ -29,7 +30,7 @@ interface AddressSearchProps {
   changeLocation: (location: MapLocation) => void;
 }
 
-export default function AddressSearch({
+export default function StopAddressSearch({
   name,
   defaultValue,
   stops,
@@ -41,7 +42,6 @@ export default function AddressSearch({
   const { searchResult, search } = UseAddressSearch();
   const [filteredStations, setFilteredStations] = useState<Station[]>([]);
   const [filteredStops, setFilteredStops] = useState<Station[]>([]);
-  const [bottomMargin, setBottomMargin] = useState(0);
 
   useEffect(() => {
     if (searchWord === undefined || searchWord.length < 3) {
@@ -126,15 +126,91 @@ export default function AddressSearch({
                     fontSize: 18,
                   },
                 ]}
-                placeholder=" esim. Rautatientori 2 "
+                placeholder={' esim. Rautatientori 2'}
                 defaultValue={defaultValue}
                 autoFocus
                 onChangeText={(text) => {
                   setSearchWord(text);
                 }}
               />
+              <Text
+                style={[
+                  listForm.fieldAnswer,
+                  {
+                    fontWeight: 'bold',
+                    marginLeft: 0,
+                    borderBottomWidth: 0,
+                    marginTop: 5,
+                  },
+                ]}
+              >
+                Pysäkit kartalla
+              </Text>
+              <StopAndStationOSM
+                address={
+                  searchResult[0] !== undefined
+                    ? searchResult[0].properties.address
+                    : undefined
+                }
+                lat={
+                  searchResult[0] !== undefined
+                    ? searchResult[0].geometry.coordinates[1]
+                    : undefined
+                }
+                lon={
+                  searchResult[0] !== undefined
+                    ? searchResult[0].geometry.coordinates[0]
+                    : undefined
+                }
+                stops={filteredStops}
+                stations={filteredStations}
+                markerDescriptionPress={changeLocation}
+                closeModal={() => setShowModal(false)}
+              />
               <ScrollView keyboardShouldPersistTaps="never">
-                {filteredStations.length > 0 && (
+                {searchResult.length > 0 && (
+                  <Text
+                    style={[
+                      listForm.fieldAnswer,
+                      {
+                        fontWeight: 'bold',
+                        marginLeft: 0,
+                        borderBottomWidth: 0,
+                        marginTop: 5,
+                      },
+                    ]}
+                  >
+                    Osoitteet
+                  </Text>
+                )}
+                {searchResult.slice(0, 100).map((result) => (
+                  <Pressable
+                    key={result.properties.id}
+                    style={{ borderBottomWidth: 1, paddingTop: 5 }}
+                    onPress={() => {
+                      changeLocation({
+                        address: result.properties.label,
+                        lon: result.geometry.coordinates[0],
+                        lat: result.geometry.coordinates[1],
+                      });
+                      setShowModal(false);
+                    }}
+                  >
+                    <Text>{result.properties.label}</Text>
+                  </Pressable>
+                ))}
+                <View style={{ height: 20 }} />
+              </ScrollView>
+            </KeyboardAvoidingView>
+          </View>
+        </Modal>
+      )}
+    </View>
+  );
+}
+
+/*
+{filteredStations.length > 0 && (
                   <Text
                     style={[
                       listForm.fieldAnswer,
@@ -198,43 +274,4 @@ export default function AddressSearch({
                       <Text>{stop.name}</Text>
                     </Pressable>
                   ))}
-                {searchResult.length > 0 && (
-                  <Text
-                    style={[
-                      listForm.fieldAnswer,
-                      {
-                        fontWeight: 'bold',
-                        marginLeft: 0,
-                        borderBottomWidth: 0,
-                        marginTop: 5,
-                      },
-                    ]}
-                  >
-                    Osoitteet
-                  </Text>
-                )}
-                {searchResult.slice(0, 100).map((result) => (
-                  <Pressable
-                    key={result.properties.id}
-                    style={{ borderBottomWidth: 1, paddingTop: 5 }}
-                    onPress={() => {
-                      changeLocation({
-                        address: result.properties.label,
-                        lon: result.geometry.coordinates[0],
-                        lat: result.geometry.coordinates[1],
-                      });
-                      setShowModal(false);
-                    }}
-                  >
-                    <Text>{result.properties.label}</Text>
-                  </Pressable>
-                ))}
-                <View style={{ height: 20 }} />
-              </ScrollView>
-            </KeyboardAvoidingView>
-          </View>
-        </Modal>
-      )}
-    </View>
-  );
-}
+ */
