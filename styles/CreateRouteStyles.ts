@@ -18,7 +18,7 @@ export const createRouteStyles = StyleSheet.create({
     padding: 20,
     borderWidth: 1,
     borderRadius: 10,
-    backgroundColor: basicColors.topBarLight,
+    backgroundColor: basicColors.backgroundLight,
     elevation: 5,
   },
   largeModal: {
@@ -33,7 +33,7 @@ export const createRouteStyles = StyleSheet.create({
     paddingBottom: 30,
     borderWidth: 1,
     borderRadius: 10,
-    backgroundColor: basicColors.topBarLight,
+    backgroundColor: basicColors.backgroundLight,
     elevation: 5,
   },
   fullScreeModal: {
@@ -44,7 +44,7 @@ export const createRouteStyles = StyleSheet.create({
     paddingHorizontal: 15,
     marginTop: 10,
     marginHorizontal: 15,
-    backgroundColor: basicColors.topBarLight,
+    backgroundColor: basicColors.backgroundLight,
     borderRadius: 10,
     elevation: 5,
   },

@@ -1,6 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import React from 'react';
+import { basicColors } from '../styles/BasicColors';
 
 type listManipulationButtonProps = {
   buttonIcon: 'add' | 'remove' | 'moveUp' | 'moveDown' | 'info' | 'edit';
@@ -45,7 +46,7 @@ export default function ListManipulationButton({
         margin: 10,
         padding: size / 6,
         borderRadius: size * 1.25,
-        backgroundColor: color,
+        backgroundColor: basicColors.secondary,
         elevation: 2,
       }}
       onPress={onButtonPress}

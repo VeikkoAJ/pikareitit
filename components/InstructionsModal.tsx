@@ -64,7 +64,7 @@ export default function InstructionsModal({
           <ListManipulationButton
             buttonIcon="remove"
             size={28}
-            color={basicColors.topBarBackground}
+            color={basicColors.background}
             onButtonPress={closeModal}
           />
         </View>

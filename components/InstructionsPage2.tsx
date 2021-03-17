@@ -11,7 +11,7 @@ export default function InstructionsPage2() {
         {
           paddingTop: 10,
           paddingBottom: 10,
-          backgroundColor: basicColors.topBarLight,
+          backgroundColor: basicColors.backgroundLight,
           elevation: 1,
         },
       ]}

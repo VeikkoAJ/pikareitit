@@ -42,7 +42,7 @@ export default function CurrentRouteTopBar({
       )}
       <Pressable
         style={{
-          backgroundColor: basicColors.topBarBackground,
+          backgroundColor: basicColors.background,
           flexShrink: 20,
           paddingStart: 20,
           paddingBottom: 5,

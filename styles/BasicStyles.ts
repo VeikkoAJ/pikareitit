@@ -10,7 +10,7 @@ export const basicStyles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 20,
     paddingTop: 25,
-    backgroundColor: basicColors.topBarLight,
+    backgroundColor: basicColors.backgroundLight,
   },
   charcoalHeader: {
     fontSize: 32,
@@ -36,7 +36,7 @@ export const listStyles = StyleSheet.create({
     marginBottom: 10,
     elevation: 2,
     borderRadius: 10,
-    backgroundColor: basicColors.topBarBackground,
+    backgroundColor: basicColors.background,
   },
   header: {
     fontSize: 24,

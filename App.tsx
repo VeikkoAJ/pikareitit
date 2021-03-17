@@ -86,7 +86,7 @@ export default function App() {
             })}
             tabBarOptions={{
               style: {
-                backgroundColor: basicColors.topBarBackground,
+                backgroundColor: basicColors.background,
               },
               activeTintColor: routeLegColors.normal,
               inactiveTintColor: 'white',

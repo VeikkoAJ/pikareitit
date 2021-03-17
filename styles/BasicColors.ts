@@ -2,15 +2,19 @@
 export const basicColors = {
   transparent: 'rgba(0, 0, 0, 0)',
   base: 'light-gray',
-  topBarBackground: '#88c399',
-  topBarLight: '#b9f6ca',
+  background: '#009688', // '#88c399'
+  backgroundLight: '#52c7b8', // '#b9f6ca'
+  backgroundDark: '#00675b',
+  secondary: '#78909c',
+  secondaryLight: '#a7c0cd',
+  secondaryDark: '#4b636e',
 };
 
 // https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=9E9E9E
 export const routeLegColors = {
-  light: '#ff7d47',
-  lightHighlight: '#ff9463',
-  normal: '#e64a19',
+  light: basicColors.secondary, // '#ff7d47',
+  lightHighlight: basicColors.secondaryLight, // '#ff9463',
+  normal: basicColors.secondaryDark, // '#e64a19',
   lightVisited: '#cfcfcf',
   normalVisited: '#9e9e9e',
   charCoalText: '#333366',

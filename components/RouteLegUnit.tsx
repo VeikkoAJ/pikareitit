@@ -58,7 +58,7 @@ export default function RouteLegUnit({
             color: routeLegColors.greenText,
             fontWeight: 'normal',
           }}
-        >{`platform ${legUnit.platformCode}`}</Text>
+        >{`Raide ${legUnit.platformCode}`}</Text>
       )}
 
       <Text

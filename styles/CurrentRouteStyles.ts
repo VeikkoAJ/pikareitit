@@ -3,7 +3,7 @@ import { basicColors, routeLegColors } from './BasicColors';
 
 export const currentRouteStyles = StyleSheet.create({
   base: {
-    backgroundColor: basicColors.topBarLight,
+    backgroundColor: basicColors.backgroundLight,
     marginTop: StatusBar.currentHeight,
     alignContent: 'stretch',
   },
@@ -21,7 +21,7 @@ export const currentRouteStyles = StyleSheet.create({
   topBarMinuteItem: {
     paddingHorizontal: 5,
     paddingBottom: 5,
-    backgroundColor: basicColors.topBarBackground,
+    backgroundColor: basicColors.background,
     flexShrink: 10,
     borderColor: 'white',
   },
@@ -73,7 +73,7 @@ export const currentRouteStyles = StyleSheet.create({
   },
   legActiveModifier: {
     backgroundColor: routeLegColors.light,
-    borderColor: 'red',
+    borderColor: routeLegColors.normal,
     elevation: 5,
   },
   legDisabledModifier: {
