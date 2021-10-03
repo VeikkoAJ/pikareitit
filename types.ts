@@ -1,3 +1,5 @@
+import { StationsQueryData, StopsQueryData } from './transitStopsQueryTypes';
+
 export type RouteMiddleSectorProps = {
   /** In seconds */
   travelTimes: number[];
@@ -55,4 +57,11 @@ export interface RouteKeyPair {
 export interface RouteLegKeyPair {
   key: string;
   routeLeg: RouteTransportLeg;
+}
+
+export interface AddressBlock {
+  key: string;
+  x: number;
+  y: number;
+  location: MapLocation;
 }

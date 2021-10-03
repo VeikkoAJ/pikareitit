@@ -9,6 +9,7 @@ import { RouteKeyPair, RouteTransportLegRow } from '../types';
 import { routeLegColors } from '../styles/BasicColors';
 import { basicStyles } from '../styles/BasicStyles';
 import { DatabaseContext } from '../contextTypes';
+import RoutePlanner from '../new_components/RoutePlanner';
 
 interface CreateRouteScreenProps {
   navigation: BottomTabNavigationProp<StackParamList, 'Create route'>;
@@ -64,12 +65,13 @@ export default function CreateRouteScreen({
   }, []);
 
   return (
-    <View style={basicStyles.base}>
+    <View style={{ ...basicStyles.base, paddingLeft: 0, paddingRight: 0 }}>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
+          paddingHorizontal: 20,
         }}
       >
         <Text style={basicStyles.charcoalHeader}>
@@ -91,12 +93,7 @@ export default function CreateRouteScreen({
         </TouchableOpacity>
       </View>
       <View style={{ minHeight: 30 }} />
-      {!loading && (
-        <RouteLegCreation
-          loadedRoute={routeKeyPair?.route}
-          saveRoute={setEditedRouteTransportLegRows}
-        />
-      )}
+      {!loading && <RoutePlanner test="fdff" />}
 
       {showModal && editedRouteTransportLegRows && (
         <SaveRouteModal

@@ -20,7 +20,7 @@ import {
   StopsQueryData,
 } from '../transitStopsQueryTypes';
 import { FindNearestStops, FindStation } from '../services/FindStation';
-import StopAndStationOSM from './StopAndStationOSM';
+import StopAndStationOSMAndroid from './StopAndStationOSM.android';
 
 interface AddressSearchProps {
   name: string;
@@ -73,15 +73,7 @@ export default function StopAddressSearch({
 
   return (
     <View style={{ paddingTop: 5 }}>
-      <Text numberOfLines={1} style={[listForm.fieldName, { flex: 1 }]}>
-        {name}
-      </Text>
-      <Text
-        style={[listForm.fieldAnswer, {}]}
-        onPress={() => setShowModal(true)}
-      >
-        {defaultValue}
-      </Text>
+      <Text style={[listForm.fieldAnswer, {}]}>{defaultValue}</Text>
 
       {showModal && (
         <Modal
