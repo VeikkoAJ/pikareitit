@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { listStyles } from '../styles/BasicStyles';
 import { ScrollView, Text, useWindowDimensions, View } from 'react-native';
+import { listStyles } from '../styles/BasicStyles';
 import { UseRoutePlan } from './UseRoutePlan';
 import AddressBlockRender from './AddressBlockRender';
 import UseTransitStopsQuery from '../hooks/UseTransitStopsQuery';
@@ -66,7 +66,7 @@ export default function RoutePlanner({ test }: RoutePlannerProps) {
           width: 4 * width,
           height: (getGridSize().ySize + 1) * height,
         }}
-        pointerEvents={'none'}
+        pointerEvents="none"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}

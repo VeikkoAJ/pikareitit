@@ -1,7 +1,7 @@
 import React from 'react';
+import { Text, View } from 'react-native';
 import { Station } from '../transitStopsQueryTypes';
 import { MapLocation } from '../types';
-import { Text, View } from 'react-native';
 
 interface StopAndStationOSMProps {
   address: string | undefined;

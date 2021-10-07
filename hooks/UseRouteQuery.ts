@@ -83,7 +83,6 @@ export default function UseRouteQuery(
    * @param queryData
    */
   const formatLegData = (queryData: QueryData | undefined) => {
-    console.log('guerydata', queryData);
     if (queryData && queryData.plan.itineraries.length > 0) {
       const formattedLegs = queryData.plan.itineraries
         .map((itinerary) => {
